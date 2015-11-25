@@ -1,0 +1,34 @@
+{
+  "name": "react-native-quiltview",
+  "version": "0.1.0",
+  "description": "Native iOS UICollectionView wrapper with RFQuiltLayout for React Native",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mmslate/react-native-quiltview.git"
+  },
+  "keywords": [
+    "react-native",
+    "react-component",
+    "UICollectionView",
+    "collectionview",
+    "quiltlayout",
+    "iOS"
+  ],
+  "author": {
+    "name": "mmslate",
+    "email": "linyize@gmail.com",
+    "url": "http://www.modernmedia.com.cn"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mmslate/react-native-quiltview/issues"
+  },
+  "homepage": "https://github.com/mmslate/react-native-quiltview#readme",
+  "dependencies": {},
+  "readme": "# react-native-quiltview\nNative iOS UICollectionView with RFQuiltLayout for React Native.",
+  "readmeFilename": "README.md"
+}
