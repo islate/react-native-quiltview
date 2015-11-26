@@ -1,15 +1,15 @@
 //
-//  RCTCell.h
-//  RCTTableView
+//  RNCellView.h
+//  RNQuiltView
 //
-//  Created by Pavlo Aksonov on 24.08.15.
-//  Copyright (c) 2015 Pavlo Aksonov. All rights reserved.
+//  Created by linyize on 26.11.15.
+//  Copyright (c) 2015 mmslate. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "RNTableViewCell.h"
+#import "RNQuiltViewCell.h"
 
-@class RNTableViewCell;
+@class RNQuiltViewCell;
 
 @interface RNCellView : UIView
 
@@ -17,7 +17,7 @@
 @property (nonatomic) NSInteger section;
 @property (nonatomic) float componentHeight;
 @property (nonatomic) float componentWidth;
-@property (nonatomic, weak) UITableView *tableView;
-@property (nonatomic, strong) RNTableViewCell *tableViewCell;
+@property (nonatomic, weak) UICollectionView *collectionView;
+@property (nonatomic, strong) RNQuiltViewCell *quiltViewCell;
 
 @end

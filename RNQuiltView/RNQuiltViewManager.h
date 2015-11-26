@@ -1,5 +1,5 @@
 //
-//  RNCellViewManager.h
+//  RNQuiltViewManager.h
 //  RNQuiltView
 //
 //  Created by linyize on 26.11.15.
@@ -8,6 +8,6 @@
 
 #import "RCTViewManager.h"
 
-@interface RNCellViewManager : RCTViewManager
+@interface RNQuiltViewManager : RCTViewManager
 
 @end

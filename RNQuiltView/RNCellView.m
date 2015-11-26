@@ -1,35 +1,26 @@
 //
-//  RCTCell.m
-//  RCTTableView
+//  RNCellView.m
+//  RNQuiltView
 //
-//  Created by Pavlo Aksonov on 24.08.15.
-//  Copyright (c) 2015 Pavlo Aksonov. All rights reserved.
+//  Created by linyize on 26.11.15.
+//  Copyright (c) 2015 mmslate. All rights reserved.
 //
 
 #import "RNCellView.h"
 
 @implementation RNCellView
 
-
--(void)setTableView:(UITableView *)tableView {
-    _tableView = tableView;
-    _tableViewCell = [[RNTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CustomCell"];
-    _tableViewCell.cellView = self;
+-(void)setCollectionView:(UICollectionView *)collectionView {
+    _collectionView = collectionView;
+    _quileViewCell = [[RNQuileViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CustomCell"];
+    _quileViewCell.cellView = self;
 }
 
 -(void)setComponentHeight:(float)componentHeight {
     _componentHeight = componentHeight;
     if (componentHeight){
-        [_tableView reloadData];
+        [_collectionView reloadData];
     }
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
 @end

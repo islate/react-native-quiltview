@@ -1,14 +1,14 @@
 //
-//  RCTTableViewCell.m
-//  RCTTableView
+//  RNQuiltViewCell.m
+//  RNQuiltView
 //
-//  Created by Pavlo Aksonov on 24.08.15.
-//  Copyright (c) 2015 Pavlo Aksonov. All rights reserved.
+//  Created by linyize on 26.11.15.
+//  Copyright (c) 2015 mmslate. All rights reserved.
 //
 
-#import "RNTableViewCell.h"
+#import "RNQuiltViewCell.h"
 
-@implementation RNTableViewCell
+@implementation RNQuiltViewCell
 
 -(void)setCellView:(RNCellView *)cellView {
     _cellView = cellView;

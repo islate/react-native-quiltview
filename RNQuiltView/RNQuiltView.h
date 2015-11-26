@@ -1,15 +1,15 @@
 //
-//  SVGUse.h
-//  SVGReact
+//  RNQuiltView.h
+//  RNQuiltView
 //
-//  Created by Pavlo Aksonov on 07.08.15.
-//  Copyright (c) 2015 Pavlo Aksonov. All rights reserved.
+//  Created by linyize on 26.11.15.
+//  Copyright (c) 2015 mmslate. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 @class RCTEventDispatcher;
 
-@protocol RNTableViewDatasource <NSObject>
+@protocol RNQuiltViewDatasource <NSObject>
 
 // create method with params dictionary
 -(id)initWithDictionary:(NSDictionary *)params ;
@@ -19,7 +19,7 @@
 
 @end
 
-@interface RNTableView : UIView
+@interface RNQuiltView : UIView
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher NS_DESIGNATED_INITIALIZER;
 

@@ -1,9 +1,9 @@
 //
-//  RCTCellViewManager.m
-//  RCTTableView
+//  RNCellViewManager.m
+//  RNQuiltView
 //
-//  Created by Pavlo Aksonov on 24.08.15.
-//  Copyright (c) 2015 Pavlo Aksonov. All rights reserved.
+//  Created by linyize on 26.11.15.
+//  Copyright (c) 2015 mmslate. All rights reserved.
 //
 
 #import "RNCellViewManager.h"

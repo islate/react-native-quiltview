@@ -1,9 +1,9 @@
 //
-//  JSONCountryDataSource.m
-//  TableViewDemo
+//  JSONDataSource.m
+//  RNQuiltView
 //
-//  Created by Pavlo Aksonov on 18.08.15.
-//  Copyright (c) 2015 Facebook. All rights reserved.
+//  Created by linyize on 26.11.15.
+//  Copyright (c) 2015 mmslate. All rights reserved.
 //
 
 #import "JSONDataSource.h"

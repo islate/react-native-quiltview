@@ -11,13 +11,9 @@
 		81595C111C05B6DF008AABBE /* JSONDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 81595BFE1C05B6DF008AABBE /* JSONDataSource.m */; };
 		81595C121C05B6DF008AABBE /* RNCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 81595C001C05B6DF008AABBE /* RNCellView.m */; };
 		81595C131C05B6DF008AABBE /* RNCellViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 81595C021C05B6DF008AABBE /* RNCellViewManager.m */; };
-		81595C141C05B6DF008AABBE /* RNTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 81595C041C05B6DF008AABBE /* RNTableFooterView.m */; };
-		81595C151C05B6DF008AABBE /* RNTableFooterViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 81595C061C05B6DF008AABBE /* RNTableFooterViewManager.m */; };
-		81595C161C05B6DF008AABBE /* RNTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 81595C081C05B6DF008AABBE /* RNTableHeaderView.m */; };
-		81595C171C05B6DF008AABBE /* RNTableHeaderViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 81595C0A1C05B6DF008AABBE /* RNTableHeaderViewManager.m */; };
-		81595C181C05B6DF008AABBE /* RNTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 81595C0C1C05B6DF008AABBE /* RNTableView.m */; };
-		81595C191C05B6DF008AABBE /* RNTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 81595C0E1C05B6DF008AABBE /* RNTableViewCell.m */; };
-		81595C1A1C05B6DF008AABBE /* RNTableViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 81595C101C05B6DF008AABBE /* RNTableViewManager.m */; };
+		81595C2C1C069A5B008AABBE /* RNQuiltViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 81595C261C069A5B008AABBE /* RNQuiltViewManager.m */; };
+		81595C2D1C069A5B008AABBE /* RNQuiltViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 81595C281C069A5B008AABBE /* RNQuiltViewCell.m */; };
+		81595C2E1C069A5B008AABBE /* RNQuiltView.m in Sources */ = {isa = PBXBuildFile; fileRef = 81595C2A1C069A5B008AABBE /* RNQuiltView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,20 +37,12 @@
 		81595C001C05B6DF008AABBE /* RNCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNCellView.m; sourceTree = "<group>"; };
 		81595C011C05B6DF008AABBE /* RNCellViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNCellViewManager.h; sourceTree = "<group>"; };
 		81595C021C05B6DF008AABBE /* RNCellViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNCellViewManager.m; sourceTree = "<group>"; };
-		81595C031C05B6DF008AABBE /* RNTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTableFooterView.h; sourceTree = "<group>"; };
-		81595C041C05B6DF008AABBE /* RNTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNTableFooterView.m; sourceTree = "<group>"; };
-		81595C051C05B6DF008AABBE /* RNTableFooterViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTableFooterViewManager.h; sourceTree = "<group>"; };
-		81595C061C05B6DF008AABBE /* RNTableFooterViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNTableFooterViewManager.m; sourceTree = "<group>"; };
-		81595C071C05B6DF008AABBE /* RNTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTableHeaderView.h; sourceTree = "<group>"; };
-		81595C081C05B6DF008AABBE /* RNTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNTableHeaderView.m; sourceTree = "<group>"; };
-		81595C091C05B6DF008AABBE /* RNTableHeaderViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTableHeaderViewManager.h; sourceTree = "<group>"; };
-		81595C0A1C05B6DF008AABBE /* RNTableHeaderViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNTableHeaderViewManager.m; sourceTree = "<group>"; };
-		81595C0B1C05B6DF008AABBE /* RNTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTableView.h; sourceTree = "<group>"; };
-		81595C0C1C05B6DF008AABBE /* RNTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNTableView.m; sourceTree = "<group>"; };
-		81595C0D1C05B6DF008AABBE /* RNTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTableViewCell.h; sourceTree = "<group>"; };
-		81595C0E1C05B6DF008AABBE /* RNTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNTableViewCell.m; sourceTree = "<group>"; };
-		81595C0F1C05B6DF008AABBE /* RNTableViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTableViewManager.h; sourceTree = "<group>"; };
-		81595C101C05B6DF008AABBE /* RNTableViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNTableViewManager.m; sourceTree = "<group>"; };
+		81595C261C069A5B008AABBE /* RNQuiltViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNQuiltViewManager.m; sourceTree = "<group>"; };
+		81595C271C069A5B008AABBE /* RNQuiltViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNQuiltViewManager.h; sourceTree = "<group>"; };
+		81595C281C069A5B008AABBE /* RNQuiltViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNQuiltViewCell.m; sourceTree = "<group>"; };
+		81595C291C069A5B008AABBE /* RNQuiltViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNQuiltViewCell.h; sourceTree = "<group>"; };
+		81595C2A1C069A5B008AABBE /* RNQuiltView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNQuiltView.m; sourceTree = "<group>"; };
+		81595C2B1C069A5B008AABBE /* RNQuiltView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNQuiltView.h; sourceTree = "<group>"; };
 		81EDA0C21C056630000B1500 /* libRNQuiltView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNQuiltView.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -99,26 +87,18 @@
 		81EDA0C41C056630000B1500 /* RNQuiltView */ = {
 			isa = PBXGroup;
 			children = (
+				81595C261C069A5B008AABBE /* RNQuiltViewManager.m */,
+				81595C271C069A5B008AABBE /* RNQuiltViewManager.h */,
+				81595C281C069A5B008AABBE /* RNQuiltViewCell.m */,
+				81595C291C069A5B008AABBE /* RNQuiltViewCell.h */,
+				81595C2A1C069A5B008AABBE /* RNQuiltView.m */,
+				81595C2B1C069A5B008AABBE /* RNQuiltView.h */,
 				81595BFD1C05B6DF008AABBE /* JSONDataSource.h */,
 				81595BFE1C05B6DF008AABBE /* JSONDataSource.m */,
 				81595BFF1C05B6DF008AABBE /* RNCellView.h */,
 				81595C001C05B6DF008AABBE /* RNCellView.m */,
 				81595C011C05B6DF008AABBE /* RNCellViewManager.h */,
 				81595C021C05B6DF008AABBE /* RNCellViewManager.m */,
-				81595C031C05B6DF008AABBE /* RNTableFooterView.h */,
-				81595C041C05B6DF008AABBE /* RNTableFooterView.m */,
-				81595C051C05B6DF008AABBE /* RNTableFooterViewManager.h */,
-				81595C061C05B6DF008AABBE /* RNTableFooterViewManager.m */,
-				81595C071C05B6DF008AABBE /* RNTableHeaderView.h */,
-				81595C081C05B6DF008AABBE /* RNTableHeaderView.m */,
-				81595C091C05B6DF008AABBE /* RNTableHeaderViewManager.h */,
-				81595C0A1C05B6DF008AABBE /* RNTableHeaderViewManager.m */,
-				81595C0B1C05B6DF008AABBE /* RNTableView.h */,
-				81595C0C1C05B6DF008AABBE /* RNTableView.m */,
-				81595C0D1C05B6DF008AABBE /* RNTableViewCell.h */,
-				81595C0E1C05B6DF008AABBE /* RNTableViewCell.m */,
-				81595C0F1C05B6DF008AABBE /* RNTableViewManager.h */,
-				81595C101C05B6DF008AABBE /* RNTableViewManager.m */,
 			);
 			path = RNQuiltView;
 			sourceTree = "<group>";
@@ -179,17 +159,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81595C2D1C069A5B008AABBE /* RNQuiltViewCell.m in Sources */,
 				81595C131C05B6DF008AABBE /* RNCellViewManager.m in Sources */,
 				81595C111C05B6DF008AABBE /* JSONDataSource.m in Sources */,
-				81595C151C05B6DF008AABBE /* RNTableFooterViewManager.m in Sources */,
-				81595C1A1C05B6DF008AABBE /* RNTableViewManager.m in Sources */,
-				81595C141C05B6DF008AABBE /* RNTableFooterView.m in Sources */,
-				81595C171C05B6DF008AABBE /* RNTableHeaderViewManager.m in Sources */,
-				81595C181C05B6DF008AABBE /* RNTableView.m in Sources */,
 				81595BFC1C05AAAD008AABBE /* RFQuiltLayout.m in Sources */,
-				81595C191C05B6DF008AABBE /* RNTableViewCell.m in Sources */,
+				81595C2C1C069A5B008AABBE /* RNQuiltViewManager.m in Sources */,
 				81595C121C05B6DF008AABBE /* RNCellView.m in Sources */,
-				81595C161C05B6DF008AABBE /* RNTableHeaderView.m in Sources */,
+				81595C2E1C069A5B008AABBE /* RNQuiltView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

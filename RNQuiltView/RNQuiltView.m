@@ -1,44 +1,42 @@
 //
-//  SVGUse.m
-//  SVGReact
+//  RNQuiltView.m
+//  RNQuiltView
 //
-//  Created by Pavlo Aksonov on 07.08.15.
-//  Copyright (c) 2015 Pavlo Aksonov. All rights reserved.
+//  Created by linyize on 26.11.15.
+//  Copyright (c) 2015 mmslate. All rights reserved.
 //
 
-#import "RNTableView.h"
+#import "RNQuiltView.h"
 #import "RCTConvert.h"
 #import "RCTEventDispatcher.h"
 #import "RCTUtils.h"
 #import "UIView+React.h"
 #import "JSONDataSource.h"
 #import "RNCellView.h"
-#import "RNTableFooterView.h"
-#import "RNTableHeaderView.h"
 
-@interface RNTableView()<UITableViewDataSource, UITableViewDelegate> {
-    id<RNTableViewDatasource> datasource;
+@interface RNQuiltView()<UIColletionViewDataSource, UICollectionViewDelegate> {
+    id<RNQuiltViewDatasource> datasource;
 }
 @property (strong, nonatomic) NSMutableArray *selectedIndexes;
-@property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) UICollectionView *collectionView;
 
 @end
 
-@implementation RNTableView {
+@implementation RNQuiltView {
     RCTEventDispatcher *_eventDispatcher;
     NSArray *_items;
     NSMutableArray *_cells;
 }
 
 -(void)setEditing:(BOOL)editing {
-    [self.tableView setEditing:editing animated:YES];
+    [self.collectionView setEditing:editing animated:YES];
 }
 
 -(void) setSeparatorColor:(UIColor *)separatorColor
 {
     _separatorColor = separatorColor;
 
-    [self.tableView setSeparatorColor: separatorColor];
+    [self.collectionView setSeparatorColor: separatorColor];
 }
 
 - (void)insertReactSubview:(UIView *)subview atIndex:(NSInteger)atIndex
@@ -49,20 +47,14 @@
     // just add them to registry
     if ([subview isKindOfClass:[RNCellView class]]){
         RNCellView *cellView = (RNCellView *)subview;
-        cellView.tableView = self.tableView;
+        cellView.collectionView = self.collectionView;
         while (cellView.section >= [_cells count]){
             [_cells addObject:[NSMutableArray array]];
         }
         [_cells[cellView.section] addObject:subview];
         if (cellView.section == [_sections count]-1 && cellView.row == [_sections[cellView.section][@"count"] integerValue]-1){
-            [self.tableView reloadData];
+            [self.collectionView reloadData];
         }
-    } else if ([subview isKindOfClass:[RNTableFooterView class]]){
-        RNTableFooterView *footerView = (RNTableFooterView *)subview;
-        footerView.tableView = self.tableView;
-    } else if ([subview isKindOfClass:[RNTableHeaderView class]]){
-        RNTableHeaderView *headerView = (RNTableHeaderView *)subview;
-        headerView.tableView = self.tableView;
     }
 }
 
@@ -84,28 +76,28 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 - (void)setTableViewStyle:(UITableViewStyle)tableViewStyle {
     _tableViewStyle = tableViewStyle;
     
-    [self createTableView];
+    [self createCollectionView];
 }
 
 - (void)setContentInset:(UIEdgeInsets)insets {
     _contentInset = insets;
-    _tableView.contentInset = insets;
+    _collectionView.contentInset = insets;
 }
 
 - (void)setContentOffset:(CGPoint)offset {
     _contentOffset = offset;
-    _tableView.contentOffset = offset;
+    _collectionView.contentOffset = offset;
 }
 
 - (void)setScrollIndicatorInsets:(UIEdgeInsets)insets {
     _scrollIndicatorInsets = insets;
-    _tableView.scrollIndicatorInsets = insets;
+    _collectionView.scrollIndicatorInsets = insets;
 }
 
 #pragma mark -
 
 - (void)layoutSubviews {
-    [self.tableView setFrame:self.frame];
+    [_collectionView setFrame:self.frame];
     
     // if sections are not define, try to load JSON
     if (![_sections count] && _json){
@@ -125,28 +117,25 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
     if (_autoFocus && selectedSection>=0 && [self numberOfSectionsInTableView:self.tableView] && [self tableView:self.tableView numberOfRowsInSection:selectedSection]){
         dispatch_async(dispatch_get_main_queue(), ^{
             NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[_selectedIndexes[selectedSection] intValue ]inSection:selectedSection];
-            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+            [_collectionView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
         });
     }
 }
 
 #pragma mark - Private APIs
 
-- (void)createTableView {
-    _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:_tableViewStyle];
-    _tableView.dataSource = self;
-    _tableView.delegate = self;
-    _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    _tableView.allowsMultipleSelectionDuringEditing = NO;
-    _tableView.contentInset = self.contentInset;
-    _tableView.contentOffset = self.contentOffset;
-    _tableView.scrollIndicatorInsets = self.scrollIndicatorInsets;
-    _tableView.backgroundColor = [UIColor clearColor];
-    UIView *view = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0.001, 0.001)];
-    _tableView.tableHeaderView = view;
-    _tableView.tableFooterView = view;
+- (void)createCollectionView {
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero style:_tableViewStyle];
+    _collectionView.dataSource = self;
+    _collectionView.delegate = self;
+    _collectionView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    _collectionView.allowsMultipleSelectionDuringEditing = NO;
+    _collectionView.contentInset = self.contentInset;
+    _collectionView.contentOffset = self.contentOffset;
+    _collectionView.scrollIndicatorInsets = self.scrollIndicatorInsets;
+    _collectionView.backgroundColor = [UIColor clearColor];
 
-    [self addSubview:_tableView];
+    [self addSubview:_collectionView];
 }
 - (void)tableView:(UITableView *)tableView willDisplayFooterView:(nonnull UIView *)view forSection:(NSInteger)section {
     UITableViewHeaderFooterView *footer = (UITableViewHeaderFooterView *)view;
@@ -408,4 +397,5 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 -(BOOL)hasCustomCells:(NSInteger)section {
     return [[_sections[section] valueForKey:@"customCells"] boolValue];
 }
+
 @end
