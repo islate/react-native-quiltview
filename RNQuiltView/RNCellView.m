@@ -12,8 +12,8 @@
 
 -(void)setCollectionView:(UICollectionView *)collectionView {
     _collectionView = collectionView;
-    _quileViewCell = [[RNQuileViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CustomCell"];
-    _quileViewCell.cellView = self;
+//    _quiltViewCell = [[RNQuiltViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CustomCell"];
+    _quiltViewCell.cellView = self;
 }
 
 -(void)setComponentHeight:(float)componentHeight {

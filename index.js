@@ -174,28 +174,6 @@ QuiltView.Item = React.createClass({
     },
 });
 
-/*
-QuiltView.Footer = React.createClass({
-    getInitialState(){
-        return {width:0, height:0}
-    },
-    render: function() {
-        return <RNFooterView onLayout={(event)=>{this.setState(event.nativeEvent.layout)}} {...this.props} componentWidth={this.state.width} componentHeight={this.state.height}/>
-    },
-});
-var RNFooterView = requireNativeComponent('RNQuiltFooterView', null);
-
-QuiltView.Header = React.createClass({
-    getInitialState(){
-        return {width:0, height:0}
-    },
-    render: function() {
-        return <RNHeaderView onLayout={(event)=>{this.setState(event.nativeEvent.layout)}} {...this.props} componentWidth={this.state.width} componentHeight={this.state.height}/>
-    },
-});
-var RNHeaderView = requireNativeComponent('RNQuiltHeaderView', null);
-*/
-
 QuiltView.Cell = React.createClass({
     getInitialState(){
         return {width:0, height:0}

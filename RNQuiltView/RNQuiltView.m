@@ -7,14 +7,16 @@
 //
 
 #import "RNQuiltView.h"
+
 #import "RCTConvert.h"
 #import "RCTEventDispatcher.h"
 #import "RCTUtils.h"
 #import "UIView+React.h"
 #import "JSONDataSource.h"
 #import "RNCellView.h"
+#import "RFQuiltLayout.h"
 
-@interface RNQuiltView()<UIColletionViewDataSource, UICollectionViewDelegate> {
+@interface RNQuiltView()<UICollectionViewDataSource, UICollectionViewDelegate, RFQuiltLayoutDelegate> {
     id<RNQuiltViewDatasource> datasource;
 }
 @property (strong, nonatomic) NSMutableArray *selectedIndexes;
@@ -22,21 +24,11 @@
 
 @end
 
-@implementation RNQuiltView {
+@implementation RNQuiltView
+{
     RCTEventDispatcher *_eventDispatcher;
     NSArray *_items;
     NSMutableArray *_cells;
-}
-
--(void)setEditing:(BOOL)editing {
-    [self.collectionView setEditing:editing animated:YES];
-}
-
--(void) setSeparatorColor:(UIColor *)separatorColor
-{
-    _separatorColor = separatorColor;
-
-    [self.collectionView setSeparatorColor: separatorColor];
 }
 
 - (void)insertReactSubview:(UIView *)subview atIndex:(NSInteger)atIndex
@@ -73,30 +65,27 @@
 
 RCT_NOT_IMPLEMENTED(-initWithFrame:(CGRect)frame)
 RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
-- (void)setTableViewStyle:(UITableViewStyle)tableViewStyle {
-    _tableViewStyle = tableViewStyle;
-    
-    [self createCollectionView];
-}
 
-- (void)setContentInset:(UIEdgeInsets)insets {
+- (void)setContentInset:(UIEdgeInsets)insets
+{
     _contentInset = insets;
     _collectionView.contentInset = insets;
 }
 
-- (void)setContentOffset:(CGPoint)offset {
+- (void)setContentOffset:(CGPoint)offset
+{
     _contentOffset = offset;
     _collectionView.contentOffset = offset;
 }
 
-- (void)setScrollIndicatorInsets:(UIEdgeInsets)insets {
+- (void)setScrollIndicatorInsets:(UIEdgeInsets)insets
+{
     _scrollIndicatorInsets = insets;
     _collectionView.scrollIndicatorInsets = insets;
 }
 
-#pragma mark -
-
-- (void)layoutSubviews {
+- (void)layoutSubviews
+{
     [_collectionView setFrame:self.frame];
     
     // if sections are not define, try to load JSON
@@ -113,6 +102,7 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
             break;
         }
     }
+    /*
     // focus of first selected value
     if (_autoFocus && selectedSection>=0 && [self numberOfSectionsInTableView:self.tableView] && [self tableView:self.tableView numberOfRowsInSection:selectedSection]){
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -120,16 +110,42 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
             [_collectionView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
         });
     }
+     */
+}
+
+#pragma mark - UICollectionViewDataSource
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return 0;
+}
+
+// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return nil;
+}
+
+#pragma mark - RFQuiltLayoutDelegate
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout blockSizeForItemAtIndexPath:(NSIndexPath *)indexPath // defaults to 1x1
+{
+    return CGSizeMake(1, 1);
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetsForItemAtIndexPath:(NSIndexPath *)indexPath // defaults to uiedgeinsetszero
+{
+    return UIEdgeInsetsZero;
 }
 
 #pragma mark - Private APIs
 
-- (void)createCollectionView {
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero style:_tableViewStyle];
+- (void)createCollectionView
+{
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:[RFQuiltLayout new]];
     _collectionView.dataSource = self;
     _collectionView.delegate = self;
-    _collectionView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    _collectionView.allowsMultipleSelectionDuringEditing = NO;
+    _collectionView.allowsMultipleSelection = NO;
     _collectionView.contentInset = self.contentInset;
     _collectionView.contentOffset = self.contentOffset;
     _collectionView.scrollIndicatorInsets = self.scrollIndicatorInsets;
@@ -137,58 +153,13 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 
     [self addSubview:_collectionView];
 }
-- (void)tableView:(UITableView *)tableView willDisplayFooterView:(nonnull UIView *)view forSection:(NSInteger)section {
-    UITableViewHeaderFooterView *footer = (UITableViewHeaderFooterView *)view;
-    
-    if (self.footerTextColor){
-        footer.textLabel.textColor = self.footerTextColor;
-    }
-    if (self.footerFont){
-        footer.textLabel.font = self.footerFont;
-    }
-}
 
+#pragma mark -
 
--(void)setHeaderHeight:(float)headerHeight {
-    _headerHeight = headerHeight;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (_sections[section][@"headerHeight"]){
-        return [_sections[section][@"headerHeight"] floatValue] ? [_sections[section][@"headerHeight"] floatValue] : 0.000001;
-    } else {
-        if (self.headerHeight){
-            return self.headerHeight;
-        }
-        return -1;
-    }
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if (_sections[section][@"footerHeight"]){
-        return [_sections[section][@"footerHeight"] floatValue] ? [_sections[section][@"footerHeight"] floatValue] : 0.000001;
-
-    } else {
-        if (self.footerHeight){
-            return self.footerHeight;
-        }
-        return -1;
-    }
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
-    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
-    
-    if (self.headerTextColor){
-        header.textLabel.textColor = self.headerTextColor;
-    }
-    if (self.headerFont){
-        header.textLabel.font = self.headerFont;
-    }
-}
-
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.emptyInsets){
+    if (self.emptyInsets)
+    {
         // Remove separator inset
         if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
             [cell setSeparatorInset:UIEdgeInsetsZero];
@@ -204,11 +175,13 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
             [cell setLayoutMargins:UIEdgeInsetsZero];
         }
     }
-    if (self.font){
+    if (self.font)
+    {
         cell.detailTextLabel.font = self.font;
         cell.textLabel.font = self.font;
     }
-    if (self.tintColor){
+    if (self.tintColor)
+    {
         cell.tintColor = self.tintColor;
     }
     NSDictionary *item = [self dataForRow:indexPath.item section:indexPath.section];
@@ -226,8 +199,6 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
         
     }
 }
-
-
 
 - (void)setSections:(NSArray *)sections
 {
@@ -262,14 +233,16 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
         sectionData[@"items"] = items;
         [_sections addObject:sectionData];
     }
-    [self.tableView reloadData];
+    [self.collectionView reloadData];
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
     return [_sections count];
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     NSInteger count = [_sections[section][@"items"] count];
     // if we have custom cells, additional processing is necessary
     if ([self hasCustomCells:section]){
@@ -286,7 +259,9 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
     }
     return count;
 }
--(UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     NSDictionary *item = [self dataForRow:indexPath.item section:indexPath.section];
     
@@ -298,7 +273,7 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
         cell.textLabel.text = item[@"label"];
         cell.detailTextLabel.text = item[@"detail"];
     } else {
-        cell = ((RNCellView *)_cells[indexPath.section][indexPath.row]).tableViewCell;
+        //cell = ((RNCellView *)_cells[indexPath.section][indexPath.row]).quiltViewCell;
     }
     if (item[@"selected"] && [item[@"selected"] intValue]){
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -310,22 +285,19 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
     return cell;
 }
 
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return _sections[section][@"label"];
-}
-
--(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    return _sections[section][@"footerLabel"];
-}
-
--(NSMutableDictionary *)dataForRow:(NSInteger)row section:(NSInteger)section {
+- (NSMutableDictionary *)dataForRow:(NSInteger)row section:(NSInteger)section
+{
     return (NSMutableDictionary *)_sections[section][@"items"][row];
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (![self hasCustomCells:indexPath.section]){
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (![self hasCustomCells:indexPath.section])
+    {
         return _cellHeight;
-    } else {
+    }
+    else
+    {
         RNCellView *cell = (RNCellView *)_cells[indexPath.section][indexPath.row];
         CGFloat height =  cell.componentHeight;
         return height;
@@ -333,7 +305,8 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
     
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
     NSInteger selectedIndex = [self.selectedIndexes[indexPath.section] integerValue];
@@ -351,50 +324,13 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
     if ((oldValue[@"selected"] && [oldValue[@"selected"] intValue]) || self.selectedValue){
         [oldValue removeObjectForKey:@"selected"];
         [newValue setObject:@1 forKey:@"selected"];
-        [self.tableView reloadData];
+        [self.collectionView reloadData];
     }
     self.selectedIndexes[indexPath.section] = [NSNumber numberWithInteger:indexPath.item];
 }
 
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSMutableDictionary *value = [self dataForRow:indexPath.item section:indexPath.section];
-    return [value[@"canEdit"] boolValue];
-}
-
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSMutableDictionary *value = [self dataForRow:indexPath.item section:indexPath.section];
-    return [value[@"canMove"] boolValue];
-}
-
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
-    [_eventDispatcher sendInputEventWithName:@"change" body:@{@"target":self.reactTag, @"sourceIndex":@(sourceIndexPath.row), @"sourceSection": @(sourceIndexPath.section), @"destinationIndex":@(destinationIndexPath.row), @"destinationSection":@(destinationIndexPath.section), @"mode": @"move"}];
-}
-
-- (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath *)sourceIndexPath toProposedIndexPath:(NSIndexPath *)proposedDestinationIndexPath {
-    if (self.moveWithinSectionOnly && sourceIndexPath.section != proposedDestinationIndexPath.section) {
-        return sourceIndexPath;
-    }
-    return proposedDestinationIndexPath;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath { //implement the delegate method
-    
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSMutableDictionary *newValue = [self dataForRow:indexPath.item section:indexPath.section];
-        newValue[@"target"] = self.reactTag;
-        newValue[@"selectedIndex"] = [NSNumber numberWithInteger:indexPath.item];
-        newValue[@"selectedSection"] = [NSNumber numberWithInteger:indexPath.section];
-        newValue[@"mode"] = @"delete";
-        
-        [_eventDispatcher sendInputEventWithName:@"change" body:newValue];
-        
-        [_sections[indexPath.section][@"items"] removeObjectAtIndex:indexPath.row];
-        [self.tableView reloadData];
-    }
-}
-
--(BOOL)hasCustomCells:(NSInteger)section {
+- (BOOL)hasCustomCells:(NSInteger)section
+{
     return [[_sections[section] valueForKey:@"customCells"] boolValue];
 }
 
