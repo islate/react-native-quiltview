@@ -149,17 +149,6 @@ var QuiltView = React.createClass({
         }
         event.stopPropagation();
     },
-    _onChange: function(event) {
-        var data = event.nativeEvent;
-        if (this.sections[data.selectedSection] && this.sections[data.selectedSection].items[data.selectedIndex] &&
-            this.sections[data.selectedSection] && this.sections[data.selectedSection].items[data.selectedIndex].onChange){
-            this.sections[data.selectedSection] && this.sections[data.selectedSection].items[data.selectedIndex].onChange(data);
-        }
-        if (this.props.onChange) {
-            this.props.onChange(data);
-        }
-        event.stopPropagation();
-    },
 });
 
 QuiltView.Item = React.createClass({
