@@ -100,6 +100,8 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 {
     [_collectionView setFrame:self.bounds];
     
+    [self getScreenState:self.bounds.size];
+    
     // if sections are not define, try to load JSON
     if (![_sections count] && _json){
         datasource = [[JSONDataSource alloc] initWithFilename:_json filter:_filter args:_filterArgs];
@@ -219,10 +221,6 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
     [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
 
     [self addSubview:_collectionView];
-    
-    [self getScreenState:self.bounds.size];
-    
-    [_collectionView reloadData];
 }
 
 
