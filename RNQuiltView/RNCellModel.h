@@ -1,9 +1,9 @@
 //
-//  cellModel.h
-//  TangramLayout
+//  RNCellModel.h
+//  RNQuiltView
 //
 //  Created by lyricdon on 15/11/20.
-//  Copyright © 2015年 lyricdon. All rights reserved.
+//  Copyright © 2015年 mmslate. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -35,9 +35,7 @@ typedef enum : NSUInteger {
     AllRegular
 } ScreenTag;
 
-@class cellModel;
-
-@interface cellModel : NSObject
+@interface RNCellModel : NSObject
 
 // 组件像素宽
 @property (nonatomic, assign) CGFloat pixelWidth;
@@ -48,7 +46,5 @@ typedef enum : NSUInteger {
 
 /* 返回实例 */
 - (void)updateCellWithTag:(ScreenSizeTag) aTag;
-
-
 
 @end

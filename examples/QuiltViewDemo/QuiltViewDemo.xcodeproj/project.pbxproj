@@ -21,10 +21,6 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		68C97E371C071F390030DCD5 /* MMCollectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C97E2F1C071F390030DCD5 /* MMCollectionManager.m */; };
-		68C97E381C071F390030DCD5 /* MMCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C97E311C071F390030DCD5 /* MMCollectionView.m */; };
-		68C97E391C071F390030DCD5 /* cellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C97E341C071F390030DCD5 /* cellModel.m */; };
-		68C97E3A1C071F390030DCD5 /* RFQuiltLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C97E361C071F390030DCD5 /* RFQuiltLayout.m */; };
 		81595C561C06ECFA008AABBE /* libRNQuiltView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81595C551C06ECB7008AABBE /* libRNQuiltView.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		87D0FDC41B836F5500B0DA60 /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = 87D0FDC31B836F5500B0DA60 /* countries.json */; };
@@ -128,14 +124,6 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = iOS/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = iOS/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
-		68C97E2E1C071F390030DCD5 /* MMCollectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMCollectionManager.h; sourceTree = "<group>"; };
-		68C97E2F1C071F390030DCD5 /* MMCollectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMCollectionManager.m; sourceTree = "<group>"; };
-		68C97E301C071F390030DCD5 /* MMCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMCollectionView.h; sourceTree = "<group>"; };
-		68C97E311C071F390030DCD5 /* MMCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMCollectionView.m; sourceTree = "<group>"; };
-		68C97E331C071F390030DCD5 /* cellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cellModel.h; sourceTree = "<group>"; };
-		68C97E341C071F390030DCD5 /* cellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cellModel.m; sourceTree = "<group>"; };
-		68C97E351C071F390030DCD5 /* RFQuiltLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFQuiltLayout.h; sourceTree = "<group>"; };
-		68C97E361C071F390030DCD5 /* RFQuiltLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFQuiltLayout.m; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		81595C501C06ECB7008AABBE /* RNQuiltView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNQuiltView.xcodeproj; path = ../../RNQuiltView.xcodeproj; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -224,7 +212,6 @@
 		13B07FAE1A68108700A75B9A /* QuiltViewDemo */ = {
 			isa = PBXGroup;
 			children = (
-				68C97E2D1C071F390030DCD5 /* MMCollectionView */,
 				87D0FDC51B8471D200B0DA60 /* states.json */,
 				87D0FDC31B836F5500B0DA60 /* countries.json */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -244,30 +231,6 @@
 				146834041AC3E56700842450 /* libReact.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		68C97E2D1C071F390030DCD5 /* MMCollectionView */ = {
-			isa = PBXGroup;
-			children = (
-				68C97E2E1C071F390030DCD5 /* MMCollectionManager.h */,
-				68C97E2F1C071F390030DCD5 /* MMCollectionManager.m */,
-				68C97E301C071F390030DCD5 /* MMCollectionView.h */,
-				68C97E311C071F390030DCD5 /* MMCollectionView.m */,
-				68C97E321C071F390030DCD5 /* RFQuiltLayout */,
-			);
-			name = MMCollectionView;
-			path = iOS/MMCollectionView;
-			sourceTree = "<group>";
-		};
-		68C97E321C071F390030DCD5 /* RFQuiltLayout */ = {
-			isa = PBXGroup;
-			children = (
-				68C97E331C071F390030DCD5 /* cellModel.h */,
-				68C97E341C071F390030DCD5 /* cellModel.m */,
-				68C97E351C071F390030DCD5 /* RFQuiltLayout.h */,
-				68C97E361C071F390030DCD5 /* RFQuiltLayout.m */,
-			);
-			path = RFQuiltLayout;
 			sourceTree = "<group>";
 		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
@@ -524,11 +487,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68C97E371C071F390030DCD5 /* MMCollectionManager.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				68C97E381C071F390030DCD5 /* MMCollectionView.m in Sources */,
-				68C97E3A1C071F390030DCD5 /* RFQuiltLayout.m in Sources */,
-				68C97E391C071F390030DCD5 /* cellModel.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

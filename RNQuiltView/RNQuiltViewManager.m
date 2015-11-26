@@ -19,6 +19,9 @@ RCT_EXPORT_MODULE()
     return [[RNQuiltView alloc] initWithEventDispatcher:self.bridge.eventDispatcher];
 }
 
+RCT_EXPORT_VIEW_PROPERTY(pixelWidth, CGFloat)
+RCT_EXPORT_VIEW_PROPERTY(pixelHeight, CGFloat)
+
 RCT_EXPORT_VIEW_PROPERTY(sections, NSArray)
 RCT_EXPORT_VIEW_PROPERTY(json, NSString)
 RCT_EXPORT_VIEW_PROPERTY(editing, BOOL)

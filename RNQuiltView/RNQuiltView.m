@@ -15,12 +15,22 @@
 #import "JSONDataSource.h"
 #import "RNCellView.h"
 #import "RFQuiltLayout.h"
+#import "RNCellModel.h"
 
-@interface RNQuiltView()<UICollectionViewDataSource, UICollectionViewDelegate, RFQuiltLayoutDelegate> {
+#define HIDDENFLAG 4
+#define MODULENUM 30
+
+@interface RNQuiltView()<UICollectionViewDataSource, UICollectionViewDelegate, RFQuiltLayoutDelegate>
+{
     id<RNQuiltViewDatasource> datasource;
 }
 @property (strong, nonatomic) NSMutableArray *selectedIndexes;
 @property (strong, nonatomic) UICollectionView *collectionView;
+
+// 组件的像素信息
+@property (nonatomic, strong) RNCellModel *cellInfo;
+// 组件数组
+@property (nonatomic, strong) NSMutableArray *numbers;
 
 @end
 
@@ -59,6 +69,8 @@
         _cellHeight = 44;
         _cells = [NSMutableArray array];
         _autoFocus = YES;
+        
+        [self createCollectionView];
     }
     return self;
 }
@@ -86,7 +98,7 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 
 - (void)layoutSubviews
 {
-    [_collectionView setFrame:self.frame];
+    [_collectionView setFrame:self.bounds];
     
     // if sections are not define, try to load JSON
     if (![_sections count] && _json){
@@ -113,36 +125,89 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
      */
 }
 
+#pragma mark - lazy load
+
+- (NSMutableArray *)numbers
+{
+    if(_numbers == nil)
+    {
+        int num = 0;
+        _numbers = [@[] mutableCopy];
+        for(; num < MODULENUM; num++)
+        {
+            [_numbers addObject:@(num)];
+        }
+    }
+    return _numbers;
+}
+
+- (RNCellModel *)cellInfo
+{
+    if(_cellInfo == nil)
+    {
+        _cellInfo = [RNCellModel new];
+    }
+    return _cellInfo;
+}
+
+
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 0;
+    return self.numbers.count;
 }
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return nil;
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    cell.backgroundColor = [self colorForNumber:self.numbers[indexPath.row]];
+    
+    // 方块计数label
+    UILabel* label = (id)[cell viewWithTag:5];
+    if(!label) label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 20)];
+    label.tag = 5;
+    label.textColor = [UIColor blackColor];
+    label.text = [NSString stringWithFormat:@"%@", self.numbers[indexPath.row]];
+    label.backgroundColor = [UIColor clearColor];
+    [cell addSubview:label];
+    
+    return cell;
 }
 
 #pragma mark - RFQuiltLayoutDelegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout blockSizeForItemAtIndexPath:(NSIndexPath *)indexPath // defaults to 1x1
 {
-    return CGSizeMake(1, 1);
+    // 第一个组件图片轮播器
+    if (!(self.cellInfo.moduleTypeNum == HIDDENFLAG)){ // 1/3分屏时不显示轮播器,
+        if (indexPath.row == 0) return CGSizeMake(8, 4);
+    }
+    // 根据组件大小,动态返回系数...
+    if (indexPath.row % self.cellInfo.moduleTypeNum == 1) return CGSizeMake(4, 2);
+    else if (indexPath.row % self.cellInfo.moduleTypeNum == 0) return CGSizeMake(4, 1);
+    else return CGSizeMake(2, 2);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetsForItemAtIndexPath:(NSIndexPath *)indexPath // defaults to uiedgeinsetszero
 {
-    return UIEdgeInsetsZero;
+    // 默认有边距, 这里设置的数值,会在cell 的frame 中减掉
+    return UIEdgeInsetsMake(10, 4, 0, 4);
 }
 
 #pragma mark - Private APIs
 
 - (void)createCollectionView
 {
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:[RFQuiltLayout new]];
+    RFQuiltLayout* layout = [RFQuiltLayout new];
+    layout.direction = UICollectionViewScrollDirectionVertical;
+    layout.delegate = self;
+    layout.blockPixels = CGSizeMake(self.pixelWidth, self.pixelHeight);
+    // item像素
+    layout.blockPixels = CGSizeMake(75,75);
+    
+    _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
     _collectionView.dataSource = self;
     _collectionView.delegate = self;
     _collectionView.allowsMultipleSelection = NO;
@@ -150,8 +215,68 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
     _collectionView.contentOffset = self.contentOffset;
     _collectionView.scrollIndicatorInsets = self.scrollIndicatorInsets;
     _collectionView.backgroundColor = [UIColor clearColor];
+    
+    [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
 
     [self addSubview:_collectionView];
+    
+    [self getScreenState:self.bounds.size];
+    
+    [_collectionView reloadData];
+}
+
+
+/* 随机颜色 */
+- (UIColor*)colorForNumber:(NSNumber*)num
+{
+    return [UIColor colorWithHue:((19 * num.intValue) % 255)/255.f saturation:1.f brightness:1.f alpha:1.f];
+}
+
+/* 每次屏幕变化都会调用 */
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    NSLog(@"viewWillTransitionToSize: %f",size.width);
+    
+    [self getScreenState:size];
+    
+    // 修改布局属性
+    RFQuiltLayout* layout = (RFQuiltLayout *)self.collectionView.collectionViewLayout;
+    //    layout.prelayoutEverything = YES;
+    layout.blockPixels = CGSizeMake(self.cellInfo.pixelWidth, self.cellInfo.pixelHeight);
+}
+
+/* 判断当前屏幕状态,并设定单元cell */
+- (void)getScreenState:(CGSize)size
+{
+    // 获得当前屏幕的状态
+    //    NSLog(@"trait.horizontalSizeClass: %tu %tu", self.traitCollection.horizontalSizeClass, self.traitCollection.verticalSizeClass);
+    
+    if (size.width == 1366) {      // 水平全屏
+        [self.cellInfo updateCellWithTag:ScreenSize_1366];
+    }else if (size.width == 981) {// 水平2/3
+        [self.cellInfo updateCellWithTag:ScreenSize_981];
+    }else if (size.width == 768) {
+        [self.cellInfo updateCellWithTag:ScreenSize_768];
+    }else if (size.width == 678) {// 水平1/2
+        [self.cellInfo updateCellWithTag:ScreenSize_678];
+    }else if (size.width == 694) {// 垂直2/3
+        [self.cellInfo updateCellWithTag:ScreenSize_694];
+    }else if (size.width == 639) {// 垂直2/3
+        [self.cellInfo updateCellWithTag:ScreenSize_639];
+    }else if (size.width == 507) {// 垂直1/3 水平1/3
+        [self.cellInfo updateCellWithTag:ScreenSize_507];
+    }else if (size.width == 438) {// 垂直1/3 水平1/3
+        [self.cellInfo updateCellWithTag:ScreenSize_438];
+    }
+    else if (size.width == 375) {// 垂直1/3 水平1/3
+        [self.cellInfo updateCellWithTag:ScreenSize_375];
+    }
+    else if (size.width == 320) {// 垂直1/3 水平1/3
+        [self.cellInfo updateCellWithTag:ScreenSize_320];
+    }
+    else {                       // 默认垂直全屏
+        [self.cellInfo updateCellWithTag:ScreenSize_1024];
+    }
 }
 
 #pragma mark -

@@ -55,4 +55,7 @@
 @property (nonatomic, strong) UIColor *separatorColor;
 @property (nonatomic) BOOL autoFocus;
 
+@property (nonatomic, assign) CGFloat pixelWidth;
+@property (nonatomic, assign) CGFloat pixelHeight;
+
 @end

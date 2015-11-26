@@ -1,22 +1,20 @@
 //
-//  cellModel.m
-//  TangramLayout
+//  RNCellModel.m
+//  RNQuiltView
 //
 //  Created by lyricdon on 15/11/20.
-//  Copyright © 2015年 lyricdon. All rights reserved.
+//  Copyright © 2015年 mmslate. All rights reserved.
 //
 
-#import "cellModel.h"
+#import "RNCellModel.h"
 
-
-@interface cellModel ()
+@interface RNCellModel ()
 
 @property (nonatomic, strong) NSArray *cells;
 
 @end
 
-@implementation cellModel
-
+@implementation RNCellModel
 
 - (void)updateCellWithTag:(ScreenSizeTag)aTag
 {
