@@ -21,7 +21,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		81595BEB1C059EC8008AABBE /* libRNQuiltView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81595BEA1C059EC4008AABBE /* libRNQuiltView.a */; };
+		81595C561C06ECFA008AABBE /* libRNQuiltView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81595C551C06ECB7008AABBE /* libRNQuiltView.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		87D0FDC41B836F5500B0DA60 /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = 87D0FDC31B836F5500B0DA60 /* countries.json */; };
 		87D0FDC61B8471D200B0DA60 /* states.json in Resources */ = {isa = PBXBuildFile; fileRef = 87D0FDC51B8471D200B0DA60 /* states.json */; };
@@ -91,9 +91,9 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RCTLinking;
 		};
-		81595BE91C059EC4008AABBE /* PBXContainerItemProxy */ = {
+		81595C541C06ECB7008AABBE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 81595BE51C059EC4008AABBE /* RNQuiltView.xcodeproj */;
+			containerPortal = 81595C501C06ECB7008AABBE /* RNQuiltView.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 81EDA0C21C056630000B1500;
 			remoteInfo = RNQuiltView;
@@ -125,7 +125,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = iOS/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
-		81595BE51C059EC4008AABBE /* RNQuiltView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNQuiltView.xcodeproj; path = "node_modules/react-native-quiltview/RNQuiltView.xcodeproj"; sourceTree = "<group>"; };
+		81595C501C06ECB7008AABBE /* RNQuiltView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNQuiltView.xcodeproj; path = ../../RNQuiltView.xcodeproj; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		87D0FDC31B836F5500B0DA60 /* countries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
 		87D0FDC51B8471D200B0DA60 /* states.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = states.json; sourceTree = "<group>"; };
@@ -136,7 +136,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81595BEB1C059EC8008AABBE /* libRNQuiltView.a in Frameworks */,
+				81595C561C06ECFA008AABBE /* libRNQuiltView.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -241,10 +241,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		81595BE61C059EC4008AABBE /* Products */ = {
+		81595C511C06ECB7008AABBE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				81595BEA1C059EC4008AABBE /* libRNQuiltView.a */,
+				81595C551C06ECB7008AABBE /* libRNQuiltView.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -252,7 +252,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				81595BE51C059EC4008AABBE /* RNQuiltView.xcodeproj */,
+				81595C501C06ECB7008AABBE /* RNQuiltView.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
 				00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */,
@@ -376,8 +376,8 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
-					ProductGroup = 81595BE61C059EC4008AABBE /* Products */;
-					ProjectRef = 81595BE51C059EC4008AABBE /* RNQuiltView.xcodeproj */;
+					ProductGroup = 81595C511C06ECB7008AABBE /* Products */;
+					ProjectRef = 81595C501C06ECB7008AABBE /* RNQuiltView.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -451,11 +451,11 @@
 			remoteRef = 78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		81595BEA1C059EC4008AABBE /* libRNQuiltView.a */ = {
+		81595C551C06ECB7008AABBE /* libRNQuiltView.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRNQuiltView.a;
-			remoteRef = 81595BE91C059EC4008AABBE /* PBXContainerItemProxy */;
+			remoteRef = 81595C541C06ECB7008AABBE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		832341B51AAA6A8300B99B32 /* libRCTText.a */ = {
