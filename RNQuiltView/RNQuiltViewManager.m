@@ -34,23 +34,13 @@ RCT_EXPORT_VIEW_PROPERTY(additionalItems, NSArray)
 RCT_EXPORT_VIEW_PROPERTY(selectedIndex, NSInteger)
 RCT_EXPORT_VIEW_PROPERTY(selectedSection, NSInteger)
 RCT_EXPORT_VIEW_PROPERTY(cellHeight, float)
-RCT_EXPORT_VIEW_PROPERTY(footerHeight, float)
-RCT_EXPORT_VIEW_PROPERTY(headerHeight, float)
+
 RCT_EXPORT_VIEW_PROPERTY(textColor, UIColor)
 RCT_EXPORT_VIEW_PROPERTY(tintColor, UIColor)
 RCT_EXPORT_VIEW_PROPERTY(selectedTextColor, UIColor)
 RCT_EXPORT_VIEW_PROPERTY(detailTextColor, UIColor)
 RCT_EXPORT_VIEW_PROPERTY(separatorColor, UIColor)
 RCT_EXPORT_VIEW_PROPERTY(moveWithinSectionOnly, BOOL)
-
-RCT_CUSTOM_VIEW_PROPERTY(tableViewStyle, UITableViewStyle, RNQuiltView) {
-    [view setTableViewStyle:[RCTConvert NSInteger:json]];
-}
-RCT_EXPORT_VIEW_PROPERTY(cellForRowAtIndexPath, NSArray)
-
-RCT_CUSTOM_VIEW_PROPERTY(tableViewCellStyle, UITableViewStyle, RNQuiltView) {
-    [view setTableViewCellStyle:[RCTConvert NSInteger:json]];
-}
 
 RCT_CUSTOM_VIEW_PROPERTY(contentInset, UIEdgeInsets, RNQuiltView) {
     [view setContentInset:[RCTConvert UIEdgeInsets:json]];
@@ -64,6 +54,7 @@ RCT_CUSTOM_VIEW_PROPERTY(scrollIndicatorInsets, UIEdgeInsets, RNQuiltView) {
     [view setScrollIndicatorInsets:[RCTConvert UIEdgeInsets:json]];
 }
 
+/*
 - (NSDictionary *)constantsToExport {
     return @{
              @"Style": @{
@@ -78,6 +69,7 @@ RCT_CUSTOM_VIEW_PROPERTY(scrollIndicatorInsets, UIEdgeInsets, RNQuiltView) {
                      }
              };
 }
+ */
 
 RCT_CUSTOM_VIEW_PROPERTY(fontSize, CGFloat, RNQuiltView)
 {
@@ -94,41 +86,6 @@ RCT_CUSTOM_VIEW_PROPERTY(fontStyle, NSString, RNQuiltView)
 RCT_CUSTOM_VIEW_PROPERTY(fontFamily, NSString, RNQuiltView)
 {
     view.font = [RCTConvert UIFont:view.font withFamily:json ?: defaultView.font.familyName];
-}
-
-RCT_CUSTOM_VIEW_PROPERTY(headerFontSize, CGFloat, RNQuiltView)
-{
-    view.headerFont = [RCTConvert UIFont:view.headerFont withSize:json ?: @(defaultView.font.pointSize)];
-}
-RCT_CUSTOM_VIEW_PROPERTY(headerFontWeight, NSString, RNQuiltView)
-{
-    view.headerFont = [RCTConvert UIFont:view.headerFont withWeight:json]; // defaults to normal
-}
-RCT_CUSTOM_VIEW_PROPERTY(headerFontStyle, NSString, RNQuiltView)
-{
-    view.headerFont = [RCTConvert UIFont:view.headerFont withStyle:json]; // defaults to normal
-}
-RCT_CUSTOM_VIEW_PROPERTY(headerFontFamily, NSString, RNQuiltView)
-{
-    view.headerFont = [RCTConvert UIFont:view.headerFont withFamily:json ?: defaultView.font.familyName];
-}
-
-
-RCT_CUSTOM_VIEW_PROPERTY(footerFontSize, CGFloat, RNQuiltView)
-{
-    view.footerFont = [RCTConvert UIFont:view.footerFont withSize:json ?: @(defaultView.font.pointSize)];
-}
-RCT_CUSTOM_VIEW_PROPERTY(footerFontWeight, NSString, RNQuiltView)
-{
-    view.footerFont = [RCTConvert UIFont:view.footerFont withWeight:json]; // defaults to normal
-}
-RCT_CUSTOM_VIEW_PROPERTY(footerFontStyle, NSString, RNQuiltView)
-{
-    view.footerFont = [RCTConvert UIFont:view.footerFont withStyle:json]; // defaults to normal
-}
-RCT_CUSTOM_VIEW_PROPERTY(footerFontFamily, NSString, RNQuiltView)
-{
-    view.footerFont = [RCTConvert UIFont:view.footerFont withFamily:json ?: defaultView.font.familyName];
 }
 
 @end

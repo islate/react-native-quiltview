@@ -30,8 +30,7 @@
 @property (nonatomic, strong) NSArray *filterArgs;
 @property (nonatomic, strong) id selectedValue;
 @property (nonatomic) float cellHeight;
-@property (nonatomic) float footerHeight;
-@property (nonatomic) float headerHeight;
+
 @property (nonatomic) BOOL customCells;
 @property (nonatomic) BOOL editing;
 @property (nonatomic) BOOL emptyInsets;
@@ -39,14 +38,7 @@
 @property (nonatomic, assign) UIEdgeInsets contentInset;
 @property (nonatomic, assign) CGPoint contentOffset;
 @property (nonatomic, assign) UIEdgeInsets scrollIndicatorInsets;
-
-@property (nonatomic, assign) UITableViewStyle tableViewStyle;
-@property (nonatomic, assign) UITableViewCellStyle tableViewCellStyle;
 @property (nonatomic, strong) UIFont *font;
-@property (nonatomic, strong) UIFont *headerFont;
-@property (nonatomic, strong) UIColor *headerTextColor;
-@property (nonatomic, strong) UIFont *footerFont;
-@property (nonatomic, strong) UIColor *footerTextColor;
 
 @property (nonatomic, strong) UIColor *textColor;
 @property (nonatomic, strong) UIColor *tintColor;
