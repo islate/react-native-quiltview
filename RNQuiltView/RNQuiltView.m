@@ -18,7 +18,6 @@
 #import "RNCellModel.h"
 
 #define HIDDENFLAG 4
-#define MODULENUM 30
 
 @interface RNQuiltView()<UICollectionViewDataSource, UICollectionViewDelegate, RFQuiltLayoutDelegate>
 {
@@ -29,8 +28,6 @@
 
 // 组件的像素信息
 @property (nonatomic, strong) RNCellModel *cellInfo;
-// 组件数组
-@property (nonatomic, strong) NSMutableArray *numbers;
 
 @end
 
@@ -72,8 +69,6 @@
         
        
         [self getScreenState:self.bounds.size];
-        
-        //        [self createCollectionView];
     }
     return self;
 }
@@ -113,20 +108,6 @@
         [self addSubview:_collectionView];
     }
     return _collectionView;
-}
-
-- (NSMutableArray *)numbers
-{
-    if(_numbers == nil)
-    {
-        int num = 0;
-        _numbers = [@[] mutableCopy];
-        for(; num < MODULENUM; num++)
-        {
-            [_numbers addObject:@(num)];
-        }
-    }
-    return _numbers;
 }
 
 - (RNCellModel *)cellInfo
@@ -203,27 +184,53 @@
 
 #pragma mark - UICollectionViewDataSource
 
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return _sections.count;
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.numbers.count;
+    NSInteger count = [_sections[section][@"items"] count];
+    // if we have custom cells, additional processing is necessary
+    if ([self hasCustomCells:section])
+    {
+        if ([_cells count]<=section)
+        {
+            return 0;
+        }
+        // don't display cells until their's height is not calculated (TODO: maybe it is possible to optimize??)
+        for (RNCellView *view in _cells[section])
+        {
+            if (!view.componentHeight)
+            {
+                return 0;
+            }
+        }
+        count = [_cells[section] count];
+    }
+    return count;
 }
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    cell.backgroundColor = [self colorForNumber:self.numbers[indexPath.row]];
-    
-#warning TODO:...
-    
-    // 方块计数label
-    UILabel* label = (id)[cell viewWithTag:5];
-    if(!label) label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 20)];
-    label.tag = 5;
-    label.textColor = [UIColor blackColor];
-    label.text = [NSString stringWithFormat:@"%@", self.numbers[indexPath.row]];
-    label.backgroundColor = [UIColor clearColor];
-    [cell addSubview:label];
+//    NSDictionary *item = [self dataForRow:indexPath.item section:indexPath.section];
+    cell.backgroundColor = [self colorForNumber:@(indexPath.item)];
+
+    BOOL haveCell = NO;\
+    for (UIView *subview in cell.contentView.subviews)
+    {
+        if ([subview isKindOfClass:[RNCellView class]])
+        {
+            haveCell = YES;
+            break;
+        }
+    }
+    if (!haveCell) {
+        [cell.contentView addSubview:((RNCellView *)_cells[indexPath.section][indexPath.row])];
+    }
     
     return cell;
 }
@@ -250,110 +257,13 @@
 
 #pragma mark - Private APIs
 
-
-
-/*
-- (void)createCollectionView
-{
-    
-    RFQuiltLayout *layout = [RFQuiltLayout new];
-    layout.direction = UICollectionViewScrollDirectionVertical;
-    layout.delegate = self;
-    // item像素
-      layout.blockPixels = CGSizeMake(self.cellInfo.pixelWidth, self.cellInfo.pixelHeight);
-    
-    _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
-    _collectionView.dataSource = self;
-    _collectionView.delegate = self;
-    _collectionView.allowsMultipleSelection = NO;
-    _collectionView.contentInset = self.contentInset;
-    _collectionView.contentOffset = self.contentOffset;
-    _collectionView.scrollIndicatorInsets = self.scrollIndicatorInsets;
-    _collectionView.backgroundColor = [UIColor clearColor];
-    
-    [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
-
-    [self addSubview:_collectionView];
-}
-*/
-
 /* 随机颜色 */
 - (UIColor*)colorForNumber:(NSNumber*)num
 {
     return [UIColor colorWithHue:((19 * num.intValue) % 255)/255.f saturation:1.f brightness:1.f alpha:1.f];
 }
 
-
-#warning INVALID控制器方法,已经失效
-/* 
-// 每次屏幕变化都会调用
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
-{
-    [self getScreenState:size];
-    
-    // 修改布局属性
-    RFQuiltLayout* layout = (RFQuiltLayout *)self.collectionView.collectionViewLayout;
-    //    layout.prelayoutEverything = YES;
-    layout.blockPixels = CGSizeMake(self.cellInfo.pixelWidth, self.cellInfo.pixelHeight);
-}
-*/
-
-
-
-
-
-
-
-
-
-
-
-
 #pragma mark -
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (self.emptyInsets)
-    {
-        // Remove separator inset
-        if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-            [cell setSeparatorInset:UIEdgeInsetsZero];
-        }
-        
-        // Prevent the cell from inheriting the Table View's margin settings
-        if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
-            [cell setPreservesSuperviewLayoutMargins:NO];
-        }
-        
-        // Explictly set your cell's layout margins
-        if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-            [cell setLayoutMargins:UIEdgeInsetsZero];
-        }
-    }
-    if (self.font)
-    {
-        cell.detailTextLabel.font = self.font;
-        cell.textLabel.font = self.font;
-    }
-    if (self.tintColor)
-    {
-        cell.tintColor = self.tintColor;
-    }
-    NSDictionary *item = [self dataForRow:indexPath.item section:indexPath.section];
-    if (self.selectedTextColor && [item[@"selected"] intValue]){
-        cell.textLabel.textColor = self.selectedTextColor;
-        cell.detailTextLabel.textColor = self.selectedTextColor;
-    } else {
-        if (self.textColor){
-            cell.textLabel.textColor = self.textColor;
-            cell.detailTextLabel.textColor = self.textColor;
-        }
-        if (self.detailTextColor){
-            cell.detailTextLabel.textColor = self.detailTextColor;
-        }
-        
-    }
-}
 
 - (void)setSections:(NSArray *)sections
 {
@@ -391,97 +301,9 @@
     [self.collectionView reloadData];
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return [_sections count];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    NSInteger count = [_sections[section][@"items"] count];
-    // if we have custom cells, additional processing is necessary
-    if ([self hasCustomCells:section]){
-        if ([_cells count]<=section){
-            return 0;
-        }
-        // don't display cells until their's height is not calculated (TODO: maybe it is possible to optimize??)
-        for (RNCellView *view in _cells[section]){
-            if (!view.componentHeight){
-                return 0;
-            }
-        }
-        count = [_cells[section] count];
-    }
-    return count;
-}
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    NSDictionary *item = [self dataForRow:indexPath.item section:indexPath.section];
-    
-    // check if it is standard cell or user-defined UI
-    if (![self hasCustomCells:indexPath.section]){
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:self.tableViewCellStyle reuseIdentifier:@"Cell"];
-        }
-        cell.textLabel.text = item[@"label"];
-        cell.detailTextLabel.text = item[@"detail"];
-    } else {
-        //cell = ((RNCellView *)_cells[indexPath.section][indexPath.row]).quiltViewCell;
-    }
-    if (item[@"selected"] && [item[@"selected"] intValue]){
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    } else if ([item[@"arrow"] intValue]) {
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    } else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
-    }
-    return cell;
-}
-*/
 - (NSMutableDictionary *)dataForRow:(NSInteger)row section:(NSInteger)section
 {
     return (NSMutableDictionary *)_sections[section][@"items"][row];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (![self hasCustomCells:indexPath.section])
-    {
-        return _cellHeight;
-    }
-    else
-    {
-        RNCellView *cell = (RNCellView *)_cells[indexPath.section][indexPath.row];
-        CGFloat height =  cell.componentHeight;
-        return height;
-    }
-    
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    
-    NSInteger selectedIndex = [self.selectedIndexes[indexPath.section] integerValue];
-    NSMutableDictionary *oldValue = selectedIndex>=0 ?[self dataForRow:selectedIndex section:indexPath.section] : [NSMutableDictionary dictionaryWithDictionary:@{}];
-    
-    NSMutableDictionary *newValue = [self dataForRow:indexPath.item section:indexPath.section];
-    newValue[@"target"] = self.reactTag;
-    newValue[@"selectedIndex"] = [NSNumber numberWithInteger:indexPath.item];
-    newValue[@"selectedSection"] = [NSNumber numberWithInteger:indexPath.section];
-    
-    
-    [_eventDispatcher sendInputEventWithName:@"press" body:newValue];
-    
-    // unselect old, select new
-    if ((oldValue[@"selected"] && [oldValue[@"selected"] intValue]) || self.selectedValue){
-        [oldValue removeObjectForKey:@"selected"];
-        [newValue setObject:@1 forKey:@"selected"];
-        [self.collectionView reloadData];
-    }
-    self.selectedIndexes[indexPath.section] = [NSNumber numberWithInteger:indexPath.item];
 }
 
 - (BOOL)hasCustomCells:(NSInteger)section

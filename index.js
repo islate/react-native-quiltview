@@ -85,7 +85,7 @@ var QuiltView = React.createClass({
                     count++;
                     items.push(el);
 
-                    if (child.type==TableView.Cell){
+                    if (child.type==QuiltView.Cell){
                         customCells = true;
                         count++;
                         var element = React.cloneElement(child, {key: index+" "+itemIndex, section: index, row: itemIndex});
@@ -127,8 +127,7 @@ var QuiltView = React.createClass({
                     scrollIndicatorInsets={this.props.contentInset}
                     {...this.props}
                     json={this.state.json}
-                    onPress={this._onPress}
-                    //onChange={this._onChange}>
+                    onPress={this._onPress}>
 
                     {this.state.children}
                 </RNQuiltView>
