@@ -47,7 +47,12 @@
 @property (nonatomic, strong) UIColor *separatorColor;
 @property (nonatomic) BOOL autoFocus;
 
+// 默认不需要修改,一旦修改以此数据为准(不赋值则会根据屏幕大小匹配写好的字典设置数值)
 @property (nonatomic, assign) CGFloat pixelWidth;
 @property (nonatomic, assign) CGFloat pixelHeight;
+
+// TODO系数
+@property (nonatomic, assign) NSInteger heightRatio;
+@property (nonatomic, assign) NSInteger widthRatio;
 
 @end

@@ -23,7 +23,7 @@ typedef enum : NSUInteger {
     ScreenSize_320
 } ScreenSizeTag;
 
-
+/*
 // 屏幕状态
 typedef enum : NSUInteger {
     HerizontalFull, // 水平全屏
@@ -34,6 +34,7 @@ typedef enum : NSUInteger {
     AllOneThirds,   // 垂直1/3  水平1/3
     AllRegular
 } ScreenTag;
+*/
 
 @interface RNCellModel : NSObject
 
@@ -44,7 +45,7 @@ typedef enum : NSUInteger {
 // 组件类型数量
 @property (nonatomic, assign) NSInteger moduleTypeNum;
 
-/* 返回实例 */
+// 设置cell像素
 - (void)updateCellWithTag:(ScreenSizeTag) aTag;
 
 @end

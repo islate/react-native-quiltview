@@ -70,61 +70,22 @@
         _cells = [NSMutableArray array];
         _autoFocus = YES;
         
+        [self getScreenState:self.bounds.size];
         [self createCollectionView];
     }
     return self;
 }
 
-RCT_NOT_IMPLEMENTED(-initWithFrame:(CGRect)frame)
-RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
-
-- (void)setContentInset:(UIEdgeInsets)insets
-{
-    _contentInset = insets;
-    _collectionView.contentInset = insets;
-}
-
-- (void)setContentOffset:(CGPoint)offset
-{
-    _contentOffset = offset;
-    _collectionView.contentOffset = offset;
-}
-
-- (void)setScrollIndicatorInsets:(UIEdgeInsets)insets
-{
-    _scrollIndicatorInsets = insets;
-    _collectionView.scrollIndicatorInsets = insets;
-}
 
 - (void)layoutSubviews
 {
+    [super layoutSubviews];
+    
     [_collectionView setFrame:self.bounds];
     
     [self getScreenState:self.bounds.size];
     
-    // if sections are not define, try to load JSON
-    if (![_sections count] && _json){
-        datasource = [[JSONDataSource alloc] initWithFilename:_json filter:_filter args:_filterArgs];
-        self.sections = [NSMutableArray arrayWithArray:[datasource sections]];
-    }
-    
-    // find first section with selection
-    NSInteger selectedSection = -1;
-    for (int i=0;i<[_selectedIndexes count];i++){
-        if ([_selectedIndexes[i] intValue] != -1){
-            selectedSection = i;
-            break;
-        }
-    }
-    /*
-    // focus of first selected value
-    if (_autoFocus && selectedSection>=0 && [self numberOfSectionsInTableView:self.tableView] && [self tableView:self.tableView numberOfRowsInSection:selectedSection]){
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[_selectedIndexes[selectedSection] intValue ]inSection:selectedSection];
-            [_collectionView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-        });
-    }
-     */
+
 }
 
 #pragma mark - lazy load
@@ -166,6 +127,8 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     cell.backgroundColor = [self colorForNumber:self.numbers[indexPath.row]];
     
+#warning TODO:...
+    
     // 方块计数label
     UILabel* label = (id)[cell viewWithTag:5];
     if(!label) label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 20)];
@@ -200,14 +163,26 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 
 #pragma mark - Private APIs
 
+-(void)setPixelWidth:(CGFloat)pixelWidth
+{
+    RFQuiltLayout *layout = (RFQuiltLayout *)self.collectionView.collectionViewLayout;
+    layout.blockPixels = CGSizeMake(pixelWidth, layout.blockPixels.height);
+}
+
+-(void)setPixelHeight:(CGFloat)pixelHeight
+{
+    RFQuiltLayout *layout = (RFQuiltLayout *)self.collectionView.collectionViewLayout;
+    layout.blockPixels = CGSizeMake(layout.blockPixels.width, pixelHeight);
+}
+
 - (void)createCollectionView
 {
-    RFQuiltLayout* layout = [RFQuiltLayout new];
+    
+    RFQuiltLayout *layout = [RFQuiltLayout new];
     layout.direction = UICollectionViewScrollDirectionVertical;
     layout.delegate = self;
-    layout.blockPixels = CGSizeMake(self.pixelWidth, self.pixelHeight);
     // item像素
-    layout.blockPixels = CGSizeMake(75,75);
+      layout.blockPixels = CGSizeMake(self.cellInfo.pixelWidth, self.cellInfo.pixelHeight);
     
     _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
     _collectionView.dataSource = self;
@@ -230,6 +205,8 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
     return [UIColor colorWithHue:((19 * num.intValue) % 255)/255.f saturation:1.f brightness:1.f alpha:1.f];
 }
 
+
+#warning 控制器方法,已经失效
 /* 每次屏幕变化都会调用 */
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
@@ -246,8 +223,6 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 /* 判断当前屏幕状态,并设定单元cell */
 - (void)getScreenState:(CGSize)size
 {
-    // 获得当前屏幕的状态
-    //    NSLog(@"trait.horizontalSizeClass: %tu %tu", self.traitCollection.horizontalSizeClass, self.traitCollection.verticalSizeClass);
     
     if (size.width == 1366) {      // 水平全屏
         [self.cellInfo updateCellWithTag:ScreenSize_1366];
@@ -276,6 +251,15 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
         [self.cellInfo updateCellWithTag:ScreenSize_1024];
     }
 }
+
+
+
+
+
+
+
+
+
 
 #pragma mark -
 
@@ -455,6 +439,28 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 - (BOOL)hasCustomCells:(NSInteger)section
 {
     return [[_sections[section] valueForKey:@"customCells"] boolValue];
+}
+
+
+RCT_NOT_IMPLEMENTED(-initWithFrame:(CGRect)frame)
+RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
+
+- (void)setContentInset:(UIEdgeInsets)insets
+{
+    _contentInset = insets;
+    _collectionView.contentInset = insets;
+}
+
+- (void)setContentOffset:(CGPoint)offset
+{
+    _contentOffset = offset;
+    _collectionView.contentOffset = offset;
+}
+
+- (void)setScrollIndicatorInsets:(UIEdgeInsets)insets
+{
+    _scrollIndicatorInsets = insets;
+    _collectionView.scrollIndicatorInsets = insets;
 }
 
 @end

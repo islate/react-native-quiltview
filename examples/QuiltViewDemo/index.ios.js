@@ -12,7 +12,7 @@ var NavigationBar = require('react-native-navbar');
 class QuiltViewExample extends React.Component {
     render(){
         return (
-            <QuiltView style={{flex:1}} pixelWidth={50} pixelHeight={50}>
+            <QuiltView style={{flex:1}} pixelWidth={120} pixelHeight={120}>
                 <Cell style={{backgroundColor:'red'}} widthRatio={4} heightRatio={2} >
                     <Text>4x2</Text>
                 </Cell>
