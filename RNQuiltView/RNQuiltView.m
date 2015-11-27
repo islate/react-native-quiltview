@@ -382,7 +382,7 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
     }
     return count;
 }
-
+/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
@@ -407,7 +407,7 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
     }
     return cell;
 }
-
+*/
 - (NSMutableDictionary *)dataForRow:(NSInteger)row section:(NSInteger)section
 {
     return (NSMutableDictionary *)_sections[section][@"items"][row];

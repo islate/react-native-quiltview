@@ -261,10 +261,7 @@
 		81EDA0CC1C056630000B1500 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../react-native/React/**",
-					"$(SRCROOT)/../../React/**",
-				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/examples/QuiltViewDemo/node_modules/**";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -274,10 +271,7 @@
 		81EDA0CD1C056630000B1500 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../react-native/React/**",
-					"$(SRCROOT)/../../React/**",
-				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/examples/QuiltViewDemo/node_modules/**";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
