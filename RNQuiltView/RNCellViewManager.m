@@ -21,4 +21,7 @@ RCT_EXPORT_VIEW_PROPERTY(section, NSInteger)
 RCT_EXPORT_VIEW_PROPERTY(componentHeight, float)
 RCT_EXPORT_VIEW_PROPERTY(componentWidth, float)
 
+RCT_EXPORT_VIEW_PROPERTY(widthRatio, NSInteger)
+RCT_EXPORT_VIEW_PROPERTY(heightRatio, NSInteger)
+
 @end

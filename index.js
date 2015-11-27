@@ -96,9 +96,9 @@ var QuiltView = React.createClass({
                 sections.push({
                     customCells,
                     label: section.props.label,
-                    footerLabel: section.props.footerLabel,
-                    footerHeight: section.props.footerHeight,
-                    headerHeight: section.props.headerHeight,
+                    //footerLabel: section.props.footerLabel,
+                    //footerHeight: section.props.footerHeight,
+                    //headerHeight: section.props.headerHeight,
                     items: items,
                     count: count
                 });
@@ -124,13 +124,11 @@ var QuiltView = React.createClass({
                     style={this.props.style}
                     sections={this.state.sections}
                     additionalItems={this.state.additionalItems}
-                    tableViewStyle={QuiltView.Consts.Style.Plain}
-                    tableViewCellStyle={QuiltView.Consts.CellStyle.Subtitle}
                     scrollIndicatorInsets={this.props.contentInset}
                     {...this.props}
                     json={this.state.json}
                     onPress={this._onPress}
-                    onChange={this._onChange}>
+                    //onChange={this._onChange}>
 
                     {this.state.children}
                 </RNQuiltView>
@@ -197,7 +195,7 @@ var styles = StyleSheet.create({
         //height: RNTableViewConsts.ComponentHeight,
     },
 });
-QuiltView.Consts = RNQuiltViewConsts;
+//QuiltView.Consts = RNQuiltViewConsts;
 
 var RNQuiltView = requireNativeComponent('RNQuiltView', null);
 

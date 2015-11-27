@@ -20,4 +20,7 @@
 @property (nonatomic, weak) UICollectionView *collectionView;
 @property (nonatomic, strong) RNQuiltViewCell *quiltViewCell;
 
+@property (nonatomic) NSInteger widthRatio;
+@property (nonatomic) NSInteger heightRatio;
+
 @end
