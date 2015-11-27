@@ -70,8 +70,10 @@
         _cells = [NSMutableArray array];
         _autoFocus = YES;
         
+       
         [self getScreenState:self.bounds.size];
-        [self createCollectionView];
+        
+        //        [self createCollectionView];
     }
     return self;
 }
@@ -83,12 +85,35 @@
     
     [_collectionView setFrame:self.bounds];
     
-    [self getScreenState:self.bounds.size];
+    // 如果外部设置了值就不在自动计算
+    if (!(self.pixelHeight || self.pixelWidth)) {
+        [self getScreenState:self.bounds.size];
+    }
     
-
 }
 
+
 #pragma mark - lazy load
+
+-(UICollectionView *)collectionView
+{
+    if (_collectionView == nil) {
+        RFQuiltLayout *layout = [RFQuiltLayout new];
+        layout.direction = UICollectionViewScrollDirectionVertical;
+        layout.delegate = self;
+        // item像素
+        layout.blockPixels = CGSizeMake(self.cellInfo.pixelWidth, self.cellInfo.pixelHeight);
+        
+        _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
+        _collectionView.dataSource = self;
+        _collectionView.delegate = self;
+        
+        [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+        
+        [self addSubview:_collectionView];
+    }
+    return _collectionView;
+}
 
 - (NSMutableArray *)numbers
 {
@@ -113,6 +138,68 @@
     return _cellInfo;
 }
 
+
+-(void)setPixelWidth:(CGFloat)pixelWidth
+{
+    _pixelWidth = pixelWidth;
+    
+    RFQuiltLayout *layout = (RFQuiltLayout *)self.collectionView.collectionViewLayout;
+    layout.blockPixels = CGSizeMake(pixelWidth, layout.blockPixels.height);
+}
+
+-(void)setPixelHeight:(CGFloat)pixelHeight
+{
+    pixelHeight = pixelHeight;
+    
+    RFQuiltLayout *layout = (RFQuiltLayout *)self.collectionView.collectionViewLayout;
+    layout.blockPixels = CGSizeMake(layout.blockPixels.width, pixelHeight);
+}
+
+/* 判断当前屏幕状态,并设定单元cell */
+- (void)getScreenState:(CGSize)size
+{
+    switch ((int)size.width) {
+        case 1366:
+            [self.cellInfo updateCellWithTag:ScreenSize_1366];
+            break;
+        case 981:
+            [self.cellInfo updateCellWithTag:ScreenSize_981];
+            break;
+        case 768:
+            [self.cellInfo updateCellWithTag:ScreenSize_768];
+            break;
+        case 694:
+            [self.cellInfo updateCellWithTag:ScreenSize_694];
+            break;
+        case 678:
+            [self.cellInfo updateCellWithTag:ScreenSize_678];
+            break;
+        case 639:
+            [self.cellInfo updateCellWithTag:ScreenSize_639];
+            break;
+        case 507:
+            [self.cellInfo updateCellWithTag:ScreenSize_507];
+            break;
+        case 438:
+            [self.cellInfo updateCellWithTag:ScreenSize_438];
+            break;
+        case 375:
+            [self.cellInfo updateCellWithTag:ScreenSize_375];
+            break;
+        case 320:
+            [self.cellInfo updateCellWithTag:ScreenSize_320];
+            break;
+        default:    // 默认pro 竖屏 1024宽
+            [self.cellInfo updateCellWithTag:ScreenSize_1024];
+            break;
+    }
+    
+    
+    // 修改布局属性
+    RFQuiltLayout* layout = (RFQuiltLayout *)self.collectionView.collectionViewLayout;
+    //    layout.prelayoutEverything = YES;
+    layout.blockPixels = CGSizeMake(self.cellInfo.pixelWidth, self.cellInfo.pixelHeight);
+}
 
 #pragma mark - UICollectionViewDataSource
 
@@ -163,18 +250,9 @@
 
 #pragma mark - Private APIs
 
--(void)setPixelWidth:(CGFloat)pixelWidth
-{
-    RFQuiltLayout *layout = (RFQuiltLayout *)self.collectionView.collectionViewLayout;
-    layout.blockPixels = CGSizeMake(pixelWidth, layout.blockPixels.height);
-}
 
--(void)setPixelHeight:(CGFloat)pixelHeight
-{
-    RFQuiltLayout *layout = (RFQuiltLayout *)self.collectionView.collectionViewLayout;
-    layout.blockPixels = CGSizeMake(layout.blockPixels.width, pixelHeight);
-}
 
+/*
 - (void)createCollectionView
 {
     
@@ -197,7 +275,7 @@
 
     [self addSubview:_collectionView];
 }
-
+*/
 
 /* 随机颜色 */
 - (UIColor*)colorForNumber:(NSNumber*)num
@@ -206,12 +284,11 @@
 }
 
 
-#warning 控制器方法,已经失效
-/* 每次屏幕变化都会调用 */
+#warning INVALID控制器方法,已经失效
+/* 
+// 每次屏幕变化都会调用
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
-    NSLog(@"viewWillTransitionToSize: %f",size.width);
-    
     [self getScreenState:size];
     
     // 修改布局属性
@@ -219,38 +296,9 @@
     //    layout.prelayoutEverything = YES;
     layout.blockPixels = CGSizeMake(self.cellInfo.pixelWidth, self.cellInfo.pixelHeight);
 }
+*/
 
-/* 判断当前屏幕状态,并设定单元cell */
-- (void)getScreenState:(CGSize)size
-{
-    
-    if (size.width == 1366) {      // 水平全屏
-        [self.cellInfo updateCellWithTag:ScreenSize_1366];
-    }else if (size.width == 981) {// 水平2/3
-        [self.cellInfo updateCellWithTag:ScreenSize_981];
-    }else if (size.width == 768) {
-        [self.cellInfo updateCellWithTag:ScreenSize_768];
-    }else if (size.width == 678) {// 水平1/2
-        [self.cellInfo updateCellWithTag:ScreenSize_678];
-    }else if (size.width == 694) {// 垂直2/3
-        [self.cellInfo updateCellWithTag:ScreenSize_694];
-    }else if (size.width == 639) {// 垂直2/3
-        [self.cellInfo updateCellWithTag:ScreenSize_639];
-    }else if (size.width == 507) {// 垂直1/3 水平1/3
-        [self.cellInfo updateCellWithTag:ScreenSize_507];
-    }else if (size.width == 438) {// 垂直1/3 水平1/3
-        [self.cellInfo updateCellWithTag:ScreenSize_438];
-    }
-    else if (size.width == 375) {// 垂直1/3 水平1/3
-        [self.cellInfo updateCellWithTag:ScreenSize_375];
-    }
-    else if (size.width == 320) {// 垂直1/3 水平1/3
-        [self.cellInfo updateCellWithTag:ScreenSize_320];
-    }
-    else {                       // 默认垂直全屏
-        [self.cellInfo updateCellWithTag:ScreenSize_1024];
-    }
-}
+
 
 
 
