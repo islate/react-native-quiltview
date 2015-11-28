@@ -219,7 +219,7 @@
 //    NSDictionary *item = [self dataForRow:indexPath.item section:indexPath.section];
     cell.backgroundColor = [self colorForNumber:@(indexPath.item)];
 
-    BOOL haveCell = NO;\
+    BOOL haveCell = NO;
     for (UIView *subview in cell.contentView.subviews)
     {
         if ([subview isKindOfClass:[RNCellView class]])
@@ -239,14 +239,8 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout blockSizeForItemAtIndexPath:(NSIndexPath *)indexPath // defaults to 1x1
 {
-    // 第一个组件图片轮播器
-    if (!(self.cellInfo.moduleTypeNum == HIDDENFLAG)){ // 1/3分屏时不显示轮播器,
-        if (indexPath.row == 0) return CGSizeMake(8, 4);
-    }
-    // 根据组件大小,动态返回系数...
-    if (indexPath.row % self.cellInfo.moduleTypeNum == 1) return CGSizeMake(4, 2);
-    else if (indexPath.row % self.cellInfo.moduleTypeNum == 0) return CGSizeMake(4, 1);
-    else return CGSizeMake(2, 2);
+    NSDictionary *item = [self dataForRow:indexPath.item section:indexPath.section];
+    return CGSizeMake([[item objectForKey:@"widthRatio"] floatValue], [[item objectForKey:@"heightRatio"] floatValue]);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetsForItemAtIndexPath:(NSIndexPath *)indexPath // defaults to uiedgeinsetszero
