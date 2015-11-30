@@ -37,7 +37,7 @@ class QuiltViewExample extends React.Component {
                         <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
                         <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
                     </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={8} heightRatio={4} >
+                     <Cell style={{backgroundColor:'green'}} widthRatio={8} heightRatio={4} >
                         <Text>8x4</Text>
                     </Cell>
                     <Cell style={{backgroundColor:'green'}} widthRatio={4} heightRatio={1} >
@@ -60,7 +60,7 @@ class QuiltViewExample extends React.Component {
                         <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
                         <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
                     </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={8} heightRatio={4} >
+                     <Cell style={{backgroundColor:'green'}} widthRatio={8} heightRatio={4} >
                         <Text>8x4</Text>
                     </Cell>
                     <Cell style={{backgroundColor:'green'}} widthRatio={4} heightRatio={1} >
@@ -83,7 +83,7 @@ class QuiltViewExample extends React.Component {
                         <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
                         <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
                     </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={8} heightRatio={4} >
+                     <Cell style={{backgroundColor:'green'}} widthRatio={8} heightRatio={4} >
                         <Text>8x4</Text>
                     </Cell>
                     <Cell style={{backgroundColor:'green'}} widthRatio={4} heightRatio={1} >
@@ -106,7 +106,17 @@ class QuiltViewExample extends React.Component {
                         <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
                         <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
                     </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={8} heightRatio={4} >
+                      <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={2} >
+                        <Text>3x2</Text>
+                    </Cell>
+                    <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={1} >
+                        <Text>3x1</Text>
+                    </Cell>
+                    <Cell style={{backgroundColor:'gray'}}  widthRatio={4} heightRatio={2}  >
+                        <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
+                        <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
+                    </Cell>
+                     <Cell style={{backgroundColor:'green'}} widthRatio={8} heightRatio={4} >
                         <Text>8x4</Text>
                     </Cell>
                     <Cell style={{backgroundColor:'green'}} widthRatio={4} heightRatio={1} >
@@ -128,21 +138,7 @@ class QuiltViewExample extends React.Component {
                     <Cell style={{backgroundColor:'gray'}}  widthRatio={4} heightRatio={2}  >
                         <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
                         <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={8} heightRatio={4} >
-                        <Text>8x4</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={4} heightRatio={1} >
-                        <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
-                        <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'red'}} widthRatio={4} heightRatio={2} >
-                        <Text>4x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={2} heightRatio={2} >
-                        <Text>2x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={2} >
+                    </Cell>   <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={2} >
                         <Text>3x2</Text>
                     </Cell>
                     <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={1} >
@@ -152,217 +148,7 @@ class QuiltViewExample extends React.Component {
                         <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
                         <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
                     </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={8} heightRatio={4} >
-                        <Text>8x4</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={4} heightRatio={1} >
-                        <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
-                        <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'red'}} widthRatio={4} heightRatio={2} >
-                        <Text>4x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={2} heightRatio={2} >
-                        <Text>2x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={2} >
-                        <Text>3x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={1} >
-                        <Text>3x1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'gray'}}  widthRatio={4} heightRatio={2}  >
-                        <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
-                        <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={8} heightRatio={4} >
-                        <Text>8x4</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={4} heightRatio={1} >
-                        <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
-                        <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'red'}} widthRatio={4} heightRatio={2} >
-                        <Text>4x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={2} heightRatio={2} >
-                        <Text>2x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={2} >
-                        <Text>3x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={1} >
-                        <Text>3x1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'gray'}}  widthRatio={4} heightRatio={2}  >
-                        <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
-                        <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
-                    </Cell>
-
-                </Section>
-                 <Section label="1">
-                    <Cell style={{backgroundColor:'green'}} widthRatio={8} heightRatio={4} >
-                        <Text>8x4</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={4} heightRatio={1} >
-                        <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
-                        <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'red'}} widthRatio={4} heightRatio={2} >
-                        <Text>4x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={2} heightRatio={2} >
-                        <Text>2x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={2} >
-                        <Text>3x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={1} >
-                        <Text>3x1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'gray'}}  widthRatio={4} heightRatio={2}  >
-                        <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
-                        <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={8} heightRatio={4} >
-                        <Text>8x4</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={4} heightRatio={1} >
-                        <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
-                        <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'red'}} widthRatio={4} heightRatio={2} >
-                        <Text>4x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={2} heightRatio={2} >
-                        <Text>2x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={2} >
-                        <Text>3x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={1} >
-                        <Text>3x1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'gray'}}  widthRatio={4} heightRatio={2}  >
-                        <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
-                        <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={8} heightRatio={4} >
-                        <Text>8x4</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={4} heightRatio={1} >
-                        <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
-                        <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'red'}} widthRatio={4} heightRatio={2} >
-                        <Text>4x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={2} heightRatio={2} >
-                        <Text>2x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={2} >
-                        <Text>3x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={1} >
-                        <Text>3x1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'gray'}}  widthRatio={4} heightRatio={2}  >
-                        <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
-                        <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={8} heightRatio={4} >
-                        <Text>8x4</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={4} heightRatio={1} >
-                        <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
-                        <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'red'}} widthRatio={4} heightRatio={2} >
-                        <Text>4x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={2} heightRatio={2} >
-                        <Text>2x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={2} >
-                        <Text>3x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={1} >
-                        <Text>3x1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'gray'}}  widthRatio={4} heightRatio={2}  >
-                        <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
-                        <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={8} heightRatio={4} >
-                        <Text>8x4</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={4} heightRatio={1} >
-                        <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
-                        <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'red'}} widthRatio={4} heightRatio={2} >
-                        <Text>4x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={2} heightRatio={2} >
-                        <Text>2x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={2} >
-                        <Text>3x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={1} >
-                        <Text>3x1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'gray'}}  widthRatio={4} heightRatio={2}  >
-                        <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
-                        <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={8} heightRatio={4} >
-                        <Text>8x4</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={4} heightRatio={1} >
-                        <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
-                        <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'red'}} widthRatio={4} heightRatio={2} >
-                        <Text>4x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={2} heightRatio={2} >
-                        <Text>2x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={2} >
-                        <Text>3x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={1} >
-                        <Text>3x1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'gray'}}  widthRatio={4} heightRatio={2}  >
-                        <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
-                        <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={8} heightRatio={4} >
-                        <Text>8x4</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={4} heightRatio={1} >
-                        <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
-                        <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'red'}} widthRatio={4} heightRatio={2} >
-                        <Text>4x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={2} heightRatio={2} >
-                        <Text>2x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={2} >
-                        <Text>3x2</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={3} heightRatio={1} >
-                        <Text>3x1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'gray'}}  widthRatio={4} heightRatio={2}  >
-                        <Text style={{color:'white', textAlign:'right'}}>Cell 1</Text>
-                        <Text style={{color:'white', textAlign:'left'}}>Cell 1</Text>
-                    </Cell>
-                    <Cell style={{backgroundColor:'green'}} widthRatio={8} heightRatio={4} >
+                     <Cell style={{backgroundColor:'green'}} widthRatio={8} heightRatio={4} >
                         <Text>8x4</Text>
                     </Cell>
                     <Cell style={{backgroundColor:'green'}} widthRatio={4} heightRatio={1} >
@@ -388,6 +174,8 @@ class QuiltViewExample extends React.Component {
 
                 </Section>
 
+              
+ 
             </QuiltView>
         );
     }

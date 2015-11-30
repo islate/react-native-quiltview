@@ -12,15 +12,19 @@
 
 -(void)setCollectionView:(UICollectionView *)collectionView {
     _collectionView = collectionView;
-    _quiltViewCell = [[RNQuiltViewCell alloc] init];
+//    _quiltViewCell = [[RNQuiltViewCell alloc] init];
     _quiltViewCell.cellView = self;
 }
 
--(void)setComponentHeight:(float)componentHeight {
-    _componentHeight = componentHeight;
-    if (componentHeight){
-        [_collectionView reloadData];
-    }
+
++ (instancetype)cellViewWithDict:(NSDictionary *)dict
+{
+    id cellView = [[self alloc] init];
+    [cellView setValuesForKeysWithDictionary:dict];
+    return cellView;
 }
+
+-(void)setValue:(id)value forUndefinedKey:(NSString *)key
+{}
 
 @end

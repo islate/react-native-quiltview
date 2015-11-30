@@ -35,34 +35,7 @@
 {
     RCTEventDispatcher *_eventDispatcher;
     NSArray *_items;
-    NSMutableArray *_cells;
-}
 
-- (void)insertReactSubview:(UIView *)subview atIndex:(NSInteger)atIndex
-{
-    
-#warning:   TODO:这里会一次性把所有RNCellView加进去
-    // just add them to registry
-    if ([subview isKindOfClass:[RNCellView class]]){
-        
-        RNCellView *cellView = (RNCellView *)subview;
-        cellView.collectionView = self.collectionView;
-
-        // 判断是否有新的session
-        while (cellView.section >= [_cells count]){
-            [_cells addObject:[NSMutableArray array]];
-        }
-        [_cells[cellView.section] addObject:subview];
-        
-        if (cellView.section == [_sections count]-1 && cellView.row == [_sections[cellView.section][@"count"] integerValue]-1){
-            [self.collectionView reloadData];
-        }
-    }
-}
-
--(void)addCell:(RNCellView *)cell
-{
-    [_cells[0] addObject:cell];
 }
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher
@@ -72,13 +45,52 @@
     if ((self = [super initWithFrame:CGRectZero])) {
         _eventDispatcher = eventDispatcher;
         _cellHeight = 44;
-        _cells = [NSMutableArray array];
+
         _autoFocus = YES;
         
-       
+        
         [self getScreenState:self.bounds.size];
     }
     return self;
+}
+
+
+// 获得所有section的数据
+- (void)setSections:(NSArray *)sections
+{
+    _sections = [NSMutableArray arrayWithCapacity:[sections count]];
+    
+    for (NSDictionary *section in sections){
+        NSMutableDictionary *sectionData = [NSMutableDictionary dictionaryWithDictionary:section];
+        
+        
+        NSMutableArray *allItems = [NSMutableArray array];
+        if (self.additionalItems){
+            [allItems addObjectsFromArray:self.additionalItems];
+        }
+        [allItems addObjectsFromArray:sectionData[@"items"]];
+        
+        NSMutableArray *items = [NSMutableArray arrayWithCapacity:[allItems count]];
+        
+
+        for (NSDictionary *item in allItems){
+            NSMutableDictionary *itemData = [NSMutableDictionary dictionaryWithDictionary:item];
+            
+     
+            [items addObject:itemData];
+        }
+ 
+        
+        sectionData[@"items"] = items;
+        [_sections addObject:sectionData];
+    }
+    [self.collectionView reloadData];
+}
+
+
+- (void)insertReactSubview:(UIView *)subview atIndex:(NSInteger)atIndex
+{
+
 }
 
 
@@ -94,8 +106,6 @@
     }
     
 }
-
-
 
 
 #pragma mark - lazy load
@@ -148,6 +158,54 @@
     layout.blockPixels = CGSizeMake(layout.blockPixels.width, pixelHeight);
 }
 
+#pragma mark - UICollectionViewDataSource
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return _sections.count;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+
+    return [_sections[section][@"items"] count];
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    RNQuiltViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"quiltCell" forIndexPath:indexPath];
+    NSDictionary *item = [self dataForRow:indexPath.item section:indexPath.section];
+    cell.backgroundColor = [self colorForNumber:@(indexPath.item)];
+
+    BOOL haveCell = NO;
+    for (UIView *subview in cell.contentView.subviews)
+    {
+        if ([subview isKindOfClass:[RNCellView class]])
+        {
+            haveCell = YES;
+            break;
+        }
+    }
+    if (!haveCell) {
+        [cell.contentView addSubview:[RNCellView cellViewWithDict:item]];
+    }
+    return cell;
+}
+
+#pragma mark - RFQuiltLayoutDelegate
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout blockSizeForItemAtIndexPath:(NSIndexPath *)indexPath // defaults to 1x1
+{
+    NSDictionary *item = [self dataForRow:indexPath.item section:indexPath.section];
+    return CGSizeMake([[item objectForKey:@"widthRatio"] floatValue], [[item objectForKey:@"heightRatio"] floatValue]);
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetsForItemAtIndexPath:(NSIndexPath *)indexPath // defaults to uiedgeinsetszero
+{
+    // 默认有边距, 这里设置的数值,会在cell 的frame 中减掉
+    return UIEdgeInsetsMake(10, 4, 0, 4);
+}
+
 /* 判断当前屏幕状态,并设定单元cell */
 - (void)getScreenState:(CGSize)size
 {
@@ -190,76 +248,8 @@
     
     // 修改布局属性
     RFQuiltLayout* layout = (RFQuiltLayout *)self.collectionView.collectionViewLayout;
-    //    layout.prelayoutEverything = YES;
-    layout.blockPixels = CGSizeMake(self.cellInfo.pixelWidth, self.cellInfo.pixelHeight);
-}
-
-#pragma mark - UICollectionViewDataSource
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return _sections.count;
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    NSInteger count = [_sections[section][@"items"] count];
-    // if we have custom cells, additional processing is necessary
-    if ([self hasCustomCells:section])
-    {
-        if ([_cells count]<=section)
-        {
-            return 0;
-        }
-        // don't display cells until their's height is not calculated (TODO: maybe it is possible to optimize??)
-        for (RNCellView *view in _cells[section])
-        {
-            if (!view.componentHeight)
-            {
-                return 0;
-            }
-        }
-        count = [_cells[section] count];
-    }
-    return count;
-}
-
-// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    RNQuiltViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"quiltCell" forIndexPath:indexPath];
-//    NSDictionary *item = [self dataForRow:indexPath.item section:indexPath.section];
-    cell.backgroundColor = [self colorForNumber:@(indexPath.item)];
-
-    BOOL haveCell = NO;
-    for (UIView *subview in cell.contentView.subviews)
-    {
-        if ([subview isKindOfClass:[RNCellView class]])
-        {
-            haveCell = YES;
-            break;
-        }
-    }
-    if (!haveCell) {
-        
-        [cell.contentView addSubview:((RNCellView *)_cells[indexPath.section][indexPath.row])];
-    }
     
-    return cell;
-}
-
-#pragma mark - RFQuiltLayoutDelegate
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout blockSizeForItemAtIndexPath:(NSIndexPath *)indexPath // defaults to 1x1
-{
-    NSDictionary *item = [self dataForRow:indexPath.item section:indexPath.section];
-    return CGSizeMake([[item objectForKey:@"widthRatio"] floatValue], [[item objectForKey:@"heightRatio"] floatValue]);
-}
-
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetsForItemAtIndexPath:(NSIndexPath *)indexPath // defaults to uiedgeinsetszero
-{
-    // 默认有边距, 这里设置的数值,会在cell 的frame 中减掉
-    return UIEdgeInsetsMake(10, 4, 0, 4);
+    layout.blockPixels = CGSizeMake(self.cellInfo.pixelWidth, self.cellInfo.pixelHeight);
 }
 
 #pragma mark - Private APIs
@@ -270,52 +260,9 @@
     return [UIColor colorWithHue:((19 * num.intValue) % 255)/255.f saturation:1.f brightness:1.f alpha:1.f];
 }
 
-#pragma mark -
-
-- (void)setSections:(NSArray *)sections
+- (NSDictionary *)dataForRow:(NSInteger)row section:(NSInteger)section
 {
-    _sections = [NSMutableArray arrayWithCapacity:[sections count]];
-    
-    // create selected indexes
-    _selectedIndexes = [NSMutableArray arrayWithCapacity:[sections count]];
-    
-//    BOOL found = NO;
-    for (NSDictionary *section in sections){
-        NSMutableDictionary *sectionData = [NSMutableDictionary dictionaryWithDictionary:section];
-        
-//        NSLog(@"%@",sections);
-        
-        NSMutableArray *allItems = [NSMutableArray array];
-        if (self.additionalItems){
-            [allItems addObjectsFromArray:self.additionalItems];
-        }
-        [allItems addObjectsFromArray:sectionData[@"items"]];
-        
-        NSMutableArray *items = [NSMutableArray arrayWithCapacity:[allItems count]];
-        
-//        NSInteger selectedIndex = -1;
-        for (NSDictionary *item in allItems){
-            NSMutableDictionary *itemData = [NSMutableDictionary dictionaryWithDictionary:item];
-            
-//            if ((itemData[@"selected"] && [itemData[@"selected"] intValue]) || (self.selectedValue && [self.selectedValue isEqual:item[@"value"]])){
-//                if(selectedIndex == -1)
-//                    selectedIndex = [items count];
-//                itemData[@"selected"] = @YES;
-//                found = YES;
-//            }
-            [items addObject:itemData];
-        }
-//        [_selectedIndexes addObject:[NSNumber numberWithUnsignedInteger:selectedIndex]];
-        
-        sectionData[@"items"] = items;
-        [_sections addObject:sectionData];
-    }
-    [self.collectionView reloadData];
-}
-
-- (NSMutableDictionary *)dataForRow:(NSInteger)row section:(NSInteger)section
-{
-    return (NSMutableDictionary *)_sections[section][@"items"][row];
+    return (NSDictionary *)_sections[section][@"items"][row];
 }
 
 - (BOOL)hasCustomCells:(NSInteger)section
@@ -327,22 +274,5 @@
 RCT_NOT_IMPLEMENTED(-initWithFrame:(CGRect)frame)
 RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 
-- (void)setContentInset:(UIEdgeInsets)insets
-{
-    _contentInset = insets;
-    _collectionView.contentInset = insets;
-}
-
-- (void)setContentOffset:(CGPoint)offset
-{
-    _contentOffset = offset;
-    _collectionView.contentOffset = offset;
-}
-
-- (void)setScrollIndicatorInsets:(UIEdgeInsets)insets
-{
-    _scrollIndicatorInsets = insets;
-    _collectionView.scrollIndicatorInsets = insets;
-}
 
 @end

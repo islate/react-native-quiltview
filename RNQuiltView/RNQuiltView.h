@@ -55,8 +55,5 @@
 @property (nonatomic, assign) NSInteger heightRatio;
 @property (nonatomic, assign) NSInteger widthRatio;
 
-// 添加cell
-- (void)addCell:(RNCellView *)cell;
-
 
 @end

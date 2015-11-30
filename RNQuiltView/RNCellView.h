@@ -16,12 +16,13 @@
 @property (nonatomic) NSInteger row;
 @property (nonatomic) NSInteger section;
 
-@property (nonatomic) float componentHeight;
-@property (nonatomic) float componentWidth;
+
 @property (nonatomic, weak) UICollectionView *collectionView;
 @property (nonatomic, strong) RNQuiltViewCell *quiltViewCell;
 
 @property (nonatomic) NSInteger widthRatio;
 @property (nonatomic) NSInteger heightRatio;
+
++ (instancetype)cellViewWithDict:(NSDictionary *)dict;
 
 @end
