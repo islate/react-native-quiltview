@@ -12,7 +12,7 @@
 
 -(void)setCollectionView:(UICollectionView *)collectionView {
     _collectionView = collectionView;
-//    _quiltViewCell = [[RNQuiltViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CustomCell"];
+    _quiltViewCell = [[RNQuiltViewCell alloc] init];
     _quiltViewCell.cellView = self;
 }
 

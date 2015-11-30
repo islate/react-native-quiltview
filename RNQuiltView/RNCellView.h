@@ -15,6 +15,7 @@
 
 @property (nonatomic) NSInteger row;
 @property (nonatomic) NSInteger section;
+
 @property (nonatomic) float componentHeight;
 @property (nonatomic) float componentWidth;
 @property (nonatomic, weak) UICollectionView *collectionView;

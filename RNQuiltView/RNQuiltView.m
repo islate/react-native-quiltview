@@ -40,21 +40,29 @@
 
 - (void)insertReactSubview:(UIView *)subview atIndex:(NSInteger)atIndex
 {
-    // will not insert because we don't need to draw them
-    //   [super insertSubview:subview atIndex:atIndex];
     
+#warning:   TODO:这里会一次性把所有RNCellView加进去
     // just add them to registry
     if ([subview isKindOfClass:[RNCellView class]]){
+        
         RNCellView *cellView = (RNCellView *)subview;
         cellView.collectionView = self.collectionView;
+
+        // 判断是否有新的session
         while (cellView.section >= [_cells count]){
             [_cells addObject:[NSMutableArray array]];
         }
         [_cells[cellView.section] addObject:subview];
+        
         if (cellView.section == [_sections count]-1 && cellView.row == [_sections[cellView.section][@"count"] integerValue]-1){
             [self.collectionView reloadData];
         }
     }
+}
+
+-(void)addCell:(RNCellView *)cell
+{
+    [_cells[0] addObject:cell];
 }
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher
@@ -88,6 +96,8 @@
 }
 
 
+
+
 #pragma mark - lazy load
 
 -(UICollectionView *)collectionView
@@ -103,6 +113,8 @@
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
         
+        // 注册重用
+        [_collectionView registerClass:[RNQuiltViewCell class] forCellWithReuseIdentifier:@"quiltCell"];
         [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
         
         [self addSubview:_collectionView];
@@ -215,7 +227,7 @@
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    RNQuiltViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"quiltCell" forIndexPath:indexPath];
 //    NSDictionary *item = [self dataForRow:indexPath.item section:indexPath.section];
     cell.backgroundColor = [self colorForNumber:@(indexPath.item)];
 
@@ -229,6 +241,7 @@
         }
     }
     if (!haveCell) {
+        
         [cell.contentView addSubview:((RNCellView *)_cells[indexPath.section][indexPath.row])];
     }
     
@@ -266,9 +279,12 @@
     // create selected indexes
     _selectedIndexes = [NSMutableArray arrayWithCapacity:[sections count]];
     
-    BOOL found = NO;
+//    BOOL found = NO;
     for (NSDictionary *section in sections){
         NSMutableDictionary *sectionData = [NSMutableDictionary dictionaryWithDictionary:section];
+        
+//        NSLog(@"%@",sections);
+        
         NSMutableArray *allItems = [NSMutableArray array];
         if (self.additionalItems){
             [allItems addObjectsFromArray:self.additionalItems];
@@ -276,18 +292,20 @@
         [allItems addObjectsFromArray:sectionData[@"items"]];
         
         NSMutableArray *items = [NSMutableArray arrayWithCapacity:[allItems count]];
-        NSInteger selectedIndex = -1;
+        
+//        NSInteger selectedIndex = -1;
         for (NSDictionary *item in allItems){
             NSMutableDictionary *itemData = [NSMutableDictionary dictionaryWithDictionary:item];
-            if ((itemData[@"selected"] && [itemData[@"selected"] intValue]) || (self.selectedValue && [self.selectedValue isEqual:item[@"value"]])){
-                if(selectedIndex == -1)
-                    selectedIndex = [items count];
-                itemData[@"selected"] = @YES;
-                found = YES;
-            }
+            
+//            if ((itemData[@"selected"] && [itemData[@"selected"] intValue]) || (self.selectedValue && [self.selectedValue isEqual:item[@"value"]])){
+//                if(selectedIndex == -1)
+//                    selectedIndex = [items count];
+//                itemData[@"selected"] = @YES;
+//                found = YES;
+//            }
             [items addObject:itemData];
         }
-        [_selectedIndexes addObject:[NSNumber numberWithUnsignedInteger:selectedIndex]];
+//        [_selectedIndexes addObject:[NSNumber numberWithUnsignedInteger:selectedIndex]];
         
         sectionData[@"items"] = items;
         [_sections addObject:sectionData];

@@ -12,6 +12,7 @@
 
 @interface RNQuiltViewCell : UICollectionViewCell
 
+/* 在set方法中将cellView加为子视图 */
 @property (nonatomic, weak) RNCellView *cellView;
 
 @end
