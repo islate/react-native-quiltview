@@ -34,7 +34,7 @@
 @implementation RNQuiltView
 {
     RCTEventDispatcher *_eventDispatcher;
-    NSArray *_items;
+    NSMutableArray *_cells;
 
 }
 
@@ -45,7 +45,7 @@
     if ((self = [super initWithFrame:CGRectZero])) {
         _eventDispatcher = eventDispatcher;
         _cellHeight = 44;
-
+        _cells = [NSMutableArray array];
         _autoFocus = YES;
         
         
@@ -90,7 +90,26 @@
 
 - (void)insertReactSubview:(UIView *)subview atIndex:(NSInteger)atIndex
 {
-
+    if ([subview isKindOfClass:[RNCellView class]]){
+        
+        RNCellView *cellView = (RNCellView *)subview;
+        cellView.collectionView = self.collectionView;
+        
+        while (cellView.section >= [_cells count]){
+            [_cells addObject:[NSMutableArray array]];
+        }
+        [_cells[cellView.section] addObject:subview];
+        
+        if (cellView.section == [_sections count]-1 && cellView.row == [_sections[cellView.section][@"count"] integerValue]-1){
+            [self.collectionView reloadData];
+        }
+    }
+    
+    // TODO: 通过组件名 判断组件类型
+//    else if ([subview isKindOfClass:[RNTableFooterView class]]){
+//        RNTableFooterView *footerView = (RNTableFooterView *)subview;
+//        footerView.tableView = self.tableView;
+//    }
 }
 
 
@@ -171,24 +190,17 @@
     return [_sections[section][@"items"] count];
 }
 
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    // 当前jsx传输过来的view
+    RNCellView *cellView = _cells[indexPath.section][indexPath.row];
     RNQuiltViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"quiltCell" forIndexPath:indexPath];
-    NSDictionary *item = [self dataForRow:indexPath.item section:indexPath.section];
+    
+    cell.cellView = cellView;
+    
     cell.backgroundColor = [self colorForNumber:@(indexPath.item)];
 
-    BOOL haveCell = NO;
-    for (UIView *subview in cell.contentView.subviews)
-    {
-        if ([subview isKindOfClass:[RNCellView class]])
-        {
-            haveCell = YES;
-            break;
-        }
-    }
-    if (!haveCell) {
-        [cell.contentView addSubview:[RNCellView cellViewWithDict:item]];
-    }
     return cell;
 }
 

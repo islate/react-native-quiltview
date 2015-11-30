@@ -19,6 +19,7 @@
 -(void)setFrame:(CGRect)frame {
     [super setFrame:frame];
     [_cellView setFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+    self.clipsToBounds = YES;
 }
 
 // Called by the collection view before the instance is returned from the reuse queue.
@@ -28,5 +29,7 @@
 //    self.cellView.collectionView.cells
     NSLog(@" I'm reuse : %@",self);
 }
+
+
 
 @end

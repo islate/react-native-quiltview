@@ -10,21 +10,27 @@
 
 @implementation RNCellView
 
--(void)setCollectionView:(UICollectionView *)collectionView {
-    _collectionView = collectionView;
-//    _quiltViewCell = [[RNQuiltViewCell alloc] init];
-    _quiltViewCell.cellView = self;
-}
+//-(void)setCollectionView:(UICollectionView *)collectionView {
+//    _collectionView = collectionView;
+//   
+//    NSIndexPath *index = [NSIndexPath indexPathForRow:self.section inSection: self.row];
+//    _quiltViewCell = [_collectionView dequeueReusableCellWithReuseIdentifier:@"quiltCell" forIndexPath:index];
+//    if (_quiltViewCell == nil) {
+//        _quiltViewCell = [[RNQuiltViewCell alloc] init];
+//    }
+//}
 
 
-+ (instancetype)cellViewWithDict:(NSDictionary *)dict
-{
-    id cellView = [[self alloc] init];
-    [cellView setValuesForKeysWithDictionary:dict];
-    return cellView;
-}
 
--(void)setValue:(id)value forUndefinedKey:(NSString *)key
-{}
+//+ (instancetype)cellViewWithDict:(NSDictionary *)dict
+//{
+//    id cellView = [[self alloc] init];
+//    [cellView setValuesForKeysWithDictionary:dict];
+//    return cellView;
+//}
+//
+//-(void)setValue:(id)value forUndefinedKey:(NSString *)key
+//{}
+
 
 @end
