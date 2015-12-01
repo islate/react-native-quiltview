@@ -2,7 +2,6 @@
 
 var React = require('react-native');
 var {
-    AppRegistry,
     View,
     Text,
     StyleSheet,
@@ -13,7 +12,7 @@ var TimerMixin = require('react-timer-mixin');
 var RefreshInfiniteListView = require('react-native-refresh-infinite-listview');
 
 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-var QuiltViewExample = React.createClass({
+module.exports = React.createClass({
     mixins: [TimerMixin],
     data: {index: 0, maxIndex:20, list:[]},
     getData(init) {
@@ -103,5 +102,3 @@ var styles = StyleSheet.create({
         backgroundColor: '#CCC'
     },
 });
-
-AppRegistry.registerComponent('QuiltViewExample', () => QuiltViewExample);
