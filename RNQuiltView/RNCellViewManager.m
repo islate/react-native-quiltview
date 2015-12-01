@@ -22,4 +22,6 @@ RCT_EXPORT_VIEW_PROPERTY(section, NSInteger)
 RCT_EXPORT_VIEW_PROPERTY(widthRatio, NSInteger)
 RCT_EXPORT_VIEW_PROPERTY(heightRatio, NSInteger)
 
+RCT_EXPORT_VIEW_PROPERTY(componentType, NSString)
+
 @end

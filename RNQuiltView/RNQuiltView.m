@@ -17,8 +17,6 @@
 #import "RFQuiltLayout.h"
 #import "RNCellModel.h"
 
-#define HIDDENFLAG 4
-
 @interface RNQuiltView()<UICollectionViewDataSource, UICollectionViewDelegate, RFQuiltLayoutDelegate>
 {
     id<RNQuiltViewDatasource> datasource;
@@ -34,8 +32,7 @@
 @implementation RNQuiltView
 {
     RCTEventDispatcher *_eventDispatcher;
-    NSMutableArray *_cells;
-
+    NSMutableDictionary *_cellTypes;
 }
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher
@@ -45,7 +42,7 @@
     if ((self = [super initWithFrame:CGRectZero])) {
         _eventDispatcher = eventDispatcher;
         _cellHeight = 44;
-        _cells = [NSMutableArray array];
+        _cellTypes = [NSMutableDictionary dictionary];
         _autoFocus = YES;
         
         
@@ -72,46 +69,27 @@
         
         NSMutableArray *items = [NSMutableArray arrayWithCapacity:[allItems count]];
         
-
         for (NSDictionary *item in allItems){
             NSMutableDictionary *itemData = [NSMutableDictionary dictionaryWithDictionary:item];
-            
-     
             [items addObject:itemData];
         }
  
-        
         sectionData[@"items"] = items;
         [_sections addObject:sectionData];
     }
     [self.collectionView reloadData];
 }
 
-
 - (void)insertReactSubview:(UIView *)subview atIndex:(NSInteger)atIndex
 {
-    if ([subview isKindOfClass:[RNCellView class]]){
-        
+    if ([subview isKindOfClass:[RNCellView class]])
+    {
         RNCellView *cellView = (RNCellView *)subview;
-        cellView.collectionView = self.collectionView;
+        [_cellTypes setObject:cellView forKey:cellView.componentType];
         
-        while (cellView.section >= [_cells count]){
-            [_cells addObject:[NSMutableArray array]];
-        }
-        [_cells[cellView.section] addObject:subview];
-        
-        if (cellView.section == [_sections count]-1 && cellView.row == [_sections[cellView.section][@"count"] integerValue]-1){
-            [self.collectionView reloadData];
-        }
+        [_collectionView registerClass:[RNQuiltViewCell class] forCellWithReuseIdentifier:cellView.componentType];
     }
-    
-    // TODO: 通过组件名 判断组件类型
-//    else if ([subview isKindOfClass:[RNTableFooterView class]]){
-//        RNTableFooterView *footerView = (RNTableFooterView *)subview;
-//        footerView.tableView = self.tableView;
-//    }
 }
-
 
 - (void)layoutSubviews
 {
@@ -123,15 +101,14 @@
     if (!(self.pixelHeight || self.pixelWidth)) {
         [self getScreenState:self.bounds.size];
     }
-    
 }
-
 
 #pragma mark - lazy load
 
--(UICollectionView *)collectionView
+- (UICollectionView *)collectionView
 {
-    if (_collectionView == nil) {
+    if (_collectionView == nil)
+    {
         RFQuiltLayout *layout = [RFQuiltLayout new];
         layout.direction = UICollectionViewScrollDirectionVertical;
         layout.delegate = self;
@@ -141,10 +118,6 @@
         _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
-        
-        // 注册重用
-        [_collectionView registerClass:[RNQuiltViewCell class] forCellWithReuseIdentifier:@"quiltCell"];
-        [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
         
         [self addSubview:_collectionView];
     }
@@ -160,8 +133,7 @@
     return _cellInfo;
 }
 
-
--(void)setPixelWidth:(CGFloat)pixelWidth
+- (void)setPixelWidth:(CGFloat)pixelWidth
 {
     _pixelWidth = pixelWidth;
     
@@ -169,7 +141,7 @@
     layout.blockPixels = CGSizeMake(pixelWidth, layout.blockPixels.height);
 }
 
--(void)setPixelHeight:(CGFloat)pixelHeight
+- (void)setPixelHeight:(CGFloat)pixelHeight
 {
     pixelHeight = pixelHeight;
     
@@ -181,23 +153,26 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return _sections.count;
+    return 1;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-
-    return [_sections[section][@"items"] count];
+    NSInteger count = [_sections[section][@"items"] count];
+    return count;
 }
-
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    // 当前jsx传输过来的view
-    RNCellView *cellView = _cells[indexPath.section][indexPath.row];
-    RNQuiltViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"quiltCell" forIndexPath:indexPath];
+    NSDictionary *item = [self dataForRow:indexPath.item section:indexPath.section];
+    NSString *componentType = [item objectForKey:@"componentType"];
+    RNQuiltViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:componentType forIndexPath:indexPath];
+    RNCellView *cellView = [_cellTypes objectForKey:componentType];
     
-    cell.cellView = cellView;
+    if (!cell.cellView) {
+#warning 如何完整复制一份cellView? 递归复制子view
+        cell.cellView = [cellView snapshotViewAfterScreenUpdates:YES];
+    }
     
     cell.backgroundColor = [self colorForNumber:@(indexPath.item)];
 
@@ -209,7 +184,9 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout blockSizeForItemAtIndexPath:(NSIndexPath *)indexPath // defaults to 1x1
 {
     NSDictionary *item = [self dataForRow:indexPath.item section:indexPath.section];
-    return CGSizeMake([[item objectForKey:@"widthRatio"] floatValue], [[item objectForKey:@"heightRatio"] floatValue]);
+    NSString *componentType = [item objectForKey:@"componentType"];
+    RNCellView *cellView = [_cellTypes objectForKey:componentType];
+    return CGSizeMake(cellView.widthRatio, cellView.heightRatio);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetsForItemAtIndexPath:(NSIndexPath *)indexPath // defaults to uiedgeinsetszero

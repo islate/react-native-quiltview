@@ -23,6 +23,8 @@
 @property (nonatomic) NSInteger widthRatio;
 @property (nonatomic) NSInteger heightRatio;
 
+@property (nonatomic, strong) NSString *componentType;
+
 //+ (instancetype)cellViewWithDict:(NSDictionary *)dict;
 
 @end
