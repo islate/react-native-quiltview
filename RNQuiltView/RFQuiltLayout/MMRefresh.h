@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RCTBridgeModule.h"
 @class RNQuiltView;
-@interface MMRefresh : UIView
+@interface MMRefresh : UIView <RCTBridgeModule>
 
 @property (nonatomic, weak) RNQuiltView *quiltView;
 @property (nonatomic, strong) UIScrollView *scrollView;

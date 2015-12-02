@@ -19,11 +19,14 @@
 @end
 
 @implementation MMRefresh
-
 {
     NSLayoutConstraint *constraint;
     BOOL isRefreshing;
+    
+    RCTResponseSenderBlock _callbackBlock;
 }
+
+RCT_EXPORT_MODULE();
 
 + (instancetype)refreshView
 {
@@ -39,7 +42,6 @@
     constraint = quiltView.constraints.lastObject;
     _needRefresh = NO;
     isRefreshing = NO;
-    
 }
 
 - (void)setScrollView:(UIScrollView *)scrollView
@@ -76,27 +78,38 @@
         constraint.constant = - _scrollView.contentOffset.y;
     }else
     {
-        
         isRefreshing = YES;
         NSLog(@"开始刷新");
-        [self loadData];
+
+        [self loadData:_callbackBlock];
     }
     
 }
 
-- (void)loadData
+// 通过jsx 回调数据
+RCT_EXPORT_METHOD(loadData:(RCTResponseSenderBlock) callback)
 {
+    self.tipView.hidden = YES;
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [UIView animateWithDuration:1.5 animations:^{
+    [UIView animateWithDuration:1.5 animations:^{
+    
+        self.loadingView.transform = CGAffineTransformRotate(self.loadingView.transform, M_PI);
+        
+    } completion:^(BOOL finished) {
+        
+        [UIView animateWithDuration:1 animations:^{
+            self.alpha = 0;
+        }completion:^(BOOL finished) {
             constraint.constant = -20;
+            
+            self.alpha = 1;
+            self.tipView.hidden = NO;
             isRefreshing = NO;
             _needRefresh = NO;
             NSLog(@"刷新完成");
         }];
-    });
-    
-    
+        
+    }];
 }
 
 // 上拉
@@ -104,7 +117,6 @@
 {
     //    NSLog(@"上拉刷新");
 }
-
 
 
 

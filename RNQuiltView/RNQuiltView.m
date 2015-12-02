@@ -119,6 +119,7 @@
         _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
+        _collectionView.backgroundColor = [UIColor orangeColor];
         
         [self addSubview:_collectionView];
     }
@@ -136,7 +137,7 @@
         [self addConstraint:[NSLayoutConstraint constraintWithItem:_refreshView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
         [self addConstraint:[NSLayoutConstraint constraintWithItem:_refreshView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:60]];
         [self addConstraint:[NSLayoutConstraint constraintWithItem:_refreshView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
-        [self addConstraint:[NSLayoutConstraint constraintWithItem:_refreshView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:60]];
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:_refreshView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
         
         _refreshView.quiltView = self;
     }
@@ -228,7 +229,7 @@
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetsForItemAtIndexPath:(NSIndexPath *)indexPath // defaults to uiedgeinsetszero
 {
     // 默认有边距, 这里设置的数值,会在cell 的frame 中减掉
-    return UIEdgeInsetsMake(10, 4, 0, 4);
+    return UIEdgeInsetsMake(0, 4, 10, 4);
 }
 
 /* 判断当前屏幕状态,并设定单元cell */

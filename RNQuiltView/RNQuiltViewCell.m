@@ -27,7 +27,7 @@
 {
     [super prepareForReuse];
 //    self.cellView.collectionView.cells
-    NSLog(@" I'm reuse : %@",self);
+    NSLog(@" I'm reuse ");
 }
 
 

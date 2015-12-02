@@ -9,7 +9,10 @@ var Cell = QuiltView.Cell;
 var {Actions, Router, Route, Schema, Animations} = require('react-native-router-flux');
 var NavigationBar = require('react-native-navbar');
 
+var MMRefresh = require('react-native').NativeModules.MMRefresh;
+
 class QuiltViewExample extends React.Component {
+
     render(){
         return (
             <QuiltView style={{flex:1}} >
