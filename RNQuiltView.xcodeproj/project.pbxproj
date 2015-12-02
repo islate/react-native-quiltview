@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4FC368FF1C0DF3E100A3E575 /* MMRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FC368FE1C0DF3E100A3E575 /* MMRefresh.m */; };
 		81595BFC1C05AAAD008AABBE /* RFQuiltLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 81595BFB1C05AAAD008AABBE /* RFQuiltLayout.m */; };
 		81595C111C05B6DF008AABBE /* JSONDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 81595BFE1C05B6DF008AABBE /* JSONDataSource.m */; };
 		81595C121C05B6DF008AABBE /* RNCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 81595C001C05B6DF008AABBE /* RNCellView.m */; };
@@ -30,6 +31,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4FC368FD1C0DF3E100A3E575 /* MMRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMRefresh.h; sourceTree = "<group>"; };
+		4FC368FE1C0DF3E100A3E575 /* MMRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMRefresh.m; sourceTree = "<group>"; };
 		81595BFA1C05AAAD008AABBE /* RFQuiltLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFQuiltLayout.h; sourceTree = "<group>"; };
 		81595BFB1C05AAAD008AABBE /* RFQuiltLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFQuiltLayout.m; sourceTree = "<group>"; };
 		81595BFD1C05B6DF008AABBE /* JSONDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONDataSource.h; sourceTree = "<group>"; };
@@ -60,6 +63,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4FC368FC1C0DF3B000A3E575 /* MMRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				4FC368FD1C0DF3E100A3E575 /* MMRefresh.h */,
+				4FC368FE1C0DF3E100A3E575 /* MMRefresh.m */,
+			);
+			name = MMRefresh;
+			path = RNQuiltView/RFQuiltLayout;
+			sourceTree = "<group>";
+		};
 		81595BF91C05AAAD008AABBE /* RFQuiltLayout */ = {
 			isa = PBXGroup;
 			children = (
@@ -73,6 +86,7 @@
 		81EDA0B91C05662F000B1500 = {
 			isa = PBXGroup;
 			children = (
+				4FC368FC1C0DF3B000A3E575 /* MMRefresh */,
 				81595BF91C05AAAD008AABBE /* RFQuiltLayout */,
 				81EDA0C41C056630000B1500 /* RNQuiltView */,
 				81EDA0C31C056630000B1500 /* Products */,
@@ -171,6 +185,7 @@
 				81595BFC1C05AAAD008AABBE /* RFQuiltLayout.m in Sources */,
 				81595C2C1C069A5B008AABBE /* RNQuiltViewManager.m in Sources */,
 				81595C121C05B6DF008AABBE /* RNCellView.m in Sources */,
+				4FC368FF1C0DF3E100A3E575 /* MMRefresh.m in Sources */,
 				81595C2E1C069A5B008AABBE /* RNQuiltView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

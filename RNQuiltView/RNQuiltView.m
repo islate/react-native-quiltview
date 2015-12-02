@@ -8,6 +8,7 @@
 
 #import "RNQuiltView.h"
 
+#import "MMRefresh.h"
 #import "RCTConvert.h"
 #import "RCTEventDispatcher.h"
 #import "RCTUtils.h"
@@ -23,6 +24,7 @@
 }
 @property (strong, nonatomic) NSMutableArray *selectedIndexes;
 @property (strong, nonatomic) UICollectionView *collectionView;
+@property (strong, nonatomic) MMRefresh *refreshView;
 
 // 组件的像素信息
 @property (nonatomic, strong) RNCellModel *cellInfo;
@@ -44,7 +46,6 @@
         _cellHeight = 44;
         _cellTypes = [NSMutableDictionary dictionary];
         _autoFocus = YES;
-        
         
         [self getScreenState:self.bounds.size];
     }
@@ -94,7 +95,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
+
     [_collectionView setFrame:self.bounds];
     
     // 如果外部设置了值就不在自动计算
@@ -122,6 +123,24 @@
         [self addSubview:_collectionView];
     }
     return _collectionView;
+}
+
+-(MMRefresh *)refreshView
+{
+    if(_refreshView == nil)
+    {
+        _refreshView = [MMRefresh refreshView];
+        [self addSubview:_refreshView];
+        // 添加约束
+        _refreshView.translatesAutoresizingMaskIntoConstraints = false;
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:_refreshView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:_refreshView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:60]];
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:_refreshView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:_refreshView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:60]];
+        
+        _refreshView.quiltView = self;
+    }
+    return _refreshView;
 }
 
 - (RNCellModel *)cellInfo
@@ -178,6 +197,23 @@
 
     return cell;
 }
+
+#pragma mark - collectionView delegate
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    self.refreshView.scrollView = scrollView;
+}
+
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if ( scrollView.contentOffset.y <= -60) {
+        self.refreshView.needRefresh = YES;
+        self.refreshView.scrollView = scrollView;
+        NSLog(@"需要刷新");
+    }
+}
+
 
 #pragma mark - RFQuiltLayoutDelegate
 

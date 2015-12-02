@@ -21,6 +21,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		688A12171C0ED8CB00768BF9 /* MMRefresh.xib in Resources */ = {isa = PBXBuildFile; fileRef = 688A12161C0ED8CB00768BF9 /* MMRefresh.xib */; };
 		81595C561C06ECFA008AABBE /* libRNQuiltView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81595C551C06ECB7008AABBE /* libRNQuiltView.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		87D0FDC41B836F5500B0DA60 /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = 87D0FDC31B836F5500B0DA60 /* countries.json */; };
@@ -124,6 +125,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = iOS/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = iOS/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		688A12161C0ED8CB00768BF9 /* MMRefresh.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MMRefresh.xib; path = iOS/MMRefresh.xib; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		81595C501C06ECB7008AABBE /* RNQuiltView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNQuiltView.xcodeproj; path = ../../RNQuiltView.xcodeproj; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
+				688A12161C0ED8CB00768BF9 /* MMRefresh.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = QuiltViewDemo;
@@ -477,6 +480,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				87D0FDC41B836F5500B0DA60 /* countries.json in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				688A12171C0ED8CB00768BF9 /* MMRefresh.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
