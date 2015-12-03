@@ -96,9 +96,6 @@ var QuiltView = React.createClass({
                 sections.push({
                     customCells,
                     label: section.props.label,
-                    //footerLabel: section.props.footerLabel,
-                    //footerHeight: section.props.footerHeight,
-                    //headerHeight: section.props.headerHeight,
                     items: items,
                     count: count
                 });

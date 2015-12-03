@@ -96,6 +96,12 @@
 {
     [super layoutSubviews];
 
+    // if sections are not define, try to load JSON
+    if (![_sections count] && _json) {
+        datasource = [[JSONDataSource alloc] initWithFilename:_json filter:_filter args:_filterArgs];
+        self.sections = [NSMutableArray arrayWithArray:[datasource sections]];
+    }
+
     [_collectionView setFrame:self.bounds];
     
     // 如果外部设置了值就不在自动计算

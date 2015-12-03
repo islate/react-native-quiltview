@@ -16,20 +16,34 @@
     NSAssert(jsonPath, @"Filename %@ doesn't exist within app bundle", filename);
     NSData *data = [NSData dataWithContentsOfFile:jsonPath];
     NSError *error = nil;
-    NSArray *json = (NSArray *)[NSJSONSerialization JSONObjectWithData:data
+    id json = [NSJSONSerialization JSONObjectWithData:data
                                                                options:NSJSONReadingMutableContainers
                                                                  error:&error];
     
     NSAssert(error==nil, @"JSON Error %@", [error description]);
-    NSAssert([json isKindOfClass:[NSArray class]], @"JSON should be NSArray type");
+    //NSAssert([json isKindOfClass:[NSArray class]], @"JSON should be NSArray type");
     
-    if (filter){
-        for (NSMutableDictionary *sections in json){
-            sections[@"items"] = [sections[@"items"] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:filter argumentArray:filterArgs]];
+    NSArray *sections = nil;
+    if ([json isKindOfClass:[NSArray class]]) {
+        sections = (NSArray *)json;
+    }
+    else
+    {
+        NSArray *components = [json objectForKey:@"components"];
+        NSAssert([components isKindOfClass:[NSArray class]], @"JSON should be NSArray type");
+        if ([components isKindOfClass:[NSArray class]])
+        {
+            sections = @[@{@"items":components}];
         }
     }
     
-    _sections = json;
+//    if (filter){
+//        for (NSMutableDictionary *sections in json){
+//            sections[@"items"] = [sections[@"items"] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:filter argumentArray:filterArgs]];
+//        }
+//    }
+    
+    _sections = sections;
     return self;
 }
 

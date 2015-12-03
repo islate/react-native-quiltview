@@ -23,6 +23,7 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		688A12171C0ED8CB00768BF9 /* MMRefresh.xib in Resources */ = {isa = PBXBuildFile; fileRef = 688A12161C0ED8CB00768BF9 /* MMRefresh.xib */; };
 		81595C561C06ECFA008AABBE /* libRNQuiltView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81595C551C06ECB7008AABBE /* libRNQuiltView.a */; };
+		8188F4781C10486C008E3244 /* layout.json in Resources */ = {isa = PBXBuildFile; fileRef = 8188F4771C10486C008E3244 /* layout.json */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		87D0FDC41B836F5500B0DA60 /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = 87D0FDC31B836F5500B0DA60 /* countries.json */; };
 		87D0FDC61B8471D200B0DA60 /* states.json in Resources */ = {isa = PBXBuildFile; fileRef = 87D0FDC51B8471D200B0DA60 /* states.json */; };
@@ -128,6 +129,7 @@
 		688A12161C0ED8CB00768BF9 /* MMRefresh.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MMRefresh.xib; path = iOS/MMRefresh.xib; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		81595C501C06ECB7008AABBE /* RNQuiltView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNQuiltView.xcodeproj; path = ../../RNQuiltView.xcodeproj; sourceTree = "<group>"; };
+		8188F4771C10486C008E3244 /* layout.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = layout.json; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		87D0FDC31B836F5500B0DA60 /* countries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
 		87D0FDC51B8471D200B0DA60 /* states.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = states.json; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 		13B07FAE1A68108700A75B9A /* QuiltViewDemo */ = {
 			isa = PBXGroup;
 			children = (
+				8188F4771C10486C008E3244 /* layout.json */,
 				87D0FDC51B8471D200B0DA60 /* states.json */,
 				87D0FDC31B836F5500B0DA60 /* countries.json */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -476,6 +479,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				87D0FDC61B8471D200B0DA60 /* states.json in Resources */,
+				8188F4781C10486C008E3244 /* layout.json in Resources */,
 				008F07F31AC5B25A0029DE68 /* main.jsbundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				87D0FDC41B836F5500B0DA60 /* countries.json in Resources */,
