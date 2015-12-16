@@ -136,6 +136,16 @@ var QuiltViewExample = React.createClass({
                     }],
                 }],
             }, "mapping" : {
+                 "headline" : {
+                    "title" : "leaf.title",
+                    "subtitle" : "leaf.desc",
+                    "image" : "leaf.picture",
+                },
+                "album" : {
+                    "title" : "leaf.title",
+                    "subtitle" : "leaf.desc",
+                    "image" : "leaf.picture",
+                },
                 "headlineCell" : {
                     "title" : "leaf.title",
                     "subtitle" : "leaf.desc",
@@ -155,11 +165,13 @@ var QuiltViewExample = React.createClass({
         });
     },
 
-    // todo: 如何传递mapping?
-    _renderRow(rowID : number, rowData : string) {
+    _renderRow(rowID : number, rowData : object) {
         // 动态加载组件
-        var type = slateComponents[rowData.componentType];
-        return React.createElement(type, {key : "cell" + rowID, data : rowData});
+        var rowData = this.state.layout.components[rowID];
+        var componentType = rowData.componentType;
+        var type = slateComponents[componentType];
+        var modelMapping = this.state.mapping[componentType];
+        return React.createElement(type, {key : "cell" + rowID, data : rowData, mapping : modelMapping});
     },
 
     render(){
@@ -172,11 +184,11 @@ var QuiltViewExample = React.createClass({
         var children = [];
         var sections = [];
         var components = this.state.layout.components;
-
+ 
         for (var rowID = 0; rowID < components.length; rowID++) {
-            var component = components[rowID];
             // 渲染数据
-            var row = this._renderRow(rowID, component);
+            var rowData = components[rowID];
+            var row = this._renderRow(rowID, rowData);
             children.push(row); 
         };
 

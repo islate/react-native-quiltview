@@ -20,14 +20,22 @@ var Album = React.createClass({
 
     render() {
         var data = this.props.data;
+        var mapping = this.props.mapping;
         if (!data) {
             return <RNCellView style={styles.cell}  {...this.props} />;
         }
+        
+         // 通过模型映射得到字段值
+        var image = eval("data." + mapping["image"]);
+        var title = eval("data." + mapping["title"]);
+        var subtitle = eval("data." + mapping["subtitle"]);
+
+        // 渲染
         return <RNCellView style={styles.cell}  {...this.props}>
-                    <Image style={styles.icon} source={{uri: data.leaf.picture}} />
+                    <Image style={styles.icon} source={{uri: image}} />
                     <View>
-                        <Text style={styles.title}>Album{data.leaf.title}</Text>
-                        <Text style={styles.desc}>{data.leaf.desc}</Text>
+                        <Text style={styles.title}>NormalCell{title}</Text>
+                        <Text style={styles.desc}>{subtitle}</Text>
                     </View>
                 </RNCellView>;
     }
