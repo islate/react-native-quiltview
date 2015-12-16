@@ -85,12 +85,12 @@ var QuiltView = React.createClass({
                     count++;
                     items.push(el);
 
-                    if (child.type==QuiltView.Cell){
+                    //if (child.type==QuiltView.Cell){
                         customCells = true;
                         count++;
                         var element = React.cloneElement(child, {key: index+" "+itemIndex, section: index, row: itemIndex});
                         children.push(element);
-                    }
+                    //}
 
                 });
                 sections.push({

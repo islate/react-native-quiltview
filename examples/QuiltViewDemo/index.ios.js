@@ -1,76 +1,23 @@
 'use strict';
 
 var React = require('react-native');
-var { AppRegistry, Image, Text, Dimensions,View,StyleSheet,PropTypes } = React;
+var { AppRegistry, Image, Text, Dimensions,View,StyleSheet,PropTypes,requireNativeComponent } = React;
 var QuiltView = require('react-native-quiltview');
 var Section = QuiltView.Section;
  var Item = QuiltView.Item;
 var Cell = QuiltView.Cell;
-var {Actions, Router, Route, Schema, Animations} = require('react-native-router-flux');
-var NavigationBar = require('react-native-navbar');
 
-var MMRefresh = require('react-native').NativeModules.MMRefresh;
+// 组件库
+var Headline = require('./SlateComponents/Headline');
+var NormalCell = require('./SlateComponents/NormalCell');
+var Album = require('./SlateComponents/Album');
+var slateComponents = {
+    "headline" : Headline,
+    "normalCell" : NormalCell,
+    "album" : Album,
+};
 
-var Headline = React.createClass({
-    propTypes: {
-        widthRatio: React.PropTypes.number,
-        heightRatio: React.PropTypes.number
-    },
-
-    getDefaultProps() {
-        return {
-            widthRatio: 4,
-            heightRatio: 2,
-        };
-    },
-
-    render(){
-        return (
-            <Text> Headline </Text>
-            );
-    }
-});
-
-var NormalCell = React.createClass({
-    propTypes: {
-        widthRatio: React.PropTypes.number,
-        heightRatio: React.PropTypes.number,
-    },
-
-    getDefaultProps() {
-        return {
-            widthRatio: 4,
-            heightRatio: 1,
-        };
-    },
-
-    render(){
-        return (
-            <Text> NormalCell </Text>
-            );
-    }
-});
-
-var Album = React.createClass({
-    propTypes: {
-        widthRatio: React.PropTypes.number,
-        heightRatio: React.PropTypes.number,
-    },
-
-    getDefaultProps() {
-        return {
-            widthRatio: 4,
-            heightRatio: 2,
-        };
-    },
-    
-    render(){
-        return (
-            <Text> Album </Text>
-            );
-    }
-});
-
+// 主界面
 var QuiltViewExample = React.createClass({
 
     getInitialState() {
@@ -78,53 +25,141 @@ var QuiltViewExample = React.createClass({
     },
 
     componentDidMount() {
-        var REQUEST_URL = 'http://www.baidu.com';
-        fetch(REQUEST_URL)
-        .then((response) => {
-            this.setState({layout:{
-                    "nodeName" : "金融",
-                    "components" : [{
-                        "componentName" : "普通图文单元",
-                        "componentType" : "normalCell",
-                        "offset" : 1,
+        //var REQUEST_URL = 'http://www.baidu.com';
+        //fetch(REQUEST_URL)
+        //.then((response) => {
+        //});
+
+        this.setState({"layout" : {
+            "nodeName" : "金融",
+            "components" : [{
+                "componentName" : "轮播图容器",
+                "componentType" : "headline",
+                "offset" : 1,
+                "leaf" : { 
+                        "leafName" : "leaf_1_1",
+                        "updateTime" : "1448935284",
+                        "title" : "头条新闻1",
+                        "desc" : "描述1",
+                        "picture" : "http://picm.photophoto.cn/005/008/002/0080020436.jpg",
+                    }, 
+                    "subComponents" : [{
+                        "componentName" : "轮播图",
+                        "componentType" : "headlineCell",
                         "leaf" : { 
-                            "leafName" : "leaf_1",
+                            "leafName" : "leaf_1_1",
                             "updateTime" : "1448935284",
-                            "title" : "新闻1",
+                            "title" : "头条新闻1",
+                            "desc" : "描述1",
+                            "picture" : "http://picm.photophoto.cn/005/008/002/0080020436.jpg",
+                        }, 
+                    },
+                    {
+                        "componentName" : "轮播图",
+                        "componentType" : "headlineCell",
+                        "leaf" : { 
+                            "leafName" : "leaf_1_2",
+                            "updateTime" : "1448935284",
+                            "title" : "头条新闻2",
+                            "desc" : "描述2",
+                            "picture" : "http://picm.photophoto.cn/005/008/002/0080020436.jpg",
+                        },
+                    }],
+                },
+                {
+                    "componentName" : "普通图文单元",
+                    "componentType" : "normalCell",
+                    "offset" : 2,
+                    "leaf" : { 
+                        "leafName" : "leaf_2",
+                        "updateTime" : "1448935284",
+                        "title" : "新闻2",
+                        "desc" : "描述2",
+                        "picture" : "http://picm.photophoto.cn/005/008/002/0080020436.jpg",
+                    },
+                },
+                {
+                    "componentName" : "普通图文单元",
+                    "componentType" : "normalCell",
+                    "offset" : 3,
+                    "leaf" : { 
+                        "leafName" : "leaf_3",
+                        "updateTime" : "1448935284",
+                        "title" : "新闻3",
+                        "desc" : "描述3",
+                        "picture" : "http://picm.photophoto.cn/005/008/002/0080020436.jpg",
+                    },
+                },
+                {
+                    "componentName" : "图集",
+                    "componentType" : "album",
+                    "offset" : 4,
+                    "leaf" : { 
+                        "leafName" : "leaf_4",
+                        "updateTime" : "1448935284",
+                        "title" : "图集名称",
+                        "desc" : "描述4",
+                        "picture" : "http://picm.photophoto.cn/005/008/002/0080020436.jpg",
+                    },
+                    "subComponents" : [{
+                        "componentName" : "图集单元",
+                        "componentType" : "albumCell",
+                        "leaf" : { 
+                            "leafName" : "leaf_4_1",
+                            "updateTime" : "1448935284",
+                            "title" : "图1",
                             "desc" : "描述1",
                             "picture" : "http://picm.photophoto.cn/005/008/002/0080020436.jpg",
                         },
                     },
                     {
-                        "componentName" : "普通图文单元",
-                        "componentType" : "normalCell",
-                        "offset" : 2,
+                        "componentName" : "图集单元",
+                        "componentType" : "albumCell",
                         "leaf" : { 
-                            "leafName" : "leaf_2",
+                            "leafName" : "leaf_4_2",
                             "updateTime" : "1448935284",
-                            "title" : "新闻2",
+                            "title" : "图2",
                             "desc" : "描述2",
                             "picture" : "http://picm.photophoto.cn/005/008/002/0080020436.jpg",
                         },
                     },
-                    ]
+                    {
+                        "componentName" : "图集单元",
+                        "componentType" : "albumCell",
+                        "leaf" : { 
+                            "leafName" : "leaf_4_3",
+                            "updateTime" : "1448935284",
+                            "title" : "图3",
+                            "desc" : "描述3",
+                            "picture" : "http://picm.photophoto.cn/005/008/002/0080020436.jpg",
+                        }, 
+                    }],
+                }],
+            }, "mapping" : {
+                "headlineCell" : {
+                    "title" : "leaf.title",
+                    "subtitle" : "leaf.desc",
+                    "image" : "leaf.picture",
+                },
+                "normalCell" : {
+                    "title" : "leaf.title",
+                    "subtitle" : "leaf.desc",
+                    "image" : "leaf.picture",
+                },
+                "albumCell" : {
+                    "title" : "leaf.title",
+                    "subtitle" : "leaf.desc",
+                    "image" : "leaf.picture",
                 }
-            });
+            }
         });
     },
 
+    // todo: 如何传递mapping?
     _renderRow(rowID : number, rowData : string) {
-        return <Cell style={styles.cell} 
-        widthRatio={4} 
-        heightRatio={1} 
-        key={rowID}
-        componentType={rowData.componentType}>
-            <Image style={styles.icon} source={{uri: rowData.leaf.picture}} />
-            <View>
-                <Text style={styles.title}>{rowData.leaf.title}</Text>
-                <Text style={styles.desc}>{rowData.leaf.desc}</Text>
-            </View>
-        </Cell>;
+        // 动态加载组件
+        var type = slateComponents[rowData.componentType];
+        return React.createElement(type, {key : "cell" + rowID, data : rowData});
     },
 
     render(){
@@ -140,11 +175,12 @@ var QuiltViewExample = React.createClass({
 
         for (var rowID = 0; rowID < components.length; rowID++) {
             var component = components[rowID];
+            // 渲染数据
             var row = this._renderRow(rowID, component);
             children.push(row); 
         };
 
-        var sectionContainer = <Section label="1"/>;
+        var sectionContainer = <Section label="1" key="section0"/>;
         var section = React.cloneElement(sectionContainer, {ref : 'quiltviewsection'}, children);
 
         sections.push(section);
