@@ -7,24 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RNQuiltViewCell.h"
 
-@class RNQuiltViewCell;
-
-@interface RNCellView : UIView
+@interface RNCellView : UIView <NSCoding>
 
 @property (nonatomic) NSInteger row;
 @property (nonatomic) NSInteger section;
-
-
-@property (nonatomic, weak) UICollectionView *collectionView;
-@property (nonatomic, strong) RNQuiltViewCell *quiltViewCell;
 
 @property (nonatomic) NSInteger widthRatio;
 @property (nonatomic) NSInteger heightRatio;
 
 @property (nonatomic, strong) NSString *componentType;
-
-//+ (instancetype)cellViewWithDict:(NSDictionary *)dict;
 
 @end

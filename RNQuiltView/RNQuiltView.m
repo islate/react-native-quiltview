@@ -17,6 +17,34 @@
 #import "RNCellView.h"
 #import "RFQuiltLayout.h"
 #import "RNCellModel.h"
+#import "RNQuiltViewCell.h"
+#import "RCTText.h"
+
+@interface RCTText (coding) <NSCoding>
+
+@end
+
+@implementation RCTText (coding)
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        self.textStorage = [coder decodeObjectForKey:@"textStorage"];
+        self.contentInset = [coder decodeUIEdgeInsetsForKey:@"contentInset"];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    [super encodeWithCoder:coder];
+    
+    [coder encodeObject:self.textStorage forKey:@"textStorage"];
+    [coder encodeUIEdgeInsets:self.contentInset forKey:@"contentInset"];
+}
+
+@end
 
 @interface RNQuiltView()<UICollectionViewDataSource, UICollectionViewDelegate, RFQuiltLayoutDelegate>
 {
@@ -34,7 +62,7 @@
 @implementation RNQuiltView
 {
     RCTEventDispatcher *_eventDispatcher;
-    NSMutableDictionary *_cellTypes;
+    NSMutableArray *_rncells;
 }
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher
@@ -44,7 +72,7 @@
     if ((self = [super initWithFrame:CGRectZero])) {
         _eventDispatcher = eventDispatcher;
         _cellHeight = 44;
-        _cellTypes = [NSMutableDictionary dictionary];
+        _rncells = [NSMutableArray array];
         _autoFocus = YES;
         
         [self getScreenState:self.bounds.size];
@@ -86,9 +114,7 @@
     if ([subview isKindOfClass:[RNCellView class]])
     {
         RNCellView *cellView = (RNCellView *)subview;
-        [_cellTypes setObject:cellView forKey:cellView.componentType];
-        
-        [_collectionView registerClass:[RNQuiltViewCell class] forCellWithReuseIdentifier:cellView.componentType];
+        [_rncells addObject:cellView];
     }
 }
 
@@ -125,9 +151,11 @@
         _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
-        _collectionView.backgroundColor = [UIColor orangeColor];
+        _collectionView.backgroundColor = [UIColor clearColor];
         
         [self addSubview:_collectionView];
+        
+        [_collectionView registerClass:[RNQuiltViewCell class] forCellWithReuseIdentifier:@"Cell"];
     }
     return _collectionView;
 }
@@ -184,21 +212,23 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
+    if (_sections.count == 0) {
+        return 0;
+    }
     NSInteger count = [_sections[section][@"items"] count];
     return count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *item = [self dataForRow:indexPath.item section:indexPath.section];
-    NSString *componentType = [item objectForKey:@"componentType"];
-    RNQuiltViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:componentType forIndexPath:indexPath];
-    RNCellView *cellView = [_cellTypes objectForKey:componentType];
+    RNQuiltViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+    RNCellView *cellView = [_rncells objectAtIndex:0];
     
-    if (!cell.cellView) {
-#warning 如何完整复制一份cellView? 递归复制子view
-        cell.cellView = [cellView snapshotViewAfterScreenUpdates:YES];
+    if (indexPath.row < _rncells.count) {
+        cellView = [_rncells objectAtIndex:indexPath.row];
     }
+    
+    cell.cellView = cellView;
     
     cell.backgroundColor = [self colorForNumber:@(indexPath.item)];
 
@@ -207,12 +237,12 @@
 
 #pragma mark - collectionView delegate
 
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     self.refreshView.scrollView = scrollView;
 }
 
--(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     if ( scrollView.contentOffset.y <= -60) {
         self.refreshView.needRefresh = YES;
@@ -226,10 +256,17 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout blockSizeForItemAtIndexPath:(NSIndexPath *)indexPath // defaults to 1x1
 {
-    NSDictionary *item = [self dataForRow:indexPath.item section:indexPath.section];
-    NSString *componentType = [item objectForKey:@"componentType"];
-    RNCellView *cellView = [_cellTypes objectForKey:componentType];
+    if (indexPath.row >= _rncells.count) {
+        return CGSizeMake(4, 1);
+    }
+    RNCellView *cellView = [_rncells objectAtIndex:indexPath.row];
+    if (cellView == nil) {
+        return CGSizeMake(4, 1);
+    }
     return CGSizeMake(cellView.widthRatio, cellView.heightRatio);
+//    NSDictionary *item = [self dataForRow:indexPath.item section:indexPath.section];
+//    NSString *componentType = [item objectForKey:@"componentType"];
+//    RNCellView *cellView = [_cellTypes objectForKey:componentType];
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetsForItemAtIndexPath:(NSIndexPath *)indexPath // defaults to uiedgeinsetszero

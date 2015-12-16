@@ -10,27 +10,24 @@
 
 @implementation RNCellView
 
-//-(void)setCollectionView:(UICollectionView *)collectionView {
-//    _collectionView = collectionView;
-//   
-//    NSIndexPath *index = [NSIndexPath indexPathForRow:self.section inSection: self.row];
-//    _quiltViewCell = [_collectionView dequeueReusableCellWithReuseIdentifier:@"quiltCell" forIndexPath:index];
-//    if (_quiltViewCell == nil) {
-//        _quiltViewCell = [[RNQuiltViewCell alloc] init];
-//    }
-//}
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        _widthRatio = [coder decodeIntegerForKey:@"widthRatio"];
+        _heightRatio = [coder decodeIntegerForKey:@"heightRatio"];
+        _componentType = [coder decodeObjectForKey:@"componentType"];
+    }
+    return self;
+}
 
-
-
-//+ (instancetype)cellViewWithDict:(NSDictionary *)dict
-//{
-//    id cellView = [[self alloc] init];
-//    [cellView setValuesForKeysWithDictionary:dict];
-//    return cellView;
-//}
-//
-//-(void)setValue:(id)value forUndefinedKey:(NSString *)key
-//{}
-
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    [super encodeWithCoder:coder];
+    
+    [coder encodeInteger:_widthRatio forKey:@"widthRatio"];
+    [coder encodeInteger:_heightRatio forKey:@"heightRatio"];
+    [coder encodeObject:_componentType forKey:@"componentType"];
+}
 
 @end

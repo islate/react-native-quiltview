@@ -1,0 +1,13 @@
+{
+	"mapping" : {
+		"headline" : {
+			"a" : "a",
+		},
+		"normalCell" : {
+			"a" : "a",
+		},
+		"albumCell" : {
+			"a" : "a",
+		}
+	}
+}

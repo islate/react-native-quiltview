@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "RNCellView.h"
-@class RNCellView;
 
 @interface RNQuiltViewCell : UICollectionViewCell
 

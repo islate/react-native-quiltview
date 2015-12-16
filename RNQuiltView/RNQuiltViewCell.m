@@ -11,19 +11,20 @@
 @implementation RNQuiltViewCell
 
 
--(void)setCellView:(RNCellView *)cellView {
+- (void)setCellView:(RNCellView *)cellView {
     _cellView = cellView;
     [self.contentView addSubview:cellView];
+    [_cellView setFrame:self.contentView.bounds];
 }
 
--(void)setFrame:(CGRect)frame {
+- (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
-    [_cellView setFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+    [_cellView setFrame:self.contentView.bounds];
     self.clipsToBounds = YES;
 }
 
 // Called by the collection view before the instance is returned from the reuse queue.
--(void)prepareForReuse
+- (void)prepareForReuse
 {
     [super prepareForReuse];
 //    self.cellView.collectionView.cells

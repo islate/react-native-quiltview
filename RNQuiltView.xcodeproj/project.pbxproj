@@ -14,8 +14,8 @@
 		81595C131C05B6DF008AABBE /* RNCellViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 81595C021C05B6DF008AABBE /* RNCellViewManager.m */; };
 		81595C2C1C069A5B008AABBE /* RNQuiltViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 81595C261C069A5B008AABBE /* RNQuiltViewManager.m */; };
 		81595C2D1C069A5B008AABBE /* RNQuiltViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 81595C281C069A5B008AABBE /* RNQuiltViewCell.m */; };
-		81595C2E1C069A5B008AABBE /* RNQuiltView.m in Sources */ = {isa = PBXBuildFile; fileRef = 81595C2A1C069A5B008AABBE /* RNQuiltView.m */; };
 		81595C721C0748CF008AABBE /* RNCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 81595C711C0748CF008AABBE /* RNCellModel.m */; };
+		81C428881C109DB60000A61B /* RNQuiltView.m in Sources */ = {isa = PBXBuildFile; fileRef = 81595C2A1C069A5B008AABBE /* RNQuiltView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -184,9 +184,9 @@
 				81595C111C05B6DF008AABBE /* JSONDataSource.m in Sources */,
 				81595BFC1C05AAAD008AABBE /* RFQuiltLayout.m in Sources */,
 				81595C2C1C069A5B008AABBE /* RNQuiltViewManager.m in Sources */,
+				81C428881C109DB60000A61B /* RNQuiltView.m in Sources */,
 				81595C121C05B6DF008AABBE /* RNCellView.m in Sources */,
 				4FC368FF1C0DF3E100A3E575 /* MMRefresh.m in Sources */,
-				81595C2E1C069A5B008AABBE /* RNQuiltView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,7 +276,7 @@
 		81EDA0CC1C056630000B1500 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/examples/QuiltViewDemo/node_modules/**";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/examples/QuiltViewDemo/node_modules/react-native/**";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -286,7 +286,7 @@
 		81EDA0CD1C056630000B1500 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/examples/QuiltViewDemo/node_modules/**";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/examples/QuiltViewDemo/node_modules/react-native/**";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
