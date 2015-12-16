@@ -97,9 +97,8 @@ var QuiltViewExample = React.createClass({
                     "leaf" : { 
                         "leafName" : "leaf_4",
                         "updateTime" : "1448935284",
-                        "title" : "图集名称",
+                        "title" : "三个图标",
                         "desc" : "描述4",
-                        "picture" : "http://picm.photophoto.cn/005/008/002/0080020436.jpg",
                     },
                     "subComponents" : [{
                         "componentName" : "图集单元",
@@ -135,15 +134,17 @@ var QuiltViewExample = React.createClass({
                         }, 
                     }],
                 }],
-            }, "mapping" : {
-                 "headline" : {
+            }, 
+            "mapping" : {
+                "headline" : {
                     "title" : "leaf.title",
                     "subtitle" : "leaf.desc",
                     "image" : "leaf.picture",
                 },
                 "album" : {
                     "title" : "leaf.title",
-                    "subtitle" : "leaf.desc",
+                },
+                "albumCell" : {
                     "image" : "leaf.picture",
                 },
                 "headlineCell" : {
@@ -156,22 +157,15 @@ var QuiltViewExample = React.createClass({
                     "subtitle" : "leaf.desc",
                     "image" : "leaf.picture",
                 },
-                "albumCell" : {
-                    "title" : "leaf.title",
-                    "subtitle" : "leaf.desc",
-                    "image" : "leaf.picture",
-                }
             }
         });
     },
 
     _renderRow(rowID : number, rowData : object) {
         // 动态加载组件
-        var rowData = this.state.layout.components[rowID];
         var componentType = rowData.componentType;
         var type = slateComponents[componentType];
-        var modelMapping = this.state.mapping[componentType];
-        return React.createElement(type, {key : "cell" + rowID, data : rowData, mapping : modelMapping});
+        return React.createElement(type, {key : "cell" + rowID, data : rowData, mapping : this.state.mapping});
     },
 
     render(){

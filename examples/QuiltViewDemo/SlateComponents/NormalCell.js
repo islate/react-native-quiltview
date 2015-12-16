@@ -26,9 +26,10 @@ var NormalCell = React.createClass({
         }
 
         // 通过模型映射得到字段值
-        var image = eval("data." + mapping["image"]);
-        var title = eval("data." + mapping["title"]);
-        var subtitle = eval("data." + mapping["subtitle"]);
+        var m = mapping[data.componentType];
+        var image = eval("data." + m["image"]);
+        var title = eval("data." + m["title"]);
+        var subtitle = eval("data." + m["subtitle"]);
 
         // 渲染
         return <RNCellView style={styles.cell}  {...this.props}>
