@@ -19,8 +19,9 @@ var HeadlineCell = React.createClass({
         var url = eval("data." + m["url"]);
 
         // 渲染
-        return <TouchableOpacity onPress={()=>Actions.news({"url": url, "title": title})} style={styles.image}>
+        return <TouchableOpacity onPress={()=>Actions.news({"url": url, "title": title})} style={styles.cell}>
                     <Image style={styles.image} source={{uri: image}} />
+                    <Text style={styles.title} >{title}</Text>
                 </TouchableOpacity>;
     }
 });
@@ -50,10 +51,10 @@ var Headline = React.createClass({
             // 模拟自动轮播
             if (i>2) {
                 i=0;
-                this.myScroll.scrollWithoutAnimationTo(0, 300 * i);
+                this.myScroll.scrollWithoutAnimationTo(0, 312 * i);
             }
             else {
-                this.myScroll.scrollTo(0, 300 * i);
+                this.myScroll.scrollTo(0, 312 * i);
             }
             i++;
         }, 3000);
@@ -71,27 +72,27 @@ var Headline = React.createClass({
         var data = this.props.data;
         var mapping = this.props.mapping;
         var subComponents = data.subComponents;
-        var container = <RNCellView style={styles.cell}  {...this.props} />;
+        var container = <RNCellView style={styles.headline}  {...this.props} />;
         if (!subComponents) {
             return container;
         }
 
         var children = [];
-        var imageContainer = <ScrollView 
-                                    ref={(ref) => this.myScroll = ref}
+        var scrollview = <ScrollView ref={(ref) => this.myScroll = ref}
                                     pagingEnabled={true}
                                     horizontal={true} 
-                                    //automaticallyAdjustContentInsets={false}
+                                    bounces={false}
+                                    automaticallyAdjustContentInsets={false}
                                  style={styles.scrollview}/>;
-        var imageContainerChildren = []
+        var scrollviewChildren = []
         for (var index = 0; index < subComponents.length; index++) {
             // 渲染数据
             var subData = subComponents[index];
             var headlineCell = this._renderHeadlineCell(index, subData);
-            imageContainerChildren.push(headlineCell); 
+            scrollviewChildren.push(headlineCell); 
         };
 
-        var images = React.cloneElement(imageContainer, {key : 'scrollview'}, imageContainerChildren);
+        var images = React.cloneElement(scrollview, {key : 'scrollview'}, scrollviewChildren);
         children.push(images);
 
         return React.cloneElement(container, {ref : 'headline'}, children);
@@ -99,26 +100,35 @@ var Headline = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  cell: {
+  headline: {
     flex: 1,
     backgroundColor: 'lightgray',
   },
   scrollview: {
     flex: 1,
     flexDirection: 'row',
-    width:300,
+    width:312,
   },
   title: {
-    textAlign: 'left',
-    color: '#333333',
-    marginTop: 20,
-    marginLeft: 12,
-    width: 290,
+    position: 'absolute',
+    textAlign: 'center',
+    backgroundColor: 'rgba(52,52,52,0.6)',
+    color: 'white',
+    bottom: 0,
+    left: 0,
+    width: 312,
+    height: 20
+  },
+  cell: {
+    flex: 1,
+    flexDirection: 'column',
+    width:312,
+    height:150
   },
   image: {
     flex: 1,
-    width:300,
-    height:200
+    width:312,
+    height:150
   },
 });
 
