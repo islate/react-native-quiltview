@@ -264,9 +264,6 @@
         return CGSizeMake(4, 1);
     }
     return CGSizeMake(cellView.widthRatio, cellView.heightRatio);
-//    NSDictionary *item = [self dataForRow:indexPath.item section:indexPath.section];
-//    NSString *componentType = [item objectForKey:@"componentType"];
-//    RNCellView *cellView = [_cellTypes objectForKey:componentType];
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetsForItemAtIndexPath:(NSIndexPath *)indexPath // defaults to uiedgeinsetszero

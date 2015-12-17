@@ -6,6 +6,11 @@ var QuiltView = require('react-native-quiltview');
 var Section = QuiltView.Section;
  var Item = QuiltView.Item;
 var Cell = QuiltView.Cell;
+var {Actions, Router, Route, Schema, Animations} = require('react-native-router-flux');
+var NavigationBar = require('react-native-navbar');
+
+// 详情页
+var WebView = require('./WebView');
 
 // 组件库
 var Headline = require('./SlateComponents/Headline');
@@ -18,7 +23,7 @@ var slateComponents = {
 };
 
 // 主界面
-var QuiltViewExample = React.createClass({
+var Launch = React.createClass({
 
     getInitialState() {
         return {};
@@ -33,104 +38,92 @@ var QuiltViewExample = React.createClass({
         this.setState({"layout" : {
             "nodeName" : "金融",
             "components" : [{
-                "componentName" : "轮播图容器",
                 "componentType" : "headline",
                 "offset" : 1,
                 "leaf" : { 
                         "leafName" : "leaf_1_1",
                         "updateTime" : "1448935284",
-                        "title" : "头条新闻1",
-                        "desc" : "描述1",
-                        "picture" : "http://picm.photophoto.cn/005/008/002/0080020436.jpg",
+                        "title" : "“双12”袭来　丰田RAV4再掀购车狂潮",
+                        "link" : "http://auto.ycwb.com/2015-12/14/content_20991507.htm",
                     }, 
                     "subComponents" : [{
-                        "componentName" : "轮播图",
                         "componentType" : "headlineCell",
                         "leaf" : { 
                             "leafName" : "leaf_1_1",
                             "updateTime" : "1448935284",
-                            "title" : "头条新闻1",
-                            "desc" : "描述1",
-                            "picture" : "http://picm.photophoto.cn/005/008/002/0080020436.jpg",
+                            "picture" : "https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=2264917522,2698064010&fm=80",
                         }, 
                     },
                     {
-                        "componentName" : "轮播图",
                         "componentType" : "headlineCell",
                         "leaf" : { 
                             "leafName" : "leaf_1_2",
                             "updateTime" : "1448935284",
-                            "title" : "头条新闻2",
-                            "desc" : "描述2",
-                            "picture" : "http://picm.photophoto.cn/005/008/002/0080020436.jpg",
+                            "picture" : "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=2070245312,2918934520&fm=80",
+                        },
+                    },
+                    {
+                        "componentType" : "headlineCell",
+                        "leaf" : { 
+                            "leafName" : "leaf_1_3",
+                            "updateTime" : "1448935284",
+                            "picture" : "https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2169543423,2641506640&fm=80",
                         },
                     }],
                 },
                 {
-                    "componentName" : "普通图文单元",
                     "componentType" : "normalCell",
                     "offset" : 2,
                     "leaf" : { 
                         "leafName" : "leaf_2",
                         "updateTime" : "1448935284",
-                        "title" : "新闻2",
-                        "desc" : "描述2",
-                        "picture" : "http://picm.photophoto.cn/005/008/002/0080020436.jpg",
+                        "title" : "土耳其：无意就击落苏-24轰炸机对俄进行赔偿",
+                        "picture" : "https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=1254653794,1787354139&fm=80",
+                        "link" : "http://news.sohu.com/20151216/n431550866.shtml",
                     },
                 },
                 {
-                    "componentName" : "普通图文单元",
                     "componentType" : "normalCell",
                     "offset" : 3,
                     "leaf" : { 
                         "leafName" : "leaf_3",
                         "updateTime" : "1448935284",
-                        "title" : "新闻3",
-                        "desc" : "描述3",
-                        "picture" : "http://picm.photophoto.cn/005/008/002/0080020436.jpg",
+                        "title" : "国内最难懂方言排行榜 你家乡上榜了没",
+                        "link" : "http://www.kejixun.com/article/201512/143784.html",
+                        "picture" : "https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=1732368520,3890924243&fm=80",
                     },
                 },
                 {
-                    "componentName" : "图集",
                     "componentType" : "album",
                     "offset" : 4,
                     "leaf" : { 
                         "leafName" : "leaf_4",
                         "updateTime" : "1448935284",
-                        "title" : "三个图标",
-                        "desc" : "描述4",
+                        "title" : "习大大参观百度展台 李彦宏介绍无人车和百度翻译",
+                        "link" : "http://tech.ifeng.com/a/20151216/41524711_0.shtml",
                     },
                     "subComponents" : [{
-                        "componentName" : "图集单元",
                         "componentType" : "albumCell",
                         "leaf" : { 
                             "leafName" : "leaf_4_1",
                             "updateTime" : "1448935284",
-                            "title" : "图1",
-                            "desc" : "描述1",
-                            "picture" : "http://picm.photophoto.cn/005/008/002/0080020436.jpg",
+                            "picture" : "https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2983569372,3003115457&fm=80",
                         },
                     },
                     {
-                        "componentName" : "图集单元",
                         "componentType" : "albumCell",
                         "leaf" : { 
                             "leafName" : "leaf_4_2",
                             "updateTime" : "1448935284",
-                            "title" : "图2",
-                            "desc" : "描述2",
-                            "picture" : "http://picm.photophoto.cn/005/008/002/0080020436.jpg",
+                            "picture" : "https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3478739337,2534079207&fm=80",
                         },
                     },
                     {
-                        "componentName" : "图集单元",
                         "componentType" : "albumCell",
                         "leaf" : { 
                             "leafName" : "leaf_4_3",
                             "updateTime" : "1448935284",
-                            "title" : "图3",
-                            "desc" : "描述3",
-                            "picture" : "http://picm.photophoto.cn/005/008/002/0080020436.jpg",
+                            "picture" : "https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3262148077,2591697069&fm=80",
                         }, 
                     }],
                 }],
@@ -138,24 +131,22 @@ var QuiltViewExample = React.createClass({
             "mapping" : {
                 "headline" : {
                     "title" : "leaf.title",
-                    "subtitle" : "leaf.desc",
-                    "image" : "leaf.picture",
+                    "url" : "leaf.link",
                 },
                 "album" : {
                     "title" : "leaf.title",
+                    "url" : "leaf.link",
                 },
                 "albumCell" : {
                     "image" : "leaf.picture",
                 },
                 "headlineCell" : {
-                    "title" : "leaf.title",
-                    "subtitle" : "leaf.desc",
                     "image" : "leaf.picture",
                 },
                 "normalCell" : {
                     "title" : "leaf.title",
-                    "subtitle" : "leaf.desc",
                     "image" : "leaf.picture",
+                    "url" : "leaf.link",
                 },
             }
         });
@@ -199,9 +190,8 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center',
     backgroundColor: 'white',
-    marginTop: 20,
+    marginTop: 10,
   },
   cell: {
     flex: 1,
@@ -227,5 +217,28 @@ var styles = StyleSheet.create({
     marginLeft: 20,
   },
 });
+
+// 导航条
+class NavBar extends React.Component {
+    render(){
+        return <NavigationBar style={{backgroundColor: '#0db0d9'}}
+                              titleColor='white'
+                              buttonsColor='white'
+                              statusBar='lightContent' {...this.props} />
+    }
+}
+
+// 页面路由
+class QuiltViewExample extends React.Component {
+    render(){
+        return (
+            <Router>
+                <Schema name="default" navBar={NavBar} sceneConfig={Animations.FlatFloatFromRight}/>
+                <Route name="launch" component={Launch} title="QuiltView Demo"/>
+                <Route name="news" component={WebView} title="News"/>
+            </Router>
+        );
+    }
+}
 
 AppRegistry.registerComponent('QuiltViewExample', () => QuiltViewExample);
