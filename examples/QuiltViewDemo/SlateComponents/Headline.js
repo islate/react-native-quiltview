@@ -73,18 +73,19 @@ var Headline = React.createClass({
         var mapping = this.props.mapping;
         var subComponents = data.subComponents;
         var container = <RNCellView style={styles.headline}  {...this.props} />;
+        
         if (!subComponents) {
             return container;
         }
 
-        var children = [];
         var scrollview = <ScrollView ref={(ref) => this.myScroll = ref}
                                     pagingEnabled={true}
                                     horizontal={true} 
                                     bounces={false}
                                     automaticallyAdjustContentInsets={false}
                                  style={styles.scrollview}/>;
-        var scrollviewChildren = []
+
+        var scrollviewChildren = [];
         for (var index = 0; index < subComponents.length; index++) {
             // 渲染数据
             var subData = subComponents[index];
@@ -92,10 +93,9 @@ var Headline = React.createClass({
             scrollviewChildren.push(headlineCell); 
         };
 
-        var images = React.cloneElement(scrollview, {key : 'scrollview'}, scrollviewChildren);
-        children.push(images);
+        var scrollviewWithChildren = React.cloneElement(scrollview, {key : 'scrollview'}, scrollviewChildren);
 
-        return React.cloneElement(container, {ref : 'headline'}, children);
+        return React.cloneElement(container, {ref : 'headline'}, scrollviewWithChildren);
     }
 });
 
