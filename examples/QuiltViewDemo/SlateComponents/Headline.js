@@ -116,8 +116,9 @@ var styles = StyleSheet.create({
     color: 'white',
     bottom: 0,
     left: 0,
+    paddingTop: 4,
     width: 312,
-    height: 20
+    height: 25
   },
   cell: {
     flex: 1,
