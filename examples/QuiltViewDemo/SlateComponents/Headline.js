@@ -3,6 +3,7 @@
 var React = require('react-native');
 var { Image, Text, View, StyleSheet, requireNativeComponent, TouchableOpacity, ScrollView } = React;
 var { Actions } = require('react-native-router-flux');
+var TimerMixin = require('react-timer-mixin');
 
 var RNCellView = requireNativeComponent('RNCellView', null);
 
@@ -28,7 +29,10 @@ var slateComponents = {
     "headlineCell" : HeadlineCell,
 };
 
+var i = 0;
+
 var Headline = React.createClass({
+    mixins: [TimerMixin],
     propTypes: {
         widthRatio: React.PropTypes.number,
         heightRatio: React.PropTypes.number
@@ -39,6 +43,20 @@ var Headline = React.createClass({
             widthRatio: 4,
             heightRatio: 2,
         };
+    },
+
+    componentDidMount() {
+        this.setInterval(()=>{
+            // 模拟自动轮播
+            if (i>2) {
+                i=0;
+                this.myScroll.scrollWithoutAnimationTo(0, 300 * i);
+            }
+            else {
+                this.myScroll.scrollTo(0, 300 * i);
+            }
+            i++;
+        }, 3000);
     },
 
     _renderHeadlineCell(index : number, data : object) {
@@ -59,7 +77,9 @@ var Headline = React.createClass({
         }
 
         var children = [];
-        var imageContainer = <ScrollView pagingEnabled={true}
+        var imageContainer = <ScrollView 
+                                    ref={(ref) => this.myScroll = ref}
+                                    pagingEnabled={true}
                                     horizontal={true} 
                                     //automaticallyAdjustContentInsets={false}
                                  style={styles.scrollview}/>;
@@ -71,7 +91,7 @@ var Headline = React.createClass({
             imageContainerChildren.push(headlineCell); 
         };
 
-        var images = React.cloneElement(imageContainer, {ref : 'scrollview', key : 'scrollview'}, imageContainerChildren);
+        var images = React.cloneElement(imageContainer, {key : 'scrollview'}, imageContainerChildren);
         children.push(images);
 
         return React.cloneElement(container, {ref : 'headline'}, children);

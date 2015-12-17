@@ -59,6 +59,16 @@ var Launch = React.createClass({
                             "link" : "http://finance.eastmoney.com/news/1670,20151214575421513.html",
                             "picture" : "http://z1.dfcfw.com/2015/12/14/201512141343461702074190.jpg",
                         },
+                    },
+                    {
+                        "componentType" : "headlineCell",
+                        "leaf" : { 
+                            "leafName" : "leaf_1_3",
+                            "updateTime" : "1448935284",
+                            "title" : "奥地利警方逮捕2名嫌犯 调查其与巴黎恐袭联系",
+                            "link" : "http://news.sohu.com/20151216/n431547423.shtml",
+                            "picture" : "http://photocdn.sohu.com/20151216/Img431547424.jpg",
+                        },
                     }]
                 },
                 {
