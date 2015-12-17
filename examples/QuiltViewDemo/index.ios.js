@@ -40,18 +40,14 @@ var Launch = React.createClass({
             "components" : [{
                 "componentType" : "headline",
                 "offset" : 1,
-                "leaf" : { 
-                        "leafName" : "leaf_1_1",
-                        "updateTime" : "1448935284",
-                        "title" : "“双12”袭来　丰田RAV4再掀购车狂潮",
-                        "link" : "http://auto.ycwb.com/2015-12/14/content_20991507.htm",
-                    }, 
                     "subComponents" : [{
                         "componentType" : "headlineCell",
                         "leaf" : { 
                             "leafName" : "leaf_1_1",
                             "updateTime" : "1448935284",
-                            "picture" : "https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=2264917522,2698064010&fm=80",
+                            "title" : "“双12”袭来　丰田RAV4再掀购车狂潮",
+                            "link" : "http://auto.ycwb.com/2015-12/14/content_20991507.htm",
+                            "picture" : "http://img.ycwb.com/auto/attachement/jpg/site2/20151214/448a5bb0f5b617d8c39801.jpg",
                         }, 
                     },
                     {
@@ -59,17 +55,11 @@ var Launch = React.createClass({
                         "leaf" : { 
                             "leafName" : "leaf_1_2",
                             "updateTime" : "1448935284",
-                            "picture" : "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=2070245312,2918934520&fm=80",
+                            "title" : "iPhone 7五大传闻曝光 6s用户已哭瞎",
+                            "link" : "http://finance.eastmoney.com/news/1670,20151214575421513.html",
+                            "picture" : "http://z1.dfcfw.com/2015/12/14/201512141343461702074190.jpg",
                         },
-                    },
-                    {
-                        "componentType" : "headlineCell",
-                        "leaf" : { 
-                            "leafName" : "leaf_1_3",
-                            "updateTime" : "1448935284",
-                            "picture" : "https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2169543423,2641506640&fm=80",
-                        },
-                    }],
+                    }]
                 },
                 {
                     "componentType" : "normalCell",
@@ -129,10 +119,6 @@ var Launch = React.createClass({
                 }],
             }, 
             "mapping" : {
-                "headline" : {
-                    "title" : "leaf.title",
-                    "url" : "leaf.link",
-                },
                 "album" : {
                     "title" : "leaf.title",
                     "url" : "leaf.link",
@@ -142,6 +128,8 @@ var Launch = React.createClass({
                 },
                 "headlineCell" : {
                     "image" : "leaf.picture",
+                    "title" : "leaf.title",
+                    "url" : "leaf.link",
                 },
                 "normalCell" : {
                     "title" : "leaf.title",
@@ -192,30 +180,7 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'white',
     marginTop: 10,
-  },
-  cell: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: 'lightgray',
-  },
-  icon: {
-    marginLeft: 15,
-    marginTop: 10,
-    width: 46,
-    height: 46,
-  },
-  title: {
-    textAlign: 'left',
-    color: '#333333',
-    marginTop: 10,
-    marginLeft: 20,
-    marginBottom: 10,
-  },
-  desc: {
-    textAlign: 'left',
-    color: '#333333',
-    marginLeft: 20,
-  },
+  }
 });
 
 // 导航条

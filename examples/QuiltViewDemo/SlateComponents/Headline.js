@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react-native');
-var { Image, Text, View, StyleSheet, requireNativeComponent, TouchableOpacity } = React;
+var { Image, Text, View, StyleSheet, requireNativeComponent, TouchableOpacity, ScrollView } = React;
 var { Actions } = require('react-native-router-flux');
 
 var RNCellView = requireNativeComponent('RNCellView', null);
@@ -14,9 +14,13 @@ var HeadlineCell = React.createClass({
         // 通过模型映射得到字段值
         var m = mapping[data.componentType];
         var image = eval("data." + m["image"]);
+        var title = eval("data." + m["title"]);
+        var url = eval("data." + m["url"]);
 
         // 渲染
-        return <Image style={styles.icon} source={{uri: image}} />;
+        return <TouchableOpacity onPress={()=>Actions.news({"url": url, "title": title})} style={styles.image}>
+                    <Image style={styles.image} source={{uri: image}} />
+                </TouchableOpacity>;
     }
 });
 
@@ -54,17 +58,11 @@ var Headline = React.createClass({
             return container;
         }
 
-        // 通过模型映射得到字段值
-        var m = mapping[data.componentType];
-        var title = eval("data." + m["title"]);
-        var url = eval("data." + m["url"]);
-
         var children = [];
-
-        var titleText = <Text style={styles.title}>{title}</Text>;
-        children.push(titleText);
-
-        var imageContainer = <View style={styles.imageContainer}/>;
+        var imageContainer = <ScrollView pagingEnabled={true}
+                                    horizontal={true} 
+                                    //automaticallyAdjustContentInsets={false}
+                                 style={styles.scrollview}/>;
         var imageContainerChildren = []
         for (var index = 0; index < subComponents.length; index++) {
             // 渲染数据
@@ -73,24 +71,22 @@ var Headline = React.createClass({
             imageContainerChildren.push(headlineCell); 
         };
 
-        var images = React.cloneElement(imageContainer, {ref : 'headlineimages'}, imageContainerChildren);
+        var images = React.cloneElement(imageContainer, {ref : 'scrollview', key : 'scrollview'}, imageContainerChildren);
         children.push(images);
 
-        var touch = <TouchableOpacity onPress={()=>Actions.news({"url": url, "title": title})} style={styles.cell} />;
-        var touchWithChildren = React.cloneElement(touch, {ref : 'touch'}, children);
-
-        return React.cloneElement(container, {ref : 'headline'}, touchWithChildren);
+        return React.cloneElement(container, {ref : 'headline'}, children);
     }
 });
 
 var styles = StyleSheet.create({
   cell: {
     flex: 1,
-    flexDirection: 'column',
     backgroundColor: 'lightgray',
   },
-  imageContainer: {
+  scrollview: {
+    flex: 1,
     flexDirection: 'row',
+    width:300,
   },
   title: {
     textAlign: 'left',
@@ -99,11 +95,10 @@ var styles = StyleSheet.create({
     marginLeft: 12,
     width: 290,
   },
-  icon: {
-    marginLeft: 12,
-    marginTop: 15,
-    width: 88,
-    height: 54,
+  image: {
+    flex: 1,
+    width:300,
+    height:200
   },
 });
 

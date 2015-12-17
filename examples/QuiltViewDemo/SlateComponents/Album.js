@@ -62,7 +62,7 @@ var Album = React.createClass({
 
         var children = [];
 
-        var titleText = <Text style={styles.title}>{title}</Text>;
+        var titleText = <Text style={styles.title} key="title">{title}</Text>;
         children.push(titleText);
 
         var imageContainer = <View style={styles.imageContainer}/>;
@@ -74,11 +74,11 @@ var Album = React.createClass({
             imageContainerChildren.push(albumCell); 
         };
 
-        var images = React.cloneElement(imageContainer, {ref : 'albumimages'}, imageContainerChildren);
+        var images = React.cloneElement(imageContainer, {ref : 'albumimages', key : 'albumimages'}, imageContainerChildren);
         children.push(images);
 
         var touch = <TouchableOpacity onPress={()=>Actions.news({"url": url, "title": title})} style={styles.cell} />;
-        var touchWithChildren = React.cloneElement(touch, {ref : 'touch'}, children);
+        var touchWithChildren = React.cloneElement(touch, {ref : 'touch', key : 'touch'}, children);
 
         return React.cloneElement(container, {ref : 'album'}, touchWithChildren);
     }
