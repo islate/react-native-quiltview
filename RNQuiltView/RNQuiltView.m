@@ -195,7 +195,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     RNQuiltViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-    RNCellView *cellView = [_rncells objectAtIndex:0];
+    RNCellView *cellView = nil;
     
     if (indexPath.row < _rncells.count) {
         cellView = [_rncells objectAtIndex:indexPath.row];

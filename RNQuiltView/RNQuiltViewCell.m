@@ -10,27 +10,23 @@
 
 @implementation RNQuiltViewCell
 
-
 - (void)setCellView:(RNCellView *)cellView {
+    if (_cellView) {
+        [_cellView removeFromSuperview];
+    }
     _cellView = cellView;
-    [self.contentView addSubview:cellView];
-    [_cellView setFrame:self.contentView.bounds];
+    if (_cellView) {
+        [self.contentView addSubview:cellView];
+        [_cellView setFrame:self.contentView.bounds];
+    }
 }
 
 - (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
-    [_cellView setFrame:self.contentView.bounds];
+    if (_cellView) {
+        [_cellView setFrame:self.contentView.bounds];
+    }
     self.clipsToBounds = YES;
 }
-
-// Called by the collection view before the instance is returned from the reuse queue.
-- (void)prepareForReuse
-{
-    [super prepareForReuse];
-//    self.cellView.collectionView.cells
-    NSLog(@" I'm reuse ");
-}
-
-
 
 @end
