@@ -8,43 +8,16 @@
 
 #import "RNQuiltView.h"
 
-#import "MMRefresh.h"
+//#import "MMRefresh.h"
 #import "RCTConvert.h"
 #import "RCTEventDispatcher.h"
 #import "RCTUtils.h"
 #import "UIView+React.h"
-#import "JSONDataSource.h"
+//#import "JSONDataSource.h"
 #import "RNCellView.h"
 #import "RFQuiltLayout.h"
 #import "RNCellModel.h"
 #import "RNQuiltViewCell.h"
-#import "RCTText.h"
-
-@interface RCTText (coding) <NSCoding>
-
-@end
-
-@implementation RCTText (coding)
-
-- (instancetype)initWithCoder:(NSCoder *)coder
-{
-    self = [super initWithCoder:coder];
-    if (self) {
-        self.textStorage = [coder decodeObjectForKey:@"textStorage"];
-        self.contentInset = [coder decodeUIEdgeInsetsForKey:@"contentInset"];
-    }
-    return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)coder
-{
-    [super encodeWithCoder:coder];
-    
-    [coder encodeObject:self.textStorage forKey:@"textStorage"];
-    [coder encodeUIEdgeInsets:self.contentInset forKey:@"contentInset"];
-}
-
-@end
 
 @interface RNQuiltView()<UICollectionViewDataSource, UICollectionViewDelegate, RFQuiltLayoutDelegate>
 {
@@ -52,7 +25,7 @@
 }
 @property (strong, nonatomic) NSMutableArray *selectedIndexes;
 @property (strong, nonatomic) UICollectionView *collectionView;
-@property (strong, nonatomic) MMRefresh *refreshView;
+//@property (strong, nonatomic) MMRefresh *refreshView;
 
 // 组件的像素信息
 @property (nonatomic, strong) RNCellModel *cellInfo;
@@ -122,11 +95,11 @@
 {
     [super layoutSubviews];
 
-    // if sections are not define, try to load JSON
-    if (![_sections count] && _json) {
-        datasource = [[JSONDataSource alloc] initWithFilename:_json filter:_filter args:_filterArgs];
-        self.sections = [NSMutableArray arrayWithArray:[datasource sections]];
-    }
+//    // if sections are not define, try to load JSON
+//    if (![_sections count] && _json) {
+//        datasource = [[JSONDataSource alloc] initWithFilename:_json filter:_filter args:_filterArgs];
+//        self.sections = [NSMutableArray arrayWithArray:[datasource sections]];
+//    }
 
     [_collectionView setFrame:self.bounds];
     
@@ -160,23 +133,23 @@
     return _collectionView;
 }
 
--(MMRefresh *)refreshView
-{
-    if(_refreshView == nil)
-    {
-        _refreshView = [MMRefresh refreshView];
-        [self addSubview:_refreshView];
-        // 添加约束
-        _refreshView.translatesAutoresizingMaskIntoConstraints = false;
-        [self addConstraint:[NSLayoutConstraint constraintWithItem:_refreshView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
-        [self addConstraint:[NSLayoutConstraint constraintWithItem:_refreshView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:60]];
-        [self addConstraint:[NSLayoutConstraint constraintWithItem:_refreshView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
-        [self addConstraint:[NSLayoutConstraint constraintWithItem:_refreshView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
-        
-        _refreshView.quiltView = self;
-    }
-    return _refreshView;
-}
+//-(MMRefresh *)refreshView
+//{
+//    if(_refreshView == nil)
+//    {
+//        _refreshView = [MMRefresh refreshView];
+//        [self addSubview:_refreshView];
+//        // 添加约束
+//        _refreshView.translatesAutoresizingMaskIntoConstraints = false;
+//        [self addConstraint:[NSLayoutConstraint constraintWithItem:_refreshView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
+//        [self addConstraint:[NSLayoutConstraint constraintWithItem:_refreshView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:60]];
+//        [self addConstraint:[NSLayoutConstraint constraintWithItem:_refreshView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
+//        [self addConstraint:[NSLayoutConstraint constraintWithItem:_refreshView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
+//        
+//        _refreshView.quiltView = self;
+//    }
+//    return _refreshView;
+//}
 
 - (RNCellModel *)cellInfo
 {
@@ -235,21 +208,21 @@
     return cell;
 }
 
-#pragma mark - collectionView delegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    self.refreshView.scrollView = scrollView;
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    if ( scrollView.contentOffset.y <= -60) {
-        self.refreshView.needRefresh = YES;
-        self.refreshView.scrollView = scrollView;
-        NSLog(@"需要刷新");
-    }
-}
+//#pragma mark - collectionView delegate
+//
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    self.refreshView.scrollView = scrollView;
+//}
+//
+//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+//{
+//    if ( scrollView.contentOffset.y <= -60) {
+//        self.refreshView.needRefresh = YES;
+//        self.refreshView.scrollView = scrollView;
+//        NSLog(@"需要刷新");
+//    }
+//}
 
 
 #pragma mark - RFQuiltLayoutDelegate
