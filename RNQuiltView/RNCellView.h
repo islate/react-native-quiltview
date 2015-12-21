@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RNCellView : UIView <NSCoding>
+@class RCTEventDispatcher;
 
-@property (nonatomic) NSInteger row;
-@property (nonatomic) NSInteger section;
+@interface RNCellView : UIView
+
+- (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic) NSInteger widthRatio;
 @property (nonatomic) NSInteger heightRatio;
-
 @property (nonatomic, strong) NSString *componentType;
 
 @end

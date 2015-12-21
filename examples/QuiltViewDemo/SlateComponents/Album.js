@@ -16,7 +16,19 @@ var AlbumCell = React.createClass({
         var image = eval("data." + m["image"]);
 
         // 渲染
-        return <Image style={styles.icon} source={{uri: image}} />;
+        return <Image style={this._imageStyles()} source={{uri: image}} />;
+    },
+
+    _imageStyles() {
+        var imageWidth = this.props.width * 0.8 / 3.0;
+        var imageHeight = imageWidth * 54.0 / 88.0;
+        var marginLeft = (this.props.width * 0.2) / 4.0;
+        return {
+            marginLeft: marginLeft,
+            marginTop: 15,
+            width: imageWidth,
+            height: imageHeight,
+        };
     }
 });
 
@@ -31,6 +43,10 @@ var Album = React.createClass({
         heightRatio: React.PropTypes.number
     },
 
+    getInitialState() {
+        return {width:0, height:0};
+    },
+
     getDefaultProps() {
         return {
             widthRatio: 4,
@@ -43,14 +59,17 @@ var Album = React.createClass({
         var componentType = data.componentType;
         var type = slateComponents[componentType];
         var mapping = this.props.mapping;
-        return React.createElement(type, {key : "albumcell" + index, data : data, mapping : mapping});
+        return React.createElement(type, {key : "albumcell" + index, data : data, mapping : mapping, width:this.state.width});
     },
 
     render() {
         var data = this.props.data;
         var mapping = this.props.mapping;
         var subComponents = data.subComponents;
-        var container = <RNCellView style={styles.cell}  {...this.props} />;
+        var container = <RNCellView
+                    onSizeChange={(event)=>{this.setState(event.nativeEvent.size)}}
+                     style={styles.cell} 
+                     {...this.props} />;
         if (!subComponents) {
             return container;
         }
@@ -62,7 +81,7 @@ var Album = React.createClass({
 
         var children = [];
 
-        var titleText = <Text style={styles.title} key="title">{title}</Text>;
+        var titleText = <Text style={this._titleStyles()} key="title">{title}</Text>;
         children.push(titleText);
 
         var imageContainer = <View style={styles.imageContainer}/>;
@@ -81,6 +100,16 @@ var Album = React.createClass({
         var touchWithChildren = React.cloneElement(touch, {ref : 'touch', key : 'touch'}, children);
 
         return React.cloneElement(container, {ref : 'album'}, touchWithChildren);
+    },
+
+    _titleStyles() {
+        return {
+            textAlign: 'left',
+            color: '#333333',
+            marginTop: 20,
+            marginLeft: 12,
+            width: this.state.width - 24,
+        };
     }
 });
 
@@ -92,13 +121,6 @@ var styles = StyleSheet.create({
   },
   imageContainer: {
     flexDirection: 'row',
-  },
-  title: {
-    textAlign: 'left',
-    color: '#333333',
-    marginTop: 20,
-    marginLeft: 12,
-    width: 290,
   },
   icon: {
     marginLeft: 12,

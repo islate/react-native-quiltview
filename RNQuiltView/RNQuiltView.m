@@ -20,9 +20,7 @@
 #import "RNQuiltViewCell.h"
 
 @interface RNQuiltView()<UICollectionViewDataSource, UICollectionViewDelegate, RFQuiltLayoutDelegate>
-{
-    id<RNQuiltViewDatasource> datasource;
-}
+
 @property (strong, nonatomic) NSMutableArray *selectedIndexes;
 @property (strong, nonatomic) UICollectionView *collectionView;
 //@property (strong, nonatomic) MMRefresh *refreshView;
@@ -35,7 +33,9 @@
 @implementation RNQuiltView
 {
     RCTEventDispatcher *_eventDispatcher;
+    RFQuiltLayout *_layout;
     NSMutableArray *_rncells;
+    CGFloat _width;
 }
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher
@@ -44,11 +44,7 @@
     
     if ((self = [super initWithFrame:CGRectZero])) {
         _eventDispatcher = eventDispatcher;
-        _cellHeight = 44;
         _rncells = [NSMutableArray array];
-        _autoFocus = YES;
-        
-        [self getScreenState:self.bounds.size];
     }
     return self;
 }
@@ -62,11 +58,7 @@
     for (NSDictionary *section in sections){
         NSMutableDictionary *sectionData = [NSMutableDictionary dictionaryWithDictionary:section];
         
-        
         NSMutableArray *allItems = [NSMutableArray array];
-        if (self.additionalItems){
-            [allItems addObjectsFromArray:self.additionalItems];
-        }
         [allItems addObjectsFromArray:sectionData[@"items"]];
         
         NSMutableArray *items = [NSMutableArray arrayWithCapacity:[allItems count]];
@@ -95,18 +87,9 @@
 {
     [super layoutSubviews];
 
-//    // if sections are not define, try to load JSON
-//    if (![_sections count] && _json) {
-//        datasource = [[JSONDataSource alloc] initWithFilename:_json filter:_filter args:_filterArgs];
-//        self.sections = [NSMutableArray arrayWithArray:[datasource sections]];
-//    }
-
     [_collectionView setFrame:self.bounds];
     
-    // 如果外部设置了值就不在自动计算
-    if (!(self.pixelHeight || self.pixelWidth)) {
-        [self getScreenState:self.bounds.size];
-    }
+    [self getScreenState:self.bounds.size];
 }
 
 #pragma mark - lazy load
@@ -115,13 +98,13 @@
 {
     if (_collectionView == nil)
     {
-        RFQuiltLayout *layout = [RFQuiltLayout new];
-        layout.direction = UICollectionViewScrollDirectionVertical;
-        layout.delegate = self;
+        _layout = [RFQuiltLayout new];
+        _layout.direction = UICollectionViewScrollDirectionVertical;
+        _layout.delegate = self;
         // item像素
-        layout.blockPixels = CGSizeMake(self.cellInfo.pixelWidth, self.cellInfo.pixelHeight);
+        _layout.blockPixels = CGSizeMake(self.cellInfo.pixelWidth, self.cellInfo.pixelHeight);
         
-        _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
+        _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:_layout];
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
         _collectionView.backgroundColor = [UIColor clearColor];
@@ -160,28 +143,7 @@
     return _cellInfo;
 }
 
-- (void)setPixelWidth:(CGFloat)pixelWidth
-{
-    _pixelWidth = pixelWidth;
-    
-    RFQuiltLayout *layout = (RFQuiltLayout *)self.collectionView.collectionViewLayout;
-    layout.blockPixels = CGSizeMake(pixelWidth, layout.blockPixels.height);
-}
-
-- (void)setPixelHeight:(CGFloat)pixelHeight
-{
-    pixelHeight = pixelHeight;
-    
-    RFQuiltLayout *layout = (RFQuiltLayout *)self.collectionView.collectionViewLayout;
-    layout.blockPixels = CGSizeMake(layout.blockPixels.width, pixelHeight);
-}
-
 #pragma mark - UICollectionViewDataSource
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return 1;
-}
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -242,12 +204,17 @@
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetsForItemAtIndexPath:(NSIndexPath *)indexPath // defaults to uiedgeinsetszero
 {
     // 默认有边距, 这里设置的数值,会在cell 的frame 中减掉
-    return UIEdgeInsetsMake(0, 4, 10, 4);
+    return UIEdgeInsetsMake(0, 0, 1, 0);
+//    return UIEdgeInsetsZero;
 }
 
 /* 判断当前屏幕状态,并设定单元cell */
 - (void)getScreenState:(CGSize)size
 {
+    if (_width == size.width) {
+        return;
+    }
+    
     switch ((int)size.width) {
         case 1366:
             [self.cellInfo updateCellWithTag:ScreenSize_1366];
@@ -273,6 +240,9 @@
         case 438:
             [self.cellInfo updateCellWithTag:ScreenSize_438];
             break;
+        case 414:
+            [self.cellInfo updateCellWithTag:ScreenSize_414];
+            break;
         case 375:
             [self.cellInfo updateCellWithTag:ScreenSize_375];
             break;
@@ -284,11 +254,10 @@
             break;
     }
     
+    _width = size.width;
     
     // 修改布局属性
-    RFQuiltLayout* layout = (RFQuiltLayout *)self.collectionView.collectionViewLayout;
-    
-    layout.blockPixels = CGSizeMake(self.cellInfo.pixelWidth, self.cellInfo.pixelHeight);
+    _layout.blockPixels = CGSizeMake(self.cellInfo.pixelWidth, self.cellInfo.pixelHeight);
 }
 
 #pragma mark - Private APIs
@@ -303,12 +272,6 @@
 {
     return (NSDictionary *)_sections[section][@"items"][row];
 }
-
-- (BOOL)hasCustomCells:(NSInteger)section
-{
-    return [[_sections[section] valueForKey:@"customCells"] boolValue];
-}
-
 
 RCT_NOT_IMPLEMENTED(-initWithFrame:(CGRect)frame)
 RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)

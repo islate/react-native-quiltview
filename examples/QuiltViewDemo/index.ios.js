@@ -189,7 +189,6 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     backgroundColor: 'white',
-    marginTop: 10,
   }
 });
 

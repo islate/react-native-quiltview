@@ -8,26 +8,42 @@
 
 #import "RNCellView.h"
 
-@implementation RNCellView
+#import "RCTConvert.h"
+#import "RCTEventDispatcher.h"
+#import "RCTUtils.h"
+#import "UIView+React.h"
 
-- (instancetype)initWithCoder:(NSCoder *)coder
+@implementation RNCellView
 {
-    self = [super initWithCoder:coder];
-    if (self) {
-        _widthRatio = [coder decodeIntegerForKey:@"widthRatio"];
-        _heightRatio = [coder decodeIntegerForKey:@"heightRatio"];
-        _componentType = [coder decodeObjectForKey:@"componentType"];
+    RCTEventDispatcher *_eventDispatcher;
+    CGFloat _width;
+}
+
+- (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher
+{
+    RCTAssertParam(eventDispatcher);
+    
+    if ((self = [super initWithFrame:CGRectZero])) {
+        _eventDispatcher = eventDispatcher;
     }
     return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)coder
+- (void)setFrame:(CGRect)frame
 {
-    [super encodeWithCoder:coder];
+    [super setFrame:frame];
     
-    [coder encodeInteger:_widthRatio forKey:@"widthRatio"];
-    [coder encodeInteger:_heightRatio forKey:@"heightRatio"];
-    [coder encodeObject:_componentType forKey:@"componentType"];
+    if (_width == frame.size.width) {
+        return;
+    }
+    
+    _width = frame.size.width;
+    
+    // 发送事件给js
+    [_eventDispatcher sendInputEventWithName:@"sizeChange" body:@{@"target":self.reactTag, @"size":@{@"width":@(self.frame.size.width), @"height" : @(self.frame.size.height)}}];
 }
+
+RCT_NOT_IMPLEMENTED(-initWithFrame:(CGRect)frame)
+RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 
 @end

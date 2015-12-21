@@ -19,11 +19,42 @@ var HeadlineCell = React.createClass({
         var url = eval("data." + m["url"]);
 
         // 渲染
-        return <TouchableOpacity onPress={()=>Actions.news({"url": url, "title": title})} style={styles.cell}>
-                    <Image style={styles.image} source={{uri: image}} />
-                    <Text style={styles.title} >{title}</Text>
+        return <TouchableOpacity onPress={()=>Actions.news({"url": url, "title": title})} style={this._cellStyles()}>
+                    <Image style={this._imageStyles()} source={{uri: image}} />
+                    <Text style={this._textStyles()} >{title}</Text>
                 </TouchableOpacity>;
-    }
+    },
+
+    _cellStyles() {
+        return {
+            flex: 1,
+            flexDirection: 'column',
+            width:this.props.width,
+            height:this.props.height
+        };
+    },
+
+    _imageStyles() {
+        return {
+            flex: 1,
+            width:this.props.width,
+            height:this.props.height
+        };
+    },
+
+    _textStyles() {
+        return {
+            position: 'absolute',
+            textAlign: 'center',
+            backgroundColor: 'rgba(52,52,52,0.6)',
+            color: 'white',
+            bottom: 0,
+            left: 0,
+            paddingTop: 4,
+            width: this.props.width,
+            height: 25
+        };
+    },
 });
 
 var slateComponents = {
@@ -39,6 +70,10 @@ var Headline = React.createClass({
         heightRatio: React.PropTypes.number
     },
 
+    getInitialState() {
+        return {width:0, height:0};
+    },
+
     getDefaultProps() {
         return {
             widthRatio: 4,
@@ -49,12 +84,13 @@ var Headline = React.createClass({
     componentDidMount() {
         this.setInterval(()=>{
             // 模拟自动轮播
+            var width = this.state.width;
             if (i>2) {
                 i=0;
-                this.myScroll.scrollWithoutAnimationTo(0, 312 * i);
+                this.myScroll.scrollWithoutAnimationTo(0, width * i);
             }
             else {
-                this.myScroll.scrollTo(0, 312 * i);
+                this.myScroll.scrollTo(0, width * i);
             }
             i++;
         }, 3000);
@@ -65,14 +101,19 @@ var Headline = React.createClass({
         var componentType = data.componentType;
         var type = slateComponents[componentType];
         var mapping = this.props.mapping;
-        return React.createElement(type, {key : "headlinecell" + index, data : data, mapping : mapping});
+        return React.createElement(type, {key : "headlinecell" + index, 
+            data : data, 
+            mapping : mapping, 
+            width:this.state.width, 
+            height:this.state.height});
     },
 
     render() {
         var data = this.props.data;
         var mapping = this.props.mapping;
         var subComponents = data.subComponents;
-        var container = <RNCellView style={styles.headline}  {...this.props} />;
+        var container = <RNCellView style={styles.headline}  {...this.props}
+                    onSizeChange={(event)=>{this.setState(event.nativeEvent.size)}} />;
         
         if (!subComponents) {
             return container;
@@ -83,7 +124,7 @@ var Headline = React.createClass({
                                     horizontal={true} 
                                     bounces={false}
                                     automaticallyAdjustContentInsets={false}
-                                 style={styles.scrollview}/>;
+                                 style={this._scrollViewStyles()}/>;
 
         var scrollviewChildren = [];
         for (var index = 0; index < subComponents.length; index++) {
@@ -96,40 +137,21 @@ var Headline = React.createClass({
         var scrollviewWithChildren = React.cloneElement(scrollview, {key : 'scrollview'}, scrollviewChildren);
 
         return React.cloneElement(container, {ref : 'headline'}, scrollviewWithChildren);
-    }
+    },
+
+    _scrollViewStyles() {
+        return {
+            flex: 1,
+            flexDirection: 'row',
+            width:this.state.width,
+        };
+    },
 });
 
 var styles = StyleSheet.create({
   headline: {
     flex: 1,
     backgroundColor: 'lightgray',
-  },
-  scrollview: {
-    flex: 1,
-    flexDirection: 'row',
-    width:312,
-  },
-  title: {
-    position: 'absolute',
-    textAlign: 'center',
-    backgroundColor: 'rgba(52,52,52,0.6)',
-    color: 'white',
-    bottom: 0,
-    left: 0,
-    paddingTop: 4,
-    width: 312,
-    height: 25
-  },
-  cell: {
-    flex: 1,
-    flexDirection: 'column',
-    width:312,
-    height:150
-  },
-  image: {
-    flex: 1,
-    width:312,
-    height:150
   },
 });
 

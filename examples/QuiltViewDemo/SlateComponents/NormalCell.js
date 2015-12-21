@@ -12,6 +12,10 @@ var NormalCell = React.createClass({
         heightRatio: React.PropTypes.number
     },
 
+    getInitialState() {
+        return {width:0, height:0};
+    },
+
     getDefaultProps() {
         return {
             widthRatio: 4,
@@ -34,36 +38,45 @@ var NormalCell = React.createClass({
         var url = eval("data." + m["url"]);
 
         // 渲染
-        return <RNCellView style={styles.cell}  {...this.props}>
-                    <TouchableOpacity onPress={()=>Actions.news({"url": url, "title": title})} style={styles.cell}>
+        return <RNCellView
+                     style={styles.cell} 
+                         {...this.props} 
+                         onSizeChange={(event)=>{this.setState(event.nativeEvent.size)}} >
+                    <TouchableOpacity onPress={()=>Actions.news({"url": url, "title": title})} style={styles.touch}>
                         <Image style={styles.icon} source={{uri: image}} />
                         <View>
-                            <Text style={styles.title}>{title}</Text>
+                            <Text style={this._titleStyles()}>{title}</Text>
                             <Text style={styles.desc}>{subtitle}</Text>
                         </View>
                     </TouchableOpacity>
                 </RNCellView>;
+    },
+
+    _titleStyles() {
+        return {
+            textAlign: 'left',
+            color: '#333333',
+            marginTop: 10,
+            marginLeft: 12,
+            width: this.state.width - 62
+        };
     }
 });
 
 var styles = StyleSheet.create({
   cell: {
     flex: 1,
-    flexDirection: 'row',
     backgroundColor: 'lightgray',
+  },
+  touch : {
+    flex: 1,
+    flexDirection: 'row',
   },
   icon: {
     marginLeft: 12,
     marginTop: 10,
     width: 50,
     height: 50,
-  },
-  title: {
-    textAlign: 'left',
-    color: '#333333',
-    marginTop: 10,
-    marginLeft: 12,
-    width: 230,
   },
   desc: {
     textAlign: 'left',

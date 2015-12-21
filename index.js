@@ -15,44 +15,6 @@ function extend(el, map) {
 var QuiltView = React.createClass({
     mixins: [NativeMethodsMixin],
 
-    propTypes: {
-        onPress: React.PropTypes.func,
-        selectedValue: React.PropTypes.any, // string or integer basically
-        autoFocus: React.PropTypes.bool,
-        moveWithinSectionOnly: React.PropTypes.bool,
-        json: React.PropTypes.string,
-        textColor: React.PropTypes.string,
-        detailTextColor: React.PropTypes.string,
-        tintColor: React.PropTypes.string,
-        footerLabel: React.PropTypes.string,
-        headerFont: React.PropTypes.number,
-        headerTextColor: React.PropTypes.string,
-        footerTextColor: React.PropTypes.string,
-        separatorColor: React.PropTypes.string,
-
-
-        /**
-         * The amount by which the content is inset from the edges
-         * of the TableView. Defaults to `{0, 0, 0, 0}`.
-         * @platform ios
-         */
-        contentInset: React.EdgeInsetsPropType,
-        /**
-         * Used to manually set the starting scroll offset.
-         * The default value is `{x: 0, y: 0}`.
-         * @platform ios
-         */
-        contentOffset: React.PointPropType,
-        /**
-         * The amount by which the scroll view indicators are inset from the
-         * edges of the TableView. This should normally be set to the same
-         * value as the `contentInset`. Defaults to `contentInset` or
-         * `{0, 0, 0, 0}`.
-         * @platform ios
-         */
-        scrollIndicatorInsets: React.EdgeInsetsPropType,
-    },
-
     getInitialState: function() {
         return this._stateFromProps(this.props);
     },
@@ -65,52 +27,37 @@ var QuiltView = React.createClass({
     // Translate TableView prop and children into stuff that RNTableView understands.
     _stateFromProps: function(props) {
         var sections = [];
-        var additionalItems = [];
         var children = [];
-        var json = props.json;
 
         // iterate over sections
         React.Children.forEach(props.children, function (section, index) {
             var items=[];
             var count = 0;
             if (section && section.type == QuiltView.Section) {
-                let customCells = false;
                 React.Children.forEach(section.props.children, function (child, itemIndex) {
                     var el = {};
                     extend(el, section.props);
                     extend(el, child.props);
-                    if (el.children) {
-                        el.label = el.children;
-                    }
                     count++;
                     items.push(el);
 
                     //if (child.type==QuiltView.Cell){
-                        customCells = true;
                         count++;
-                        var element = React.cloneElement(child, {key: index+" "+itemIndex, section: index, row: itemIndex});
+                        var element = React.cloneElement(child, {key: index+" "+itemIndex});
                         children.push(element);
                     //}
 
                 });
                 sections.push({
-                    customCells,
-                    label: section.props.label,
                     items: items,
                     count: count
                 });
-            } else if (section && section.type == QuiltView.Item){
-                var el = extend({},section.props);
-                if (!el.label){
-                    el.label = el.children;
-                }
-                additionalItems.push(el);
             } else if (section){
                 children.push(section);
             }
         });
         this.sections = sections;
-        return {sections, additionalItems, children, json};
+        return {sections, children};
     },
 
     render: function() {
@@ -120,28 +67,12 @@ var QuiltView = React.createClass({
                     ref={QUILTVIEW}
                     style={this.props.style}
                     sections={this.state.sections}
-                    additionalItems={this.state.additionalItems}
-                    scrollIndicatorInsets={this.props.contentInset}
-                    {...this.props}
-                    json={this.state.json}
-                    onPress={this._onPress}>
+                    {...this.props} >
 
                     {this.state.children}
                 </RNQuiltView>
             </View>
         );
-    },
-
-    _onPress: function(event) {
-        var data = event.nativeEvent;
-        if (this.sections[data.selectedSection] && this.sections[data.selectedSection].items[data.selectedIndex] &&
-            this.sections[data.selectedSection] && this.sections[data.selectedSection].items[data.selectedIndex].onPress){
-            this.sections[data.selectedSection] && this.sections[data.selectedSection].items[data.selectedIndex].onPress(data);
-        }
-        if (this.props.onPress) {
-            this.props.onPress(data);
-        }
-        event.stopPropagation();
     },
 });
 
@@ -162,7 +93,7 @@ QuiltView.Cell = React.createClass({
         return {width:0, height:0}
     },
     render: function() {
-        return <RNCellView onLayout={(event)=>{this.setState(event.nativeEvent.layout)}} {...this.props} componentWidth={this.state.width} componentHeight={this.state.height}/>
+        return <RNCellView onLayout={(event)=>{this.setState(event.nativeEvent.layout)}} {...this.props} />
     },
 });
 var RNCellView = requireNativeComponent('RNCellView', null);

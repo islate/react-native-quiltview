@@ -17,67 +17,63 @@
     switch (aTag) {
         case ScreenSize_1366:// 1366
             dict = @{@"pixelWidth":@"130.0",
-                     @"pixelHeight":@"130.0",
-                     @"moduleTypeNum":@"3"};
+                     @"pixelHeight":@"130.0"};
             break;
             
         case ScreenSize_1024:// 1024
         case ScreenSize_981: // 981
             dict = @{@"pixelWidth":@"120.0",
-                     @"pixelHeight":@"120.0",
-                     @"moduleTypeNum":@"3"};
+                     @"pixelHeight":@"120.0"};
             break;
             
         case ScreenSize_768: // 768
             dict = @{@"pixelWidth":@"90.0",
-                     @"pixelHeight":@"90.0",
-                     @"moduleTypeNum":@"3"};
+                     @"pixelHeight":@"90.0"};
             break;
             
         case ScreenSize_694: // 694
             dict = @{@"pixelWidth":@"82.0",
-                     @"pixelHeight":@"82.0",
-                     @"moduleTypeNum":@"3"};
+                     @"pixelHeight":@"82.0"};
             break;
             
         case ScreenSize_678: // 678
             dict = @{@"pixelWidth":@"80.0",
-                    @"pixelHeight":@"80.0",
-                    @"moduleTypeNum":@"3"};
+                    @"pixelHeight":@"80.0"};
         break;
             
         case ScreenSize_639: // 639
             dict = @{@"pixelWidth":@"75.0",
-                     @"pixelHeight":@"75.0",
-                     @"moduleTypeNum":@"3"};
+                     @"pixelHeight":@"75.0"};
             break;
             
         case ScreenSize_507: //507
             dict = @{@"pixelWidth":@"60.0",
-                     @"pixelHeight":@"60.0",
-                     @"moduleTypeNum":@"3"};
+                     @"pixelHeight":@"60.0"};
             break;
             
         case ScreenSize_438: //438   没有轮播器
             dict = @{@"pixelWidth":@"100.0",
-                     @"pixelHeight":@"100.0",
-                     @"moduleTypeNum":@"4"};
+                     @"pixelHeight":@"100.0"};
+            break;
+            
+        case ScreenSize_414: //414   没有轮播器
+            dict = @{@"pixelWidth":@"103.5",
+                     @"pixelHeight":@"103.5"};
             break;
             
         case ScreenSize_375: //375   没有轮播器
-            dict = @{@"pixelWidth":@"80.0",
-                     @"pixelHeight":@"80.0",
-                     @"moduleTypeNum":@"4"};
+            dict = @{@"pixelWidth":@"93.75",
+                     @"pixelHeight":@"93.75"};
             break;
             
         case ScreenSize_320: //320
-            dict = @{@"pixelWidth":@"35.0",
-                     @"pixelHeight":@"35.0",
-                     @"moduleTypeNum":@"3"};
+            dict = @{@"pixelWidth":@"80.0",
+                     @"pixelHeight":@"80.0"};
             break;
        
-            default:
+        default:
             NSLog(@"屏幕类型未识别!");
+            break;
         }
     
     [self setValuesForKeysWithDictionary:dict];
