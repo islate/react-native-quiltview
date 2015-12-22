@@ -204,6 +204,9 @@
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetsForItemAtIndexPath:(NSIndexPath *)indexPath // defaults to uiedgeinsetszero
 {
     // 默认有边距, 这里设置的数值,会在cell 的frame 中减掉
+    if (collectionView.bounds.size.width > 414) {
+        return UIEdgeInsetsMake(2, 2, 2, 2);
+    }
     return UIEdgeInsetsMake(0, 0, 1, 0);
 //    return UIEdgeInsetsZero;
 }
@@ -258,6 +261,11 @@
     
     // 修改布局属性
     _layout.blockPixels = CGSizeMake(self.cellInfo.pixelWidth, self.cellInfo.pixelHeight);
+    
+    // 通知各个Cell修正大小 （解决了旋转和分屏的样式适配）
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateBlockPixels" object:nil];
+    });
 }
 
 #pragma mark - Private APIs

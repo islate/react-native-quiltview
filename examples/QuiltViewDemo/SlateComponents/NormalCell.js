@@ -43,7 +43,7 @@ var NormalCell = React.createClass({
                          {...this.props} 
                          onSizeChange={(event)=>{this.setState(event.nativeEvent.size)}} >
                     <TouchableOpacity onPress={()=>Actions.news({"url": url, "title": title})} style={styles.touch}>
-                        <Image style={styles.icon} source={{uri: image}} />
+                        <Image style={this._imageStyles()} source={{uri: image}} />
                         <View>
                             <Text style={this._titleStyles()}>{title}</Text>
                             <Text style={styles.desc}>{subtitle}</Text>
@@ -53,12 +53,24 @@ var NormalCell = React.createClass({
     },
 
     _titleStyles() {
+        var imageWidth = this.state.height - 24;
         return {
             textAlign: 'left',
             color: '#333333',
             marginTop: 10,
             marginLeft: 12,
-            width: this.state.width - 62
+            width: this.state.width - 4 - 12 - imageWidth - 12
+        };
+    },
+
+    _imageStyles() {
+        var width = this.state.height - 24;
+        var height = width;
+        return {
+            marginLeft: 12,
+            marginTop: 10,
+            width: width,
+            height: height,
         };
     }
 });
@@ -71,12 +83,6 @@ var styles = StyleSheet.create({
   touch : {
     flex: 1,
     flexDirection: 'row',
-  },
-  icon: {
-    marginLeft: 12,
-    marginTop: 10,
-    width: 50,
-    height: 50,
   },
   desc: {
     textAlign: 'left',

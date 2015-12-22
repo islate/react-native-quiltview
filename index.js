@@ -2,7 +2,6 @@
 
 var React = require('react-native');
 var {NativeMethodsMixin, ReactNativeViewAttributes, NativeModules, StyleSheet, View, requireNativeComponent} = React;
-var RNQuiltViewConsts = NativeModules.UIManager.RNQuiltView.Constants;
 
 var QUILTVIEW = 'quiltview';
 
@@ -93,7 +92,7 @@ QuiltView.Cell = React.createClass({
         return {width:0, height:0}
     },
     render: function() {
-        return <RNCellView onLayout={(event)=>{this.setState(event.nativeEvent.layout)}} {...this.props} />
+        return <RNCellView {...this.props} />
     },
 });
 var RNCellView = requireNativeComponent('RNCellView', null);
@@ -113,16 +112,6 @@ QuiltView.Section = React.createClass({
         return null;
     },
 });
-
-var styles = StyleSheet.create({
-    quiltView: {
-        // The picker will conform to whatever width is given, but we do
-        // have to set the component's height explicitly on the
-        // surrounding view to ensure it gets rendered.
-        //height: RNTableViewConsts.ComponentHeight,
-    },
-});
-//QuiltView.Consts = RNQuiltViewConsts;
 
 var RNQuiltView = requireNativeComponent('RNQuiltView', null);
 

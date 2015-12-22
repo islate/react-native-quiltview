@@ -25,8 +25,20 @@
     
     if ((self = [super initWithFrame:CGRectZero])) {
         _eventDispatcher = eventDispatcher;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBlockPixels) name:@"UpdateBlockPixels" object:nil];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)updateBlockPixels
+{
+    [self setFrame:self.superview.bounds];
 }
 
 - (void)setFrame:(CGRect)frame

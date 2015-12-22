@@ -23,9 +23,10 @@ var AlbumCell = React.createClass({
         var imageWidth = this.props.width * 0.8 / 3.0;
         var imageHeight = imageWidth * 54.0 / 88.0;
         var marginLeft = (this.props.width * 0.2) / 4.0;
+        var marginTop = this.props.height * 0.2;
         return {
             marginLeft: marginLeft,
-            marginTop: 15,
+            marginTop: marginTop,
             width: imageWidth,
             height: imageHeight,
         };
@@ -59,7 +60,11 @@ var Album = React.createClass({
         var componentType = data.componentType;
         var type = slateComponents[componentType];
         var mapping = this.props.mapping;
-        return React.createElement(type, {key : "albumcell" + index, data : data, mapping : mapping, width:this.state.width});
+        return React.createElement(type, {key : "albumcell" + index, 
+            data, 
+            mapping, 
+            width:this.state.width,
+            height:this.state.height});
     },
 
     render() {
@@ -103,12 +108,15 @@ var Album = React.createClass({
     },
 
     _titleStyles() {
+        var marginLeft = (this.state.width * 0.2) / 4.0;
+        var marginTop = this.state.height * 0.2;
+        var width = this.state.width - 4 - marginLeft * 2;
         return {
             textAlign: 'left',
             color: '#333333',
-            marginTop: 20,
-            marginLeft: 12,
-            width: this.state.width - 24,
+            marginTop: marginTop,
+            marginLeft: marginLeft,
+            width: width,
         };
     }
 });
@@ -120,13 +128,8 @@ var styles = StyleSheet.create({
     backgroundColor: 'lightgray',
   },
   imageContainer: {
-    flexDirection: 'row',
-  },
-  icon: {
-    marginLeft: 12,
-    marginTop: 15,
-    width: 88,
-    height: 54,
+    flex: 1,
+    flexDirection: 'row'
   },
 });
 
