@@ -61,8 +61,6 @@ var slateComponents = {
     "headlineCell" : HeadlineCell,
 };
 
-var i = 0;
-
 var Headline = React.createClass({
     mixins: [TimerMixin],
     propTypes: {
@@ -71,13 +69,13 @@ var Headline = React.createClass({
     },
 
     getInitialState() {
-        return {width:0, height:0};
+        return {width:0, height:0, scrollIndex:0};
     },
 
     getDefaultProps() {
         return {
             widthRatio: 4,
-            heightRatio: 2,
+            heightRatio: 2
         };
     },
 
@@ -85,15 +83,21 @@ var Headline = React.createClass({
         this.setInterval(()=>{
             // 模拟自动轮播
             var width = this.state.width;
-            if (i>2) {
-                i=0;
-                this.myScroll.scrollWithoutAnimationTo(0, width * i);
+            var newState = this.state;
+            if (newState.scrollIndex > this.props.data.subComponents.length - 1) {
+                newState.scrollIndex = 0;
+                this.myScroll.scrollWithoutAnimationTo(0, width * newState.scrollIndex);
             }
             else {
-                this.myScroll.scrollTo(0, width * i);
+                this.myScroll.scrollTo(0, width * newState.scrollIndex);
             }
-            i++;
+            newState.scrollIndex++;
+            this.setState(newState);
         }, 3000);
+    },
+
+    shouldComponentUpdate: function(nextProps, nextState) {
+        return this.state.width !== nextState.width || this.state.height !== nextState.height;
     },
 
     _renderHeadlineCell(index : number, data : object) {

@@ -20,9 +20,9 @@ var AlbumCell = React.createClass({
     },
 
     _imageStyles() {
-        var imageWidth = this.props.width * 0.8 / 3.0;
+        var imageWidth = this.props.width * 0.9 / 3.0;
         var imageHeight = imageWidth * 54.0 / 88.0;
-        var marginLeft = (this.props.width * 0.2) / 4.0;
+        var marginLeft = (this.props.width * 0.1) / 4.0;
         var marginTop = this.props.height * 0.2;
         return {
             marginLeft: marginLeft,
@@ -108,7 +108,7 @@ var Album = React.createClass({
     },
 
     _titleStyles() {
-        var marginLeft = (this.state.width * 0.2) / 4.0;
+        var marginLeft = (this.state.width * 0.1) / 4.0;
         var marginTop = this.state.height * 0.2;
         var width = this.state.width - 4 - marginLeft * 2;
         return {

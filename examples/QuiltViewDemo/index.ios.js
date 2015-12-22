@@ -31,7 +31,7 @@ var Launch = React.createClass({
 
     componentDidMount() {
 
-        var debug = true; // 调试开关，是否使用本地数据
+        var debug = false; // 调试开关，是否使用本地数据
 
         if (debug) {
 
@@ -153,7 +153,7 @@ var Launch = React.createClass({
         }
 
         // 真实请求
-        fetch('http://7b1gcw.com1.z0.glb.clouddn.com/quiltdemo/branch/column/node/news/layout?12')
+        fetch('http://7b1gcw.com1.z0.glb.clouddn.com/quiltdemo/branch/column/node/tennews/layout')
         .then((response) => response.json())
         .then((responseJSON) => {
             var layout = responseJSON;
