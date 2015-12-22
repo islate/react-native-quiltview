@@ -30,11 +30,12 @@ var Launch = React.createClass({
     },
 
     componentDidMount() {
-        //var REQUEST_URL = 'http://www.baidu.com';
-        //fetch(REQUEST_URL)
-        //.then((response) => {
-        //});
 
+        var debug = true; // 调试开关，是否使用本地数据
+
+        if (debug) {
+
+        // 伪造数据
         this.setState({"layout" : {
             "nodeName" : "金融",
             "components" : [{
@@ -148,6 +149,25 @@ var Launch = React.createClass({
                 },
             }
         });
+            return;
+        }
+
+        // 真实请求
+        fetch('http://7b1gcw.com1.z0.glb.clouddn.com/quiltdemo/branch/column/node/news/layout?12')
+        .then((response) => response.json())
+        .then((responseJSON) => {
+            var layout = responseJSON;
+            //console.log(responseJSON);
+            fetch(layout.mapping)
+            .then((response) => response.json())
+            .then((responseJSON) => {
+                var mapping = responseJSON;
+                //console.log(responseJSON);
+                this.setState({layout, mapping});
+            })
+            .catch((error) => console.warn(error));
+        })
+        .catch((error) => console.warn(error));
     },
 
     _renderRow(rowID : number, rowData : object) {

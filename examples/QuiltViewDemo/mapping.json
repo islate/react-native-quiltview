@@ -1,0 +1,19 @@
+{
+    "album" : {
+        "title" : "leaf.title",
+        "url" : "leaf.link"
+    },
+    "albumCell" : {
+        "image" : "leaf.picture"
+    },
+    "headlineCell" : {
+        "image" : "leaf.picture",
+        "title" : "leaf.title",
+        "url" : "leaf.link"
+    },
+    "normalCell" : {
+        "title" : "leaf.title",
+        "image" : "leaf.picture",
+        "url" : "leaf.link"
+    }
+}
