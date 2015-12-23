@@ -27,8 +27,6 @@ var HeadlineCell = React.createClass({
 
     _cellStyles() {
         return {
-            flex: 1,
-            flexDirection: 'column',
             width:this.props.width,
             height:this.props.height
         };
@@ -36,7 +34,6 @@ var HeadlineCell = React.createClass({
 
     _imageStyles() {
         return {
-            flex: 1,
             width:this.props.width,
             height:this.props.height
         };
@@ -116,8 +113,10 @@ var Headline = React.createClass({
         var data = this.props.data;
         var mapping = this.props.mapping;
         var subComponents = data.subComponents;
-        var container = <RNCellView style={styles.headline}  {...this.props}
-                    onSizeChange={(event)=>{this.setState(event.nativeEvent.size)}} />;
+        var container = <RNCellView 
+                            style={this._headlineStyles()}
+                            onSizeChange={(event)=>{this.setState(event.nativeEvent.size)}} 
+                            {...this.props} />;
         
         if (!subComponents) {
             return container;
@@ -128,7 +127,7 @@ var Headline = React.createClass({
                                     horizontal={true} 
                                     bounces={false}
                                     automaticallyAdjustContentInsets={false}
-                                 style={this._scrollViewStyles()}/>;
+                                    style={styles.scrollview}/>;
 
         var scrollviewChildren = [];
         for (var index = 0; index < subComponents.length; index++) {
@@ -143,20 +142,23 @@ var Headline = React.createClass({
         return React.cloneElement(container, {ref : 'headline'}, scrollviewWithChildren);
     },
 
-    _scrollViewStyles() {
+    _headlineStyles() {
         return {
-            flex: 1,
-            flexDirection: 'row',
-            width:this.state.width,
+            position: 'absolute',
+            backgroundColor: 'lightgray',
+            top: 0,
+            left: 0,
+            width: this.state.width,
+            height: this.state.height
         };
-    },
+    }
 });
 
 var styles = StyleSheet.create({
-  headline: {
-    flex: 1,
-    backgroundColor: 'lightgray',
-  },
+    scrollview : {
+        flex: 1,
+        flexDirection: 'row',
+    }
 });
 
 module.exports = Headline;

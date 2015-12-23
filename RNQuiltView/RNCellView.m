@@ -16,7 +16,6 @@
 @implementation RNCellView
 {
     RCTEventDispatcher *_eventDispatcher;
-    CGFloat _width;
 }
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher
@@ -38,21 +37,29 @@
 
 - (void)updateBlockPixels
 {
-    [self setFrame:self.superview.bounds];
+    if (self.superview) {
+        [self setFrame:self.superview.bounds];
+    }
 }
 
 - (void)setFrame:(CGRect)frame
 {
+    CGRect oldFrame = self.frame;
+    
     [super setFrame:frame];
     
-    if (_width == frame.size.width) {
+    if (oldFrame.size.width == frame.size.width) {
         return;
     }
     
-    _width = frame.size.width;
-    
     // 发送事件给js
-    [_eventDispatcher sendInputEventWithName:@"sizeChange" body:@{@"target":self.reactTag, @"size":@{@"width":@(self.frame.size.width), @"height" : @(self.frame.size.height)}}];
+    [_eventDispatcher sendInputEventWithName:@"sizeChange"
+                                        body:@{@"target":self.reactTag,
+                                               @"size":@{
+                                                       @"width":@(frame.size.width),
+                                                       @"height" : @(frame.size.height)
+                                                       }
+                                               }];
 }
 
 RCT_NOT_IMPLEMENTED(-initWithFrame:(CGRect)frame)

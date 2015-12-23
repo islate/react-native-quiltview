@@ -73,7 +73,7 @@ var Album = React.createClass({
         var subComponents = data.subComponents;
         var container = <RNCellView
                     onSizeChange={(event)=>{this.setState(event.nativeEvent.size)}}
-                     style={styles.cell} 
+                     style={this._cellStyles()} 
                      {...this.props} />;
         if (!subComponents) {
             return container;
@@ -107,6 +107,18 @@ var Album = React.createClass({
         return React.cloneElement(container, {ref : 'album'}, touchWithChildren);
     },
 
+    _cellStyles() {
+        return {
+            position: 'absolute',
+            flexDirection: 'column',
+            backgroundColor: 'lightgray',
+            top: 0,
+            left: 0,
+            width: this.state.width,
+            height: this.state.height
+        };
+    },
+
     _titleStyles() {
         var marginLeft = (this.state.width * 0.1) / 4.0;
         var marginTop = this.state.height * 0.2;
@@ -122,11 +134,6 @@ var Album = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  cell: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: 'lightgray',
-  },
   imageContainer: {
     flex: 1,
     flexDirection: 'row'

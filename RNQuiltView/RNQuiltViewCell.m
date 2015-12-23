@@ -11,12 +11,18 @@
 @implementation RNQuiltViewCell
 
 - (void)setCellView:(RNCellView *)cellView {
-    if (_cellView) {
+    if (_cellView == cellView) {
+        return;
+    }
+    if (_cellView.superview == self) {
         [_cellView removeFromSuperview];
+    }
+    if (cellView) {
+        [cellView removeFromSuperview];
     }
     _cellView = cellView;
     if (_cellView) {
-        [self.contentView addSubview:cellView];
+        [self.contentView addSubview:_cellView];
         [_cellView setFrame:self.contentView.bounds];
     }
 }

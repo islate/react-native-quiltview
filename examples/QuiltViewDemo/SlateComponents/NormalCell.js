@@ -39,9 +39,9 @@ var NormalCell = React.createClass({
 
         // 渲染
         return <RNCellView
-                     style={styles.cell} 
-                         {...this.props} 
-                         onSizeChange={(event)=>{this.setState(event.nativeEvent.size)}} >
+                     style={this._cellStyles()} 
+                     onSizeChange={(event)=>{this.setState(event.nativeEvent.size)}}
+                     {...this.props} >
                     <TouchableOpacity onPress={()=>Actions.news({"url": url, "title": title})} style={styles.touch}>
                         <Image style={this._imageStyles()} source={{uri: image}} />
                         <View>
@@ -50,6 +50,17 @@ var NormalCell = React.createClass({
                         </View>
                     </TouchableOpacity>
                 </RNCellView>;
+    },
+
+    _cellStyles() {
+        return {
+            position: 'absolute',
+            backgroundColor: 'lightgray',
+            top: 0,
+            left: 0,
+            width: this.state.width,
+            height: this.state.height
+        };
     },
 
     _titleStyles() {
@@ -76,10 +87,6 @@ var NormalCell = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  cell: {
-    flex: 1,
-    backgroundColor: 'lightgray',
-  },
   touch : {
     flex: 1,
     flexDirection: 'row',
