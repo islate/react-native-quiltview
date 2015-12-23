@@ -167,6 +167,7 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: HEADER,
+    marginTop: 20
   },
   addressBarRow: {
     flexDirection: 'row',
