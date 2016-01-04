@@ -2,8 +2,7 @@
 
 var React = require('react-native');
 var { Image, Text, View, StyleSheet, requireNativeComponent, TouchableOpacity } = React;
-var { Actions } = require('react-native-router-flux');
-
+var SlateURI = require('../SlateURI');
 var RNCellView = requireNativeComponent('RNCellView', null);
 
 var NormalCell = React.createClass({
@@ -37,12 +36,14 @@ var NormalCell = React.createClass({
         var subtitle = eval("data." + m["subtitle"]);
         var url = eval("data." + m["url"]);
 
+        var uri = "demo://news/" + title + "/" + url;
+
         // 渲染
         return <RNCellView
                      style={this._cellStyles()} 
                      onSizeChange={(event)=>{this.setState(event.nativeEvent.size)}}
                      {...this.props} >
-                    <TouchableOpacity onPress={()=>Actions.news({"url": url, "title": title})} style={styles.touch}>
+                    <TouchableOpacity onPress={()=>SlateURI.openURI(uri)} style={styles.touch}>
                         <Image style={this._imageStyles()} source={{uri: image}} />
                         <View>
                             <Text style={this._titleStyles()}>{title}</Text>

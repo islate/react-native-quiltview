@@ -2,9 +2,8 @@
 
 var React = require('react-native');
 var { Image, Text, View, StyleSheet, requireNativeComponent, TouchableOpacity, ScrollView } = React;
-var { Actions } = require('react-native-router-flux');
+var SlateURI = require('../SlateURI');
 var TimerMixin = require('react-timer-mixin');
-
 var RNCellView = requireNativeComponent('RNCellView', null);
 
 var HeadlineCell = React.createClass({
@@ -17,9 +16,11 @@ var HeadlineCell = React.createClass({
         var image = eval("data." + m["image"]);
         var title = eval("data." + m["title"]);
         var url = eval("data." + m["url"]);
+        
+        var uri = "demo://news/" + title + "/" + url;
 
         // 渲染
-        return <TouchableOpacity onPress={()=>Actions.news({"url": url, "title": title})} style={this._cellStyles()}>
+        return <TouchableOpacity onPress={()=>SlateURI.openURI(uri)} style={this._cellStyles()}>
                     <Image style={this._imageStyles()} source={{uri: image}} />
                     <Text style={this._textStyles()} >{title}</Text>
                 </TouchableOpacity>;

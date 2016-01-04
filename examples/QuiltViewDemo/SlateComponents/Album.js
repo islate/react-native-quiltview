@@ -2,8 +2,7 @@
 
 var React = require('react-native');
 var { Image, Text, View, StyleSheet, requireNativeComponent, TouchableOpacity } = React;
-var { Actions } = require('react-native-router-flux');
-
+var SlateURI = require('../SlateURI');
 var RNCellView = requireNativeComponent('RNCellView', null);
 
 var AlbumCell = React.createClass({
@@ -100,8 +99,10 @@ var Album = React.createClass({
 
         var images = React.cloneElement(imageContainer, {ref : 'albumimages', key : 'albumimages'}, imageContainerChildren);
         children.push(images);
+        
+        var uri = "demo://news/" + title + "/" + url;
 
-        var touch = <TouchableOpacity onPress={()=>Actions.news({"url": url, "title": title})} style={styles.cell} />;
+        var touch = <TouchableOpacity onPress={()=>SlateURI.openURI(uri)} style={styles.cell} />;
         var touchWithChildren = React.cloneElement(touch, {ref : 'touch', key : 'touch'}, children);
 
         return React.cloneElement(container, {ref : 'album'}, touchWithChildren);

@@ -1,5 +1,9 @@
 'use strict';
 
+var SlateURI = require('./SlateURI');
+var SlateURIHandler = require('./SlateURIHandler');
+SlateURI.handler = SlateURIHandler;
+
 var React = require('react-native');
 var { AppRegistry, Image, Text, Dimensions,View,StyleSheet,PropTypes,requireNativeComponent } = React;
 var QuiltView = require('react-native-quiltview');
