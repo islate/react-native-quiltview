@@ -26,6 +26,9 @@ var slateComponents = {
     "album" : Album,
 };
 
+// 原生api模块
+var SlateApi = require('react-native').NativeModules.SlateApiManager;
+
 // 主界面
 var Launch = React.createClass({
 
@@ -156,6 +159,27 @@ var Launch = React.createClass({
             return;
         }
 
+        // 调用原生接口
+        var url = "http://7b1gcw.com1.z0.glb.clouddn.com/quiltdemo/branch/column/node/tennews/layout";
+        SlateApi.fetchJSON(url, (error, json)=>{
+            if (error) {
+                console.warn(error);
+            }
+            else {
+                var layout = json;
+                SlateApi.fetchJSON(layout.mapping, (error, json)=>{
+                    if (error) {
+                        console.warn(error);
+                    }
+                    else {
+                        var mapping = json;
+                        this.setState({layout, mapping});
+                    }
+                });
+            }
+        });
+
+        /*
         // 真实请求
         fetch('http://7b1gcw.com1.z0.glb.clouddn.com/quiltdemo/branch/column/node/tennews/layout')
         .then((response) => response.json())
@@ -172,6 +196,7 @@ var Launch = React.createClass({
             .catch((error) => console.warn(error));
         })
         .catch((error) => console.warn(error));
+        */
     },
 
     _renderRow(rowID : number, rowData : object) {
