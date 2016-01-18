@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "RCTView.h"
+
 @class RCTEventDispatcher;
 
-@interface RNCellView : UIView
+@interface RNCellView : RCTView
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher NS_DESIGNATED_INITIALIZER;
 

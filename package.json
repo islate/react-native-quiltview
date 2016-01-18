@@ -30,5 +30,9 @@
   "homepage": "https://github.com/mmslate/react-native-quiltview#readme",
   "dependencies": {},
   "readme": "# react-native-quiltview\nNative iOS UICollectionView with RFQuiltLayout for React Native.",
-  "readmeFilename": "README.md"
+  "readmeFilename": "README.md",
+  "gitHead": "4674cc4126258a32276f243b9063f288be33523a",
+  "_id": "react-native-quiltview@0.1.5",
+  "_shasum": "9dd1cb62b0f0395f7fbd886e01a167b74f47a71c",
+  "_from": "react-native-quiltview@>=0.1.5 <0.2.0"
 }

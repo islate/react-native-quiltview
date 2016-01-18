@@ -1,9 +1,12 @@
 'use strict';
 
 var React = require('react-native');
-var {NativeMethodsMixin, ReactNativeViewAttributes, NativeModules, StyleSheet, View, requireNativeComponent} = React;
-
+var { NativeMethodsMixin, ReactNativeViewAttributes, 
+    NativeModules, StyleSheet, 
+    View, requireNativeComponent } = React;
 var QUILTVIEW = 'quiltview';
+var RNQuiltView = requireNativeComponent('RNQuiltView', null);
+
 
 function extend(el, map) {
     for (var i in map)
@@ -40,11 +43,11 @@ var QuiltView = React.createClass({
                     count++;
                     items.push(el);
 
-                    //if (child.type==QuiltView.Cell){
+                    {
                         count++;
                         var element = React.cloneElement(child, {key: index+" "+itemIndex});
                         children.push(element);
-                    //}
+                    }
 
                 });
                 sections.push({
@@ -60,59 +63,26 @@ var QuiltView = React.createClass({
     },
 
     render: function() {
-        return (
-            <View style={[{flex:1},this.props.style]}>
-                <RNQuiltView
+        var children = this.state.children;
+        var refreshControl = this.props.refreshControl;
+        if (refreshControl) {
+            children.push(refreshControl);
+        }
+        return <RNQuiltView
                     ref={QUILTVIEW}
                     style={this.props.style}
                     sections={this.state.sections}
                     {...this.props} >
-
-                    {this.state.children}
-                </RNQuiltView>
-            </View>
-        );
+                    {children}
+                </RNQuiltView>;
     },
 });
-
-QuiltView.Item = React.createClass({
-    propTypes: {
-        value: React.PropTypes.any, // string or integer basically
-        label: React.PropTypes.string,
-    },
-
-    render: function() {
-        // These items don't get rendered directly.
-        return null;
-    },
-});
-
-QuiltView.Cell = React.createClass({
-    getInitialState(){
-        return {width:0, height:0}
-    },
-    render: function() {
-        return <RNCellView {...this.props} />
-    },
-});
-var RNCellView = requireNativeComponent('RNCellView', null);
 
 QuiltView.Section = React.createClass({
-    propTypes: {
-        label: React.PropTypes.string,
-        footerLabel: React.PropTypes.string,
-        arrow: React.PropTypes.bool,
-        footerHeight: React.PropTypes.number,
-        headerHeight: React.PropTypes.number,
-
-    },
-
     render: function() {
         // These items don't get rendered directly.
         return null;
     },
 });
-
-var RNQuiltView = requireNativeComponent('RNQuiltView', null);
 
 module.exports = QuiltView;
