@@ -1,6 +1,6 @@
 {
   "name": "react-native-quiltview",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Native iOS UICollectionView wrapper with RFQuiltLayout for React Native",
   "main": "index.js",
   "scripts": {
