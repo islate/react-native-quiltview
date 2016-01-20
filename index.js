@@ -23,7 +23,7 @@ var QuiltView = React.createClass({
         this.setState(state);
     },
 
-    // Translate TableView prop and children into stuff that RNTableView understands.
+    // Translate QuiltView prop and children into stuff that RNQuiltView understands.
     _stateFromProps: function(props) {
         var sections = [];
         var children = [];
@@ -35,18 +35,11 @@ var QuiltView = React.createClass({
             if (section && section.type == QuiltView.Section) {
                 React.Children.forEach(section.props.children, function (child, itemIndex) {
                     var el = {};
-                    extend(el, section.props);
                     extend(el, child.props);
+                    el.key = child.key;
                     count++;
                     items.push(el);
-
-                    {
-                        count++;
-                        //var element = React.cloneElement(child, {key: index+" "+itemIndex});
-                        //children.push(element);
-                        children.push(child);
-                    }
-
+                    children.push(child);
                 });
                 sections.push({
                     items: items,

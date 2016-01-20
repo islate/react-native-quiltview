@@ -1,38 +1,80 @@
 {
-  "name": "react-native-quiltview",
-  "version": "0.1.7",
-  "description": "Native iOS UICollectionView wrapper with RFQuiltLayout for React Native",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "_args": [
+    [
+      "react-native-quiltview@^0.1.7",
+      "/Volumes/Macintosh HD/Desktop/bbwcchoice/bbwcchoice"
+    ]
+  ],
+  "_from": "react-native-quiltview@>=0.1.7 <0.2.0",
+  "_id": "react-native-quiltview@0.1.7",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/react-native-quiltview",
+  "_nodeVersion": "5.3.0",
+  "_npmUser": {
+    "email": "linyize@gmail.com",
+    "name": "linyize"
   },
+  "_npmVersion": "3.3.12",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "react-native-quiltview",
+    "raw": "react-native-quiltview@^0.1.7",
+    "rawSpec": "^0.1.7",
+    "scope": null,
+    "spec": ">=0.1.7 <0.2.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_shasum": "d400d27cac708768ffc395cdc5809af78d40513b",
+  "_shrinkwrap": null,
+  "_spec": "react-native-quiltview@^0.1.7",
+  "_where": "/Volumes/Macintosh HD/Desktop/bbwcchoice/bbwcchoice",
+  "author": {
+    "email": "linyize@gmail.com",
+    "name": "mmslate",
+    "url": "http://www.modernmedia.com.cn"
+  },
+  "bugs": {
+    "url": "https://github.com/mmslate/react-native-quiltview/issues"
+  },
+  "dependencies": {},
+  "description": "Native iOS UICollectionView wrapper with RFQuiltLayout for React Native",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "d400d27cac708768ffc395cdc5809af78d40513b",
+    "tarball": "http://registry.npmjs.org/react-native-quiltview/-/react-native-quiltview-0.1.7.tgz"
+  },
+  "gitHead": "4674cc4126258a32276f243b9063f288be33523a",
+  "homepage": "https://github.com/mmslate/react-native-quiltview#readme",
+  "keywords": [
+    "UICollectionView",
+    "collectionview",
+    "iOS",
+    "quiltlayout",
+    "react-component",
+    "react-native"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "linyize",
+      "email": "linyize@gmail.com"
+    }
+  ],
+  "name": "react-native-quiltview",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mmslate/react-native-quiltview.git"
   },
-  "keywords": [
-    "react-native",
-    "react-component",
-    "UICollectionView",
-    "collectionview",
-    "quiltlayout",
-    "iOS"
-  ],
-  "author": {
-    "name": "mmslate",
-    "email": "linyize@gmail.com",
-    "url": "http://www.modernmedia.com.cn"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/mmslate/react-native-quiltview/issues"
-  },
-  "homepage": "https://github.com/mmslate/react-native-quiltview#readme",
-  "dependencies": {},
-  "readme": "# react-native-quiltview\nNative iOS UICollectionView with RFQuiltLayout for React Native.",
-  "readmeFilename": "README.md",
-  "gitHead": "4674cc4126258a32276f243b9063f288be33523a",
-  "_id": "react-native-quiltview@0.1.5",
-  "_shasum": "9dd1cb62b0f0395f7fbd886e01a167b74f47a71c",
-  "_from": "react-native-quiltview@>=0.1.5 <0.2.0"
+  "version": "0.1.7"
 }

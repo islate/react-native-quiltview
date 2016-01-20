@@ -145,6 +145,39 @@
     }
 }
 
+- (void)removeReactSubview:(UIView *)subview
+{
+    // quiltview
+    if ([subview isKindOfClass:[RNCellView class]]) {
+        [_rncells removeObject:subview];
+        [_reactSubviews removeObject:subview];
+    }
+    
+    // RCTScrollView
+    else if ([subview isKindOfClass:[RCTRefreshControl class]]) {
+        _scrollView.refreshControl = nil;
+        [_reactSubviews removeObject:subview];
+    } else {
+        RCTAssert(_contentView == subview, @"Attempted to remove non-existent subview");
+        _contentView = nil;
+        [subview removeFromSuperview];
+    }
+}
+
+- (NSArray<UIView *> *)reactSubviews
+{
+    // quiltView
+    if (_reactSubviews.count > 0) {
+        return _reactSubviews;
+    }
+    
+    // RCTScrollView
+    if (_contentView && _scrollView.refreshControl) {
+        return @[_contentView, _scrollView.refreshControl];
+    }
+    return _contentView ? @[_contentView] : @[];
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -332,47 +365,6 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 - (void)setRemoveClippedSubviews:(__unused BOOL)removeClippedSubviews
 {
     // Does nothing
-}
-
-//- (void)insertReactSubview:(UIView *)view atIndex:(__unused NSInteger)atIndex
-//{
-//    if ([view isKindOfClass:[RCTRefreshControl class]]) {
-//        _scrollView.refreshControl = (RCTRefreshControl*)view;
-//    } else {
-//        RCTAssert(_contentView == nil, @"RCTScrollView may only contain a single subview");
-//        _contentView = view;
-//        [_scrollView addSubview:view];
-//    }
-//}
-
-- (void)removeReactSubview:(UIView *)subview
-{
-    if ([subview isKindOfClass:[RNCellView class]]) {
-        [_rncells removeObject:subview];
-        [_reactSubviews removeObject:subview];
-    }
-    else if ([subview isKindOfClass:[RCTRefreshControl class]]) {
-        _scrollView.refreshControl = nil;
-        [_reactSubviews removeObject:subview];
-    } else {
-        RCTAssert(_contentView == subview, @"Attempted to remove non-existent subview");
-        _contentView = nil;
-        [subview removeFromSuperview];
-    }
-}
-
-- (NSArray<UIView *> *)reactSubviews
-{
-    // quiltView
-    if (_reactSubviews.count > 0) {
-        return _reactSubviews;
-    }
-    
-    // RCTScrollView
-    if (_contentView && _scrollView.refreshControl) {
-        return @[_contentView, _scrollView.refreshControl];
-    }
-    return _contentView ? @[_contentView] : @[];
 }
 
 - (BOOL)centerContent
