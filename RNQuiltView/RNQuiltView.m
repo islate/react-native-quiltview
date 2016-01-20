@@ -51,6 +51,7 @@
     RCTEventDispatcher *_eventDispatcher;
     RFQuiltLayout *_layout;
     NSMutableArray *_rncells;
+    NSMutableArray *_reactSubviews;
     CGFloat _width;
     
     RNCustomCollectionView *_scrollView;
@@ -69,6 +70,7 @@
         
         // quiltview
         _rncells = [NSMutableArray array];
+        _reactSubviews = [NSMutableArray array];
         _layout = [RFQuiltLayout new];
         _layout.direction = UICollectionViewScrollDirectionVertical;
         _layout.delegate = self;
@@ -121,16 +123,19 @@
 
 - (void)insertReactSubview:(UIView *)subview atIndex:(NSInteger)atIndex
 {
+    // quiltview
     if ([subview isKindOfClass:[RNCellView class]])
     {
         RNCellView *cellView = (RNCellView *)subview;
         [_rncells addObject:cellView];
+        [_reactSubviews addObject:subview];
     }
     
     // RCTScrollView
     else if ([subview isKindOfClass:[RCTRefreshControl class]])
     {
         _scrollView.refreshControl = (RCTRefreshControl*)subview;
+        [_reactSubviews addObject:subview];
     }
     else
     {
@@ -342,8 +347,13 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 
 - (void)removeReactSubview:(UIView *)subview
 {
-    if ([subview isKindOfClass:[RCTRefreshControl class]]) {
+    if ([subview isKindOfClass:[RNCellView class]]) {
+        [_rncells removeObject:subview];
+        [_reactSubviews removeObject:subview];
+    }
+    else if ([subview isKindOfClass:[RCTRefreshControl class]]) {
         _scrollView.refreshControl = nil;
+        [_reactSubviews removeObject:subview];
     } else {
         RCTAssert(_contentView == subview, @"Attempted to remove non-existent subview");
         _contentView = nil;
@@ -353,6 +363,12 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 
 - (NSArray<UIView *> *)reactSubviews
 {
+    // quiltView
+    if (_reactSubviews.count > 0) {
+        return _reactSubviews;
+    }
+    
+    // RCTScrollView
     if (_contentView && _scrollView.refreshControl) {
         return @[_contentView, _scrollView.refreshControl];
     }

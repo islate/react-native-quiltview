@@ -1,12 +1,9 @@
 'use strict';
 
 var React = require('react-native');
-var { NativeMethodsMixin, ReactNativeViewAttributes, 
-    NativeModules, StyleSheet, 
-    View, requireNativeComponent } = React;
+var { NativeMethodsMixin, requireNativeComponent } = React;
 var QUILTVIEW = 'quiltview';
 var RNQuiltView = requireNativeComponent('RNQuiltView', null);
-
 
 function extend(el, map) {
     for (var i in map)
@@ -45,8 +42,9 @@ var QuiltView = React.createClass({
 
                     {
                         count++;
-                        var element = React.cloneElement(child, {key: index+" "+itemIndex});
-                        children.push(element);
+                        //var element = React.cloneElement(child, {key: index+" "+itemIndex});
+                        //children.push(element);
+                        children.push(child);
                     }
 
                 });
@@ -65,14 +63,12 @@ var QuiltView = React.createClass({
     render: function() {
         var children = this.state.children;
         var refreshControl = this.props.refreshControl;
-        if (refreshControl) {
-            children.push(refreshControl);
-        }
         return <RNQuiltView
                     ref={QUILTVIEW}
                     style={this.props.style}
                     sections={this.state.sections}
                     {...this.props} >
+                    {refreshControl}
                     {children}
                 </RNQuiltView>;
     },
