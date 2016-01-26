@@ -25,6 +25,8 @@ extern CGFloat const ZINDEX_STICKY_HEADER;
 
 @property (nonatomic, copy) NSMutableArray *sections;
 
+- (void)invalidateLayout;
+
 
 // RCTAutoInsetsProtocol
 @property (nonatomic, assign) UIEdgeInsets contentInset;

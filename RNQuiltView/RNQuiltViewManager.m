@@ -30,6 +30,21 @@ RCT_EXPORT_MODULE()
     return [[RNQuiltView alloc] initWithEventDispatcher:self.bridge.eventDispatcher];
 }
 
+RCT_EXPORT_METHOD(invalidateLayout:(nonnull NSNumber *)reactTag)
+{
+    [self.bridge.uiManager addUIBlock:^(__unused RCTUIManager *uiManager, NSDictionary<NSNumber *, RNQuiltView *> *viewRegistry) {
+        
+        RNQuiltView *view = viewRegistry[reactTag];
+        if (!view || ![view isKindOfClass:[RNQuiltView class]]) {
+            RCTLogError(@"Cannot find RNQuiltView with tag #%@", reactTag);
+            return;
+        }
+        
+        [view invalidateLayout];
+    }];
+}
+
+
 RCT_EXPORT_VIEW_PROPERTY(sections, NSArray)
 
 

@@ -97,6 +97,11 @@
     return self;
 }
 
+- (void)invalidateLayout
+{
+    [_layout invalidateLayout];
+}
+
 // 获得所有section的数据
 - (void)setSections:(NSArray *)sections
 {
@@ -229,7 +234,7 @@
     
     cell.cellView = cellView;
     
-    cell.backgroundColor = [self colorForNumber:@(indexPath.item)];
+    //cell.backgroundColor = [self colorForNumber:@(indexPath.item)];
 
     return cell;
 }
@@ -398,6 +403,8 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 - (void)dealloc
 {
     _scrollView.delegate = nil;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 //- (void)layoutSubviews
