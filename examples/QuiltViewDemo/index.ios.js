@@ -5,13 +5,12 @@ var SlateURIHandler = require('./SlateURIHandler');
 SlateURI.handler = SlateURIHandler;
 
 var React = require('react-native');
-var { AppRegistry, Image, Text, Dimensions,View,StyleSheet,PropTypes,requireNativeComponent } = React;
+var { AppRegistry, Navigator, Image, Text, Dimensions,View,StyleSheet,PropTypes,requireNativeComponent } = React;
 var QuiltView = require('react-native-quiltview');
 var Section = QuiltView.Section;
  var Item = QuiltView.Item;
 var Cell = QuiltView.Cell;
 var {Actions, Router, Route, Schema, Animations} = require('react-native-router-flux');
-var NavigationBar = require('react-native-navbar');
 
 // 详情页
 var WebView = require('./WebView');
@@ -242,22 +241,12 @@ var styles = StyleSheet.create({
   }
 });
 
-// 导航条
-class NavBar extends React.Component {
-    render(){
-        return <NavigationBar style={{backgroundColor: '#0db0d9'}}
-                              titleColor='white'
-                              buttonsColor='white'
-                              statusBar='lightContent' {...this.props} />
-    }
-}
-
 // 页面路由
 class QuiltViewExample extends React.Component {
     render(){
         return (
             <Router>
-                <Schema name="default" navBar={NavBar} sceneConfig={Animations.FlatFloatFromRight}/>
+                <Schema name="default" sceneConfig={Navigator.SceneConfigs.FloatFromRight}/>
                 <Route name="launch" component={Launch} title="QuiltView Demo"/>
                 <Route name="news" component={WebView} title="News"/>
             </Router>

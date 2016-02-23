@@ -81,16 +81,20 @@ var Headline = React.createClass({
         this.setInterval(()=>{
             // 模拟自动轮播
             var width = this.state.width;
-            var newState = this.state;
-            if (newState.scrollIndex > this.props.data.subComponents.length - 1) {
-                newState.scrollIndex = 0;
-                this.myScroll.scrollWithoutAnimationTo(0, width * newState.scrollIndex);
+            var layout = this.props.data;
+            if (!layout) {
+                return false;
+            }
+            var scrollIndex = this.state.scrollIndex;
+            if (scrollIndex > layout.subComponents.length - 1) {
+                scrollIndex = 0;
+                this.myScroll.scrollTo({y:0, x:width * scrollIndex, animated:false});
             }
             else {
-                this.myScroll.scrollTo(0, width * newState.scrollIndex);
+                this.myScroll.scrollTo({y:0, x:width * scrollIndex, animated:true});
             }
-            newState.scrollIndex++;
-            this.setState(newState);
+            scrollIndex++;
+            this.setState({scrollIndex});
         }, 3000);
     },
 
