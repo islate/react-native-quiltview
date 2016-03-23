@@ -14,7 +14,7 @@
     if (_cellView == cellView) {
         return;
     }
-    if (_cellView.superview == self) {
+    if (_cellView.superview == self.contentView) {
         [_cellView removeFromSuperview];
     }
     if (cellView) {
