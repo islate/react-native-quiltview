@@ -64,28 +64,6 @@
                                                }];
 }
 
-- (void)setWidthRatio:(NSInteger)widthRatio
-{
-    NSInteger oldRatio = _widthRatio;
-    
-    _widthRatio = widthRatio;
-    
-    if (oldRatio > 0 && oldRatio != widthRatio) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"CellSizeChange" object:nil];
-    }
-}
-
-- (void)setHeightRatio:(NSInteger)heightRatio
-{
-    NSInteger oldRatio = _heightRatio;
-    
-    _heightRatio = heightRatio;
-    
-    if (oldRatio > 0 && oldRatio != heightRatio) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"CellSizeChange" object:nil];
-    }
-}
-
 RCT_NOT_IMPLEMENTED(-initWithFrame:(CGRect)frame)
 RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 
